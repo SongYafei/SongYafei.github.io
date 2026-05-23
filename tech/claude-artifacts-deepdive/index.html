@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Claude Artifacts 深入分析 · 渲染机制、风格统一与触发判定</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;background:#0a0a14;color:#e0e0e8;padding:16px}
+.container{max-width:900px;margin:0 auto}
+.header{background:linear-gradient(135deg,#0d0d2b 0%,#1a0a3e 50%,#2d1b69 100%);border-radius:20px;padding:32px 28px;color:#fff;margin-bottom:20px;position:relative;overflow:hidden}
+.header::after{content:'';position:absolute;top:-60%;right:-30%;width:300px;height:300px;background:radial-gradient(circle,rgba(102,126,234,0.12) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+.header h1{font-size:24px;font-weight:700;position:relative;line-height:1.3}
+.header .sub{font-size:14px;color:rgba(255,255,255,0.65);margin-top:8px;position:relative}
+.header .meta{font-size:12px;color:rgba(255,255,255,0.35);margin-top:10px;position:relative}
+.tab-bar{display:flex;gap:8px;margin-bottom:20px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab-btn{padding:10px 20px;border-radius:24px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.5);font-size:14px;font-weight:600;cursor:pointer;transition:all .3s ease;flex-shrink:0}
+.tab-btn.active{background:linear-gradient(135deg,#667eea,#764ba2);border-color:transparent;color:#fff;box-shadow:0 4px 20px rgba(102,126,234,0.3)}
+.section{display:none;animation:fadeUp .4s ease}
+.section.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.card{background:linear-gradient(135deg,rgba(255,255,255,0.06) 0%,rgba(255,255,255,0.02) 100%);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:20px;margin-bottom:14px}
+.card.highlight{border-color:rgba(102,126,234,0.4);background:linear-gradient(135deg,rgba(102,126,234,0.12) 0%,rgba(118,75,162,0.08) 100%)}
+.card.green{border-color:rgba(81,207,102,0.3);background:linear-gradient(135deg,rgba(81,207,102,0.08) 0%,rgba(81,207,102,0.03) 100%)}
+.card.blue{border-color:rgba(102,126,234,0.3);background:linear-gradient(135deg,rgba(102,126,234,0.08) 0%,rgba(66,165,245,0.03) 100%)}
+.card.orange{border-color:rgba(255,160,0,0.3);background:linear-gradient(135deg,rgba(255,160,0,0.08) 0%,rgba(255,160,0,0.03) 100%)}
+.card.red{border-color:rgba(255,107,107,0.3);background:linear-gradient(135deg,rgba(255,107,107,0.08) 0%,rgba(255,107,107,0.03) 100%)}
+.card-title{font-size:17px;font-weight:700;color:#fff;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.card-sub{font-size:13px;color:rgba(255,255,255,0.55);margin-bottom:8px;line-height:1.7}
+.code-block{background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:16px;font-family:"SF Mono","Fira Code","Consolas",monospace;font-size:12.5px;line-height:1.7;color:#c9d1d9;overflow-x:auto;margin:10px 0;white-space:pre-wrap}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:10px 0}
+th{background:rgba(255,255,255,0.04);text-align:left;padding:10px 12px;font-weight:600;color:rgba(255,255,255,0.5);font-size:13px;border-bottom:1px solid rgba(255,255,255,0.06)}
+td{padding:10px 12px;border-top:1px solid rgba(255,255,255,0.04);color:rgba(255,255,255,0.75)}
+.tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:500}
+.tag-green{background:rgba(81,207,102,0.15);color:#51cf66}
+.tag-red{background:rgba(255,107,107,0.15);color:#ff6b6b}
+.tag-blue{background:rgba(102,126,234,0.15);color:#667eea}
+.tag-orange{background:rgba(255,160,0,0.15);color:#ffa000}
+.note{font-size:13px;color:rgba(255,255,255,0.5);padding:12px 14px;background:rgba(255,255,255,0.03);border-radius:8px;margin-top:8px;line-height:1.6}
+.note strong{color:rgba(255,255,255,0.7)}
+.info-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.info-item{flex:1;min-width:120px;background:linear-gradient(135deg,rgba(255,255,255,0.04) 0%,rgba(255,255,255,0.02) 100%);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:14px;text-align:center}
+.info-item .num{font-size:20px;font-weight:700;color:#667eea}
+.info-item .lbl{font-size:12px;color:rgba(255,255,255,0.4);margin-top:4px}
+.divider{height:1px;background:rgba(255,255,255,0.06);margin:20px 0}
+.schema-box{background:rgba(0,0,0,0.25);border:1px solid rgba(102,126,234,0.2);border-radius:12px;padding:18px;margin:10px 0}
+.schema-box h4{color:#667eea;font-size:14px;margin-bottom:8px}
+.schema-box ul{list-style:none;padding:0}
+.schema-box li{padding:5px 0;font-size:13px;color:rgba(255,255,255,0.7);display:flex;gap:8px}
+.schema-box li .key{color:#d2a8ff;font-family:monospace;min-width:100px}
+.schema-box li .val{color:rgba(255,255,255,0.5)}
+.flow-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;padding:16px}
+.flow-step{background:rgba(102,126,234,0.12);border:1px solid rgba(102,126,234,0.2);border-radius:8px;padding:10px 16px;font-size:13px;color:#c9d1d9;text-align:center}
+.flow-arrow{color:rgba(255,255,255,0.2);font-size:16px}
+.footnote{text-align:center;padding:20px;color:rgba(255,255,255,0.15);font-size:12px}
+@media (max-width:600px){body{padding:12px}.header{padding:20px}.header h1{font-size:20px}.tab-btn{padding:8px 14px;font-size:13px}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>🔬 Claude Artifacts 深度解析</h1>
+  <div class="sub">渲染机制 · 风格统一 · 触发判定 · 对我们的启示</div>
+  <div class="meta">基于系统提示词逆向工程、官方文档、社区分析 · 2026-05-24</div>
+</div>
+
+<div class="tab-bar">
+  <div class="tab-btn active" onclick="switchTab('tab-mechanism')">⚙️ 渲染机制</div>
+  <div class="tab-btn" onclick="switchTab('tab-style')">🎨 风格统一</div>
+  <div class="tab-btn" onclick="switchTab('tab-trigger')">🧠 触发判定</div>
+  <div class="tab-btn" onclick="switchTab('tab-apply')">⚡ 对我们的启示</div>
+</div>
+
+<div id="tab-mechanism" class="section active">
+  <div class="info-row">
+    <div class="info-item"><div class="num">&lt;antArtifact&gt;</div><div class="lbl">XML 标记协议</div></div>
+    <div class="info-item"><div class="num">6种</div><div class="lbl">Artifact 类型</div></div>
+    <div class="info-item"><div class="num">Sandbox</div><div class="lbl">iframe 沙箱</div></div>
+    <div class="info-item"><div class="num">MIME</div><div class="lbl">类型标识体系</div></div>
+  </div>
+
+  <div class="card highlight">
+    <div class="card-title">一、Claude Artifacts 的底层渲染架构</div>
+    <div class="card-sub">Artifacts 不是 UI 黑科技，而是一个<strong>结构化的响应协议</strong> + <strong>前端沙箱渲染引擎</strong>的组合。</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">1.1 通信协议：&lt;antArtifact&gt; XML 标签</div>
+    <div class="card-sub">Claude 在生成响应时，直接在文本流中嵌入 XML 标签。前端 UI 解析响应流，提取 &lt;antArtifact&gt; 标签内容渲染到侧边面板。不改变底层 API，只在响应内容上做标记。</div>
+    <div class="code-block">&lt;antArtifact identifier="metrics-dashboard" type="application/vnd.ant.react" title="Dashboard"&gt;
+  // 完整的组件代码...
+&lt;/antArtifact&gt;</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">1.2 六种 Artifact 类型与 MIME 体系</div>
+    <table>
+      <tr><th>类型</th><th>MIME Type</th><th>渲染方式</th></tr>
+      <tr><td>Code</td><td><code>application/vnd.ant.code</code></td><td>语法高亮 + 代码面板</td></tr>
+      <tr><td>HTML</td><td><code>text/html</code></td><td>iframe 沙箱渲染完整网页</td></tr>
+      <tr><td>React</td><td><code>application/vnd.ant.react</code></td><td>Babel + React 运行时交互式组件</td></tr>
+      <tr><td>SVG</td><td><code>image/svg+xml</code></td><td>直接渲染为矢量图</td></tr>
+      <tr><td>Mermaid</td><td><code>application/vnd.ant.mermaid</code></td><td>mermaid.js 渲染流程图</td></tr>
+      <tr><td>Markdown</td><td><code>text/markdown</code></td><td>标准 Markdown 渲染</td></tr>
+    </table>
+  </div>
+
+  <div class="card blue">
+    <div class="card-title">1.3 HTML/React 的沙箱渲染流程</div>
+    <div class="card-sub">
+      <strong>安全限制：</strong>无网络请求 · 无文件系统 · 无持久存储 · 仅允许 cdnjs 加载脚本<br>
+      <strong>React 运行时：</strong>Babel standalone 浏览器端转译 JSX · 内置 React/Recharts/Lucide/shadcn/ui
+    </div>
+    <div class="flow-row">
+      <div class="flow-step">① Claude 生成 artifact</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">② 前端提取 XML</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">③ 注入 iframe 沙箱</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">④ Babel 转译 JSX</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">⑤ React 挂载渲染</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">1.4 identifier 版本控制机制</div>
+    <div class="card-sub">每个 artifact 有 kebab-case identifier。用户说"修改这个"时，Claude 复用 identifier 更新已有 artifact，而不是新建。前端根据 identifier 判断新建还是替换，实现自然的迭代体验。</div>
+    <div class="code-block">// 首次创建
+&lt;antArtifact identifier="factorial-script" type="application/vnd.ant.code" ...&gt;
+// 用户说"改成支持负数" → 复用 identifier
+&lt;antArtifact identifier="factorial-script" type="application/vnd.ant.code" ...&gt;</div>
+  </div>
+</div>
+
+<div id="tab-style" class="section">
+  <div class="info-row">
+    <div class="info-item"><div class="num">Tailwind</div><div class="lbl">默认样式框架</div></div>
+    <div class="info-item"><div class="num">禁止</div><div class="lbl">Arbitrary Values</div></div>
+    <div class="info-item"><div class="num">shadcn/ui</div><div class="lbl">组件库</div></div>
+    <div class="info-item"><div class="num">Lucide</div><div class="lbl">图标库</div></div>
+  </div>
+
+  <div class="card highlight">
+    <div class="card-title">二、风格统一是如何做到的</div>
+    <div class="card-sub">通过<strong>系统提示词硬性约束技术选型</strong>，而不是靠模型自己"学会审美"。</div>
+  </div>
+
+  <div class="card blue">
+    <div class="card-title">2.1 System Prompt 中的样式规则</div>
+    <div class="code-block">// 逆向出来的系统提示词样式约束
+· Use Tailwind classes for styling.
+· DO NOT USE ARBITRARY VALUES (e.g. h-[600px]).
+· lucide-react@0.263.1 is available for icons.
+· recharts is available for charts.
+· shadcn/ui components are importable.
+· cdns.cloudflare.com is the only allowed CDN.
+· Use placeholder images: &lt;img src="/api/placeholder/400/320" /&gt;</div>
+    <div class="note">关键洞察：风格统一不是模型"学会了设计审美"，而是系统提示词强制指定了技术栈，自然保证了输出一致性。</div>
+  </div>
+
+  <div class="card green">
+    <div class="card-title">2.2 为什么选 Tailwind？</div>
+    <div class="card-sub">
+      <strong>1. 原子化类名降低幻觉</strong> — 写 <code>flex items-center</code> 比手写 <code>display: flex; align-items: center;</code> 更不容易出错。<br><br>
+      <strong>2. 固定词表</strong> — Tailwind 的类名是有限集合，模型不需要"发明"CSS 属性值。<br><br>
+      <strong>3. 禁用 Arbitrary Values 的意义</strong> — 强制使用预设设计系统，避免生成奇怪的尺寸/颜色。
+    </div>
+    <div class="code-block">❌ 无约束时模型可能写：
+&lt;div style="margin-left: 17.3px; background: #A7C8E9; font-size: 0.92rem"&gt;
+（随机值，没有一致性）
+
+✅ Tailwind + 禁止任意值：
+&lt;div class="ml-4 bg-blue-100 text-sm"&gt;
+（设计系统内的固定值，视觉一致）</div>
+  </div>
+
+  <div class="card orange">
+    <div class="card-title">2.3 内置组件生态</div>
+    <div class="card-sub">
+      shadcn/ui 提供统一卡片、提示框、按钮等组件；Lucide 提供统一线条图标风格。模型只需要 import 这些组件，不再从零"发明"UI。
+    </div>
+    <div class="code-block">import { Card, CardHeader, CardContent } from '@/components/ui/card'
+import { Camera, User } from 'lucide-react'
+
+const ProfileCard = () => (
+  &lt;Card&gt;
+    &lt;CardHeader&gt;User Profile&lt;/CardHeader&gt;
+    &lt;CardContent&gt;&lt;User /&gt; John Doe&lt;/CardContent&gt;
+  &lt;/Card&gt;
+)</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">2.4 代码结构约束</div>
+    <div class="card-sub">
+      · <strong>单文件</strong> — HTML/JS/CSS 必须在一个文件内<br>
+      · <strong>禁止占位符</strong> — 不能写 "// rest of the code remains the same"<br>
+      · <strong>默认导出</strong> — 统一组件导出规范<br>
+      · <strong>无 required props</strong> — 所有组件拿来即用
+    </div>
+  </div>
+</div>
+
+<div id="tab-trigger" class="section">
+  <div class="info-row">
+    <div class="info-item"><div class="num">&gt;15行</div><div class="lbl">内容量阈值</div></div>
+    <div class="info-item"><div class="num">&lt;antThinking&gt;</div><div class="lbl">预评估机制</div></div>
+    <div class="info-item"><div class="num">倾向不</div><div class="lbl">默认保守策略</div></div>
+    <div class="info-item"><div class="num">正反规则</div><div class="lbl">显式判定标准</div></div>
+  </div>
+
+  <div class="card highlight">
+    <div class="card-title">三、如何判定用户 query 需要生成 artifact</div>
+    <div class="card-sub">双层评估机制：显式规则 + 隐式 chain-of-thought。</div>
+  </div>
+
+  <div class="card blue">
+    <div class="card-title">3.1 显式规则：应该 / 不应该</div>
+    <div class="schema-box">
+      <h4>✅ 应该创建</h4>
+      <ul>
+        <li><span class="key">内容量</span><span class="val">&gt;15 行，足够 substantial</span></li>
+        <li><span class="key">可迭代</span><span class="val">用户可能会修改或迭代</span></li>
+        <li><span class="key">自包含</span><span class="val">脱离对话也能独立理解</span></li>
+        <li><span class="key">外部可用</span><span class="val">可用于对话之外的场景</span></li>
+        <li><span class="key">可引用</span><span class="val">会被多次引用</span></li>
+      </ul>
+    </div>
+    <div class="schema-box">
+      <h4>❌ 不应该创建</h4>
+      <ul>
+        <li><span class="key">简短</span><span class="val">简单信息、短代码片段</span></li>
+        <li><span class="key">解释性</span><span class="val">主要为了阐明概念</span></li>
+        <li><span class="key">评论</span><span class="val">对已有 artifact 的反馈</span></li>
+        <li><span class="key">依赖上下文</span><span class="val">脱离对话就无意义</span></li>
+        <li><span class="key">一次性</span><span class="val">用户不可能修改</span></li>
+        <li><span class="key">一句话</span><span class="val">看起来是一次性询问</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card orange">
+    <div class="card-title">3.2 &lt;antThinking&gt; 隐式预评估</div>
+    <div class="card-sub">
+      最巧妙的设计——系统提示词要求 Claude 在生成 artifact 前，在 &lt;antThinking&gt; 标签中思考一句话：<br>
+      <em>"当前内容是否符合标准？如果不用 artifact 是否也能很好呈现？"</em><br><br>
+      这个标签在服务端被剥离，用户永远看不到。但它的存在起到了 chain-of-thought 效果，让模型自检。
+    </div>
+    <div class="code-block">实际例子（来自逆向工程）：
+&lt;antThinking&gt;Drawing a simple blue circle in SVG is a good candidate for
+an artifact. It's a standalone visual element that can be reused.&lt;/antThinking&gt;
+
+另一个例子（判定不创建）：
+&lt;antThinking&gt;The user asked about Python list methods. Putting this
+in an artifact would make it harder to scan and ask follow-ups.&lt;/antThinking&gt;</div>
+  </div>
+
+  <div class="card red">
+    <div class="card-title">3.3 设计哲学：倾向于不创建</div>
+    <div class="card-sub">
+      <strong>"If unsure whether the content qualifies as an artifact... err on the side of NOT creating an artifact."</strong><br><br>
+      <strong>"Prefer in-line content (don't use artifacts) when possible. Unnecessary use of artifacts can be jarring for users."</strong><br><br>
+      这是一个精心设计的保守策略——artifact 打断对话流，滥用会破坏用户体验。
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">3.4 实际触发场景</div>
+    <table>
+      <tr><th>用户 Query</th><th>触发?</th><th>类型</th></tr>
+      <tr><td>"写一个 Python 脚本计算阶乘"</td><td><span class="tag tag-green">✅ 触发</span></td><td>code</td></tr>
+      <tr><td>"画一个蓝色圆圈的 SVG"</td><td><span class="tag tag-green">✅ 触发</span></td><td>SVG</td></tr>
+      <tr><td>"做个 React 仪表盘"</td><td><span class="tag tag-green">✅ 触发</span></td><td>React</td></tr>
+      <tr><td>"Python 列表有哪些方法？"</td><td><span class="tag tag-red">❌ 不触发</span></td><td>解释性内容</td></tr>
+      <tr><td>"快速正则例子"</td><td><span class="tag tag-red">❌ 不触发</span></td><td>短而一次性</td></tr>
+      <tr><td>"帮我做一个流程图"</td><td><span class="tag tag-green">✅ 触发</span></td><td>Mermaid</td></tr>
+      <tr><td>"改一下刚才那个"</td><td><span class="tag tag-green">✅ 更新</span></td><td>复用 identifier</td></tr>
+      <tr><td>"这个代码有什么问题？"</td><td><span class="tag tag-orange">⚠️ 通常不</span></td><td>评论/反馈</td></tr>
+    </table>
+  </div>
+</div>
+
+<div id="tab-apply" class="section">
+  <div class="card highlight">
+    <div class="card-title">四、对我们的启示与可借鉴之处</div>
+    <div class="card-sub">Claude Artifacts 不是黑盒，而是一个可分析的<strong>系统设计</strong>。我们可以从中借鉴多层模式。</div>
+  </div>
+
+  <div class="card blue">
+    <div class="card-title">4.1 协议设计：文本流中嵌入富媒体</div>
+    <div class="card-sub">
+      Claude 用 XML 标签在文本流中标记结构化内容，不改变底层 API。这实际上是一种<strong>流式富媒体协议</strong>。<br><br>
+      <strong>我们在做的类似的事：</strong>每次让你上传 HTML 报告到 GitHub Pages，本质就是"在文本对话中嵌入富媒体"——我给你内容，你给我 URL。这已经是我们版本的 artifact 协议。
+    </div>
+  </div>
+
+  <div class="card green">
+    <div class="card-title">4.2 风格统一：建立自己的 HTML 模板系统</div>
+    <div class="card-sub">
+      我们目前每次写 HTML 报告虽然视觉统一（暗色主题、卡片布局），但还没有正式的模板系统。可以借鉴 Claude 的做法：<br><br>
+      · <strong>固定 CSS 框架</strong> — 已有的设计系统（渐变背景、圆角卡片、暗色主题）可以收敛为一个基础模板<br>
+      · <strong>限定设计 token</strong> — 主色、间距、字体等固定下来，不再每次手写<br>
+      · <strong>组件库（可选）</strong> — shadcn/ui 那样的卡片、表格、标签组件可以做成 CSS 类库
+    </div>
+    <div class="code-block">// 当前我们的模板核心样式：
+-- 渐变色头: gradient(135deg, #0d0d2b, #1a0a3e, #2d1b69)
+-- 卡片: rgba(255,255,255,0.06) 背景
+-- 标签: rgba(81,207,102,0.15) 绿色标签
+-- 代码块: rgba(0,0,0,0.35)
+-- 圆角: 14px/20px/24px
+-- 字体: -apple-system, PingFang SC, sans-serif
+
+// 这些可以固化成一个 base.css 或模板</div>
+  </div>
+
+  <div class="card orange">
+    <div class="card-title">4.3 触发判定：开与关的决策框架</div>
+    <div class="card-sub">
+      我们生成 HTML 报告时也可以采用类似的双层评估：<br><br>
+      <strong>应该生成 HTML 报告：</strong><br>
+      · 需要多 Tab 组织的复杂内容<br>
+      · 含有表格、图表、代码块等结构化信息<br>
+      · 需要比对话更丰富的视觉呈现<br>
+      · 可能被多次查阅或分享<br><br>
+      <strong>不应该生成 HTML 报告：</strong><br>
+      · 短信息（一两段话就能说清楚）<br>
+      · 实时问答（你在等答案的场景）<br>
+      · 简单建议（"买还是卖"这类）<br>
+      · 一次性话题，不会再回看
+    </div>
+    <div class="note">实际上你已经在用这个框架了——恒科分析、Karpathy、Artifacts 这些深度内容都生了 HTML 报告。点到为止的问答都在对话里解决。</div>
+  </div>
+
+  <div class="card blue">
+    <div class="card-title">4.4 版本控制：GitHub Pages 作为 artifact 存储</div>
+    <div class="card-sub">
+      Claude 用 identifier 管理 artifact 版本迭代。我们用的 GitHub Pages + 子目录 本质上也是版本控制——<br><br>
+      · 每个报告是一个独立 URL<br>
+      · 更新时覆盖 index.html 即可<br>
+      · git 历史自动保留所有版本<br><br>
+      <strong>可以进一步优化：</strong>在首页（songyafei.github.io）自动列出所有报告，类似 Claude 的 artifact 侧边栏。
+    </div>
+  </div>
+
+  <div class="card green">
+    <div class="card-title">4.5 最值得直接借鉴的点</div>
+    <table>
+      <tr><th>Claude 的做法</th><th>我们的对应</th><th>优化方向</th></tr>
+      <tr><td>&lt;antArtifact&gt; XML 协议</td><td>对话中告知 URL</td><td>可以固定格式 "@report: url"</td></tr>
+      <tr><td>Tailwind + shadcn/ui</td><td>每次手写 CSS</td><td>建立统一的 CSS 模板</td></tr>
+      <tr><td>&lt;antThinking&gt; 自评估</td><td>无</td><td>生成前快速判断是否需要 HTML</td></tr>
+      <tr><td>identifier 版本控制</td><td>Git 历史</td><td>已经够用</td></tr>
+      <tr><td>MIME 类型体系</td><td>子目录分类</td><td>travel/finance/tech 已实现</td></tr>
+      <tr><td>单文件约束</td><td>单 HTML 文件</td><td>保持一致</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="footnote">数据来源：njpearman 逆向工程的系统提示词 · buildfastwith.ai · 编译整理：虾飞飞 🦐</div>
+</div>
+<script>
+function switchTab(id) {
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>
