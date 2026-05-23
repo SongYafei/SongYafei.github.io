@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Karpathy CLAUDE.md 深度分析 · 如何应用到你的开发流程</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;background:#0a0a14;color:#e0e0e8;padding:16px}
+.container{max-width:860px;margin:0 auto}
+
+.header{
+  background:linear-gradient(135deg,#0d0d2b 0%,#1a0a3e 50%,#2d1b69 100%);
+  border-radius:20px;padding:32px 28px;color:#fff;margin-bottom:20px;
+  position:relative;overflow:hidden
+}
+.header::after{
+  content:'';position:absolute;top:-60%;right:-30%;width:300px;height:300px;
+  background:radial-gradient(circle,rgba(102,126,234,0.12) 0%,transparent 70%);
+  border-radius:50%;pointer-events:none
+}
+.header h1{font-size:24px;font-weight:700;position:relative;line-height:1.3}
+.header .sub{font-size:14px;color:rgba(255,255,255,0.65);margin-top:8px;position:relative}
+.header .meta{font-size:12px;color:rgba(255,255,255,0.35);margin-top:10px;position:relative}
+
+.tab-bar{display:flex;gap:8px;margin-bottom:20px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab-btn{
+  flex-shrink:0;padding:10px 20px;border-radius:24px;
+  border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.5);
+  font-size:14px;font-weight:600;cursor:pointer;transition:all .3s ease
+}
+.tab-btn.active{
+  background:linear-gradient(135deg,#667eea,#764ba2);border-color:transparent;color:#fff;
+  box-shadow:0 4px 20px rgba(102,126,234,0.3)
+}
+
+.section{display:none;animation:fadeUp .4s ease}
+.section.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+.card{
+  background:linear-gradient(135deg,rgba(255,255,255,0.06) 0%,rgba(255,255,255,0.02) 100%);
+  border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:20px;
+  margin-bottom:14px;transition:all .2s
+}
+.card.highlight{
+  border-color:rgba(102,126,234,0.4);
+  background:linear-gradient(135deg,rgba(102,126,234,0.12) 0%,rgba(118,75,162,0.08) 100%)
+}
+.card.green{
+  border-color:rgba(81,207,102,0.3);
+  background:linear-gradient(135deg,rgba(81,207,102,0.08) 0%,rgba(81,207,102,0.03) 100%)
+}
+.card.orange{
+  border-color:rgba(255,160,0,0.3);
+  background:linear-gradient(135deg,rgba(255,160,0,0.08) 0%,rgba(255,160,0,0.03) 100%)
+}
+.card.blue{
+  border-color:rgba(102,126,234,0.3);
+  background:linear-gradient(135deg,rgba(102,126,234,0.08) 0%,rgba(66,165,245,0.03) 100%)
+}
+
+.card-title{font-size:17px;font-weight:700;color:#fff;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.card-sub{font-size:13px;color:rgba(255,255,255,0.45);margin-bottom:6px;line-height:1.5}
+
+.code-block{
+  background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.08);border-radius:10px;
+  padding:16px;font-family:"SF Mono","Fira Code","Consolas",monospace;
+  font-size:13px;line-height:1.7;color:#c9d1d9;overflow-x:auto;margin:10px 0
+}
+.code-block .hl{color:#ffa657}
+.code-block .cm{color:#8b949e}
+.code-block .kw{color:#ff7b72}
+.code-block .s{color:#a5d6ff}
+.code-block .func{color:#d2a8ff}
+
+table{width:100%;border-collapse:collapse;font-size:14px;margin:10px 0}
+th{background:rgba(255,255,255,0.04);text-align:left;padding:10px 12px;font-weight:600;color:rgba(255,255,255,0.5);font-size:13px;border-bottom:1px solid rgba(255,255,255,0.06)}
+td{padding:10px 12px;border-top:1px solid rgba(255,255,255,0.04);color:rgba(255,255,255,0.75)}
+tr:first-child td{border-top:none}
+
+.tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:500}
+.tag-green{background:rgba(81,207,102,0.15);color:#51cf66}
+.tag-red{background:rgba(255,107,107,0.15);color:#ff6b6b}
+.tag-blue{background:rgba(102,126,234,0.15);color:#667eea}
+.tag-orange{background:rgba(255,160,0,0.15);color:#ffa000}
+.tag-purple{background:rgba(210,168,255,0.15);color:#d2a8ff}
+
+.note{
+  font-size:13px;color:rgba(255,255,255,0.5);padding:12px 14px;
+  background:rgba(255,255,255,0.03);border-radius:8px;margin-top:8px;line-height:1.6
+}
+.note strong{color:rgba(255,255,255,0.7)}
+
+.info-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.info-item{
+  flex:1;min-width:120px;
+  background:linear-gradient(135deg,rgba(255,255,255,0.04) 0%,rgba(255,255,255,0.02) 100%);
+  border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:14px;text-align:center
+}
+.info-item .num{font-size:20px;font-weight:700;color:#667eea}
+.info-item .lbl{font-size:12px;color:rgba(255,255,255,0.4);margin-top:4px}
+
+.divider{height:1px;background:rgba(255,255,255,0.06);margin:20px 0}
+
+.tip-box{
+  background:rgba(255,160,0,0.06);border-left:4px solid #ffa000;
+  border-radius:8px;padding:14px;margin:10px 0;font-size:13px;color:rgba(255,160,0,0.8);line-height:1.6
+}
+
+.apply-box{
+  background:rgba(102,126,234,0.06);border-left:4px solid #667eea;
+  border-radius:8px;padding:16px;margin:12px 0;
+}
+.apply-box h4{color:#667eea;font-size:14px;margin-bottom:6px}
+.apply-box p{font-size:13px;color:rgba(255,255,255,0.65);line-height:1.6}
+
+.footnote{text-align:center;padding:20px;color:rgba(255,255,255,0.2);font-size:12px}
+
+@media (max-width:600px){
+  body{padding:12px}
+  .header{padding:20px}
+  .header h1{font-size:20px}
+  .tab-btn{padding:8px 14px;font-size:13px}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>🔧 Karpathy 的 CLAUDE.md</h1>
+  <div class="sub">65 行代码，10 万 + GitHub Stars · 为什么它登顶 GitHub Trending？以及如何应用到你的开发流程</div>
+  <div class="meta">基于 Forrest Chang 的 andrej-karpathy-skills 仓库 · 原始数据来自 Karpathy 2026年1月的推文</div>
+</div>
+
+<div class="tab-bar">
+  <div class="tab-btn active" onclick="switchTab('tab-overview')">📋 事件全貌</div>
+  <div class="tab-btn" onclick="switchTab('tab-principles')">📐 四大原则</div>
+  <div class="tab-btn" onclick="switchTab('tab-original')">📄 完整原文</div>
+  <div class="tab-btn" onclick="switchTab('tab-apply')">⚡ 你的开发流程</div>
+</div>
+
+<div id="tab-overview" class="section active">
+  <div class="info-row">
+    <div class="info-item"><div class="num">109k+</div><div class="lbl">GitHub Stars</div></div>
+    <div class="info-item"><div class="num">65</div><div class="lbl">行代码</div></div>
+    <div class="info-item"><div class="num">4</div><div class="lbl">核心原则</div></div>
+    <div class="info-item"><div class="num">#1</div><div class="lbl">GitHub Trending</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📖 这是什么？</div>
+    <div class="card-sub">
+      <strong>CLAUDE.md</strong> 是放在项目根目录的一个 Markdown 文件。启动 Claude Code 时，AI 会自动读取它作为上下文指令。<br><br>
+      Karpathy（OpenAI 联合创始人、前 Tesla AI 负责人、"vibe coding" 提出者）在 2026年1月26日 发了一条推文，分享了数周密集使用 Claude Code 后观察到的 LLM 编码痛点。<br><br>
+      开发者 <strong>Forrest Chang</strong> 用 Claude Code 把 Karpathy 的观察提炼成了一份 CLAUDE.md，又让 AI 自我审查精简到约 65 行。<strong>结果：GitHub 有史以来增长最快的仓库之一。</strong>
+    </div>
+  </div>
+
+  <div class="card green">
+    <div class="card-title">🔥 为什么能火？</div>
+    <div class="card-sub">
+      <strong>时机完美：</strong>Karpathy 说 "LLM agent capabilities crossed a threshold of coherence around December 2025"——数以百万计的开发者突然开始用 AI 编码助手，并遇到了 Karpathy 描述的完全一样的痛点。<br><br>
+      <strong>Karpathy 的信用背书：</strong>他不是随便抱怨的开发者，他是构建了 AI 基础的人之一。<br><br>
+      <strong>不是新发现，是共识的共鸣：</strong>四大原则不是新颖的理论，而是所有深度使用过 AI 编码的人都切身体会过的痛点。文件走红是因为"被说中了"，而不是"被教会了"。
+    </div>
+  </div>
+
+  <div class="card orange">
+    <div class="card-title">🔍 Karpathy 观察到的三大失败模式</div>
+    <table>
+      <tr><th style="width:100px">模式</th><th>描述</th><th>典型例子</th></tr>
+      <tr><td><span class="tag tag-red">1. 沉默假设</span></td><td>AI 替你做了错误的假设，然后默默跑下去了——不澄清、不质疑、不展示取舍</td><td>你说了"A"，AI 以为你要"B"，直接写了 500 行实现</td></tr>
+      <tr><td><span class="tag tag-orange">2. 过度工程</span></td><td>AI 喜欢把代码搞得很复杂，过度抽象，100 行能解决的问题写 1000 行</td><td>对两个字段做"企业级"抽象工厂模式</td></tr>
+      <tr><td><span class="tag tag-red">3. 附带损害</span></td><td>改代码时碰了不该碰的地方，删了注释、改了格式、动了无关代码</td><td>让你加个按钮，它把你的整个 CSS 重构了一遍</td></tr>
+    </table>
+  </div>
+</div>
+
+<div id="tab-principles" class="section">
+  <div class="card highlight">
+    <div class="card-title">📐 四大核心原则</div>
+    <div class="card-sub">Forrest Chang 让 AI 把 Karpathy 的观察提炼成 actionable 的指令，又让 AI 自审精简到 65 行。</div>
+  </div>
+
+  <div class="card blue">
+    <div class="card-title">1️⃣ Think Before Coding — 先想再写</div>
+    <div class="card-sub">
+      <strong>核心：</strong>写代码前必须显式陈述假设，如果有多种解读，全部列出来；不清楚就停下来问。<br><br>
+      <strong>解决了：</strong>沉默假设问题。<br><br>
+      <strong>好例子 vs 坏例子：</strong>
+    </div>
+    <div class="code-block">
+      <span class="cm">❌ AI 默默地选了一个方案</span><br>
+      <span>"Adding email validation..."</span><br>
+      → <span class="s">手写了一个简单的正则匹配</span><br><br>
+      <span class="cm">✅ AI 先展示取舍</span><br>
+      "I see two approaches:<br>
+      <span class="hl">Option A:</span> simple regex for basic validation<br>
+      <span class="hl">Option B:</span> RFC 5322 compliance with DNS checking<br>
+      Which fits your needs?"
+    </div>
+  </div>
+
+  <div class="card green">
+    <div class="card-title">2️⃣ Simplicity First — 简单优先</div>
+    <div class="card-sub">
+      <strong>核心：</strong>写最少的代码解决当前问题。没有要求的特性不要做，没有要求的抽象不要加，没有要求的灵活性不要留。<br><br>
+      <strong>自检标准：</strong>如果 200 行能写成 50 行，重写。问自己"资深工程师会说这过度复杂吗？"<br><br>
+      <strong>解决了：</strong>过度工程问题。
+    </div>
+    <div class="code-block">
+      <span class="cm">❌ AI 的过度抽象</span><br>
+      <span class="kw">class</span> <span class="func">ValidationStrategyFactory</span> {<br>
+      &nbsp;&nbsp;<span class="cm">// 200 行的抽象工厂，只为了验证 2 个字段</span><br>
+      }<br><br>
+      <span class="cm">✅ 简单直接</span><br>
+      <span class="kw">function</span> <span class="func">validateEmail</span>(email: string): boolean {<br>
+      &nbsp;&nbsp;<span class="cm">// 20 行，看得懂，改得了</span><br>
+      }
+    </div>
+  </div>
+
+  <div class="card orange">
+    <div class="card-title">3️⃣ Surgical Changes — 手术刀式修改</div>
+    <div class="card-sub">
+      <strong>核心：</strong>只动必须动的代码。不要"顺手改进"旁边的代码、注释或格式。不要重构没坏的东西。匹配现有风格（即使你会用另一种写法）。<br><br>
+      <strong>关键区分：</strong>你的改动造成了无用的 import/变量 → 删除（你的锅）。已有的死代码 → 只提一句，不删（除非被要求）。<br><br>
+      <strong>检验标准：</strong>每一处改动都应能直接追溯到你的需求。<br><br>
+      <strong>解决了：</strong>附带损害问题。
+    </div>
+    <div class="code-block">
+      <span class="cm">❌ AI "顺手"改了一堆</span><br>
+      <span class="hl">+</span> <span class="s">// 你要的功能（1 行）</span><br>
+      <span class="hl">+</span> <span class="s">// 重命名了 3 个变量</span><br>
+      <span class="hl">+</span> <span class="s">// 改成了箭头函数</span><br>
+      <span class="hl">+</span> <span class="s">// 删了 2 行注释（删除无误但也没人要求）</span><br><br>
+      <span class="cm">✅ 手术刀式</span><br>
+      <span class="hl">+</span> <span class="s">// 你要的功能（1 行）</span><br>
+      <span class="cm">// 别的什么都没碰</span>
+    </div>
+  </div>
+
+  <div class="card blue">
+    <div class="card-title">4️⃣ Goal-Driven Execution — 目标驱动执行</div>
+    <div class="card-sub">
+      <strong>核心：</strong>这是 Karpathy 最关键的洞见——"LLMs are exceptionally good at looping until they meet specific goals."<br><br>
+      <strong>不要告诉 AI 怎么做，给它成功标准，让它自己去迭代。</strong><br><br>
+      <strong>转化方式：</strong>
+    </div>
+    <div class="code-block">
+      <span class="cm">❌ 指令式（弱标准）</span><br>
+      "Add validation"<br>
+      "Fix the bug"<br>
+      "Make it work"<br><br>
+      <span class="cm">✅ 声明式目标（强标准）</span><br>
+      "Write tests for invalid inputs, then make them pass"<br>
+      "Write a test that reproduces the bug, then make it pass"<br>
+      "Ensure tests pass before and after refactoring"<br><br>
+      <span class="cm">多步骤任务规划：</span><br>
+      1. [Step] → verify: [check]<br>
+      2. [Step] → verify: [check]
+    </div>
+    <div class="note">
+      <strong>为什么有效：</strong>强成功标准让 AI 可以自主循环迭代。弱标准（"搞好"）需要不断追问，既浪费时间又容易跑偏。
+    </div>
+  </div>
+</div>
+
+<div id="tab-original" class="section">
+  <div class="card highlight">
+    <div class="card-title">📄 原始 CLAUDE.md 全文（65 行）</div>
+    <div class="card-sub">来自 <a href="https://github.com/forrestchang/andrej-karpathy-skills" style="color:#667eea" target="_blank">github.com/forrestchang/andrej-karpathy-skills</a></div>
+  </div>
+
+  <div class="code-block">
+<span class="cm"># CLAUDE.md</span><br><br>
+Behavioral guidelines to reduce common LLM coding mistakes.<br>
+<span class="kw">**Tradeoff:**</span> These guidelines bias toward caution over speed.<br>
+For trivial tasks, use judgment.<br><br>
+<span class="kw">## 1. Think Before Coding</span><br><br>
+<span class="kw">**Don't assume. Don't hide confusion. Surface tradeoffs.**</span><br><br>
+Before implementing:<br>
+- State your assumptions explicitly. If uncertain, ask.<br>
+- If multiple interpretations exist, present them - don't pick silently.<br>
+- If a simpler approach exists, say so. Push back when warranted.<br>
+- If something is unclear, stop. Name what's confusing. Ask.<br><br>
+<span class="kw">## 2. Simplicity First</span><br><br>
+<span class="kw">**Minimum code that solves the problem. Nothing speculative.**</span><br><br>
+- No features beyond what was asked.<br>
+- No abstractions for single-use code.<br>
+- No "flexibility" or "configurability" that wasn't requested.<br>
+- No error handling for impossible scenarios.<br>
+- If you write 200 lines and it could be 50, rewrite it.<br><br>
+Ask yourself: "Would a senior engineer say this is overcomplicated?" If yes, simplify.<br><br>
+<span class="kw">## 3. Surgical Changes</span><br><br>
+<span class="kw">**Touch only what you must. Clean up only your own mess.**</span><br><br>
+When editing existing code:<br>
+- Don't "improve" adjacent code, comments, or formatting.<br>
+- Don't refactor things that aren't broken.<br>
+- Match existing style, even if you'd do it differently.<br>
+- If you notice unrelated dead code, mention it - don't delete it.<br><br>
+When your changes create orphans:<br>
+- Remove imports/variables/functions that YOUR changes made unused.<br>
+- Don't remove pre-existing dead code unless asked.<br><br>
+The test: Every changed line should trace directly to the user's request.<br><br>
+<span class="kw">## 4. Goal-Driven Execution</span><br><br>
+<span class="kw">**Define success criteria. Loop until verified.**</span><br><br>
+Transform tasks into verifiable goals:<br>
+- "Add validation" → "Write tests for invalid inputs, then make them pass"<br>
+- "Fix the bug" → "Write a test that reproduces it, then make it pass"<br>
+- "Refactor X" → "Ensure tests pass before and after"<br><br>
+For multi-step tasks, state a brief plan:<br>
+1. [Step] → verify: [check]<br>
+2. [Step] → verify: [check]<br>
+3. [Step] → verify: [check]<br><br>
+Strong success criteria let you loop independently.<br>
+Weak criteria ("make it work") require constant clarification.<br><br>
+---<br><br>
+These guidelines are working if:<br>
+fewer unnecessary changes in diffs,<br>
+fewer rewrites due to overcomplication,<br>
+and clarifying questions come before implementation rather than after mistakes.
+  </div>
+</div>
+
+<div id="tab-apply" class="section">
+  <div class="card highlight">
+    <div class="card-title">⚡ 如何应用到你的开发流程</div>
+    <div class="card-sub">你是 OpenClaw 用户 + AI Agent 重度使用者。Karpathy 的四大原则可以直接迁移到你和 AI 的协作中。</div>
+  </div>
+
+  <div class="apply-box">
+    <h4>📌 原则 1：Think Before Coding → 让 AI 先说话再动手</h4>
+    <p>
+      给 AI 下达任务时，加一句 <strong>"先说说你的理解和方案，确认后再说"</strong>。<br><br>
+      <strong>你的场景：</strong>让 OpenClaw 执行复杂操作（部署、改配置、写脚本）前，让 AI 先列计划和假设，避免直接动手后偏离预期。<br><br>
+      ✅ "帮我分析这个 issue，先说你的理解和修复方案"<br>
+      ✅ "列出你认为可能出坑的地方"
+    </p>
+  </div>
+
+  <div class="apply-box">
+    <h4>📌 原则 2：Simplicity First → 明确要求"别过度设计"</h4>
+    <p>
+      对 AI 输出的期望要明确：<strong>"最简单的方案，最小代码量"</strong>。<br><br>
+      <strong>你的场景：</strong>生成脚本/配置时，AI 喜欢加额外的参数、冗余的 fallback、不必要的抽象。<br><br>
+      ✅ "用最直接的方式写，不要抽象，不要考虑未来的扩展"<br>
+      ✅ "这个脚本只做一个事，别加额外功能"
+    </p>
+  </div>
+
+  <div class="apply-box">
+    <h4>📌 原则 3：Surgical Changes → 改哪动哪</h4>
+    <p>
+      修改现有代码/配置时：<strong>"只改我指定的地方，不要改动其他任何内容"</strong>。<br><br>
+      <strong>你的场景：</strong>修改 gateway.json、openclaw.json、Python 脚本等配置文件时，AI 经常会顺手格式化 or 调整不相关的地方，造成不必要的 diff。<br><br>
+      ✅ "只添加这个字段，别动已有配置的任何格式"<br>
+      ✅ "不要重新格式化文件，保持原样"
+    </p>
+  </div>
+
+  <div class="apply-box">
+    <h4>📌 原则 4：Goal-Driven → 给验证标准，而不是操作步骤</h4>
+    <p>
+      <strong>这是最关键的迁移。</strong><br><br>
+      ❌ "帮我配置一下 Nginx"（AI 可能过度配置了一堆你不需要的东西）<br>
+      ✅ "Nginx 转发 /api 到 localhost:3000，验证：curl localhost:8080/api/health 返回 200"<br><br>
+      <strong>你在 OpenClaw 中的最佳实践：</strong><br>
+      ✅ "执行这个命令，验证：xxx 日志中出现 yyy 字样"<br>
+      ✅ "修改 config，验证：执行 curl 检查确认生效"
+    </p>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="card green">
+    <div class="card-title">🛠️ 实操：给你自己的项目加 CLAUDE.md</div>
+    <div class="card-sub">
+      在你的项目根目录创建一个 <code>CLAUDE.md</code> 或 <code>AGENTS.md</code>（OpenClaw 已支持），写入项目特定的规则：
+    </div>
+    <div class="code-block">
+<span class="cm"># PROJECT GUIDELINES</span><br><br>
+<span class="kw">## 编码规范</span><br>
+- 优先 Python 3.11+，不要用兼容 2.x 的写法<br>
+- 错误处理：使用 try/except，不要用 if-return 模式<br>
+- 日志使用 logging 模块，不要 print<br><br>
+<span class="kw">## 配置修改规范</span><br>
+- 修改 openclaw.json 请使用 config patch 命令<br>
+- 不要直接编辑 config 文件格式，以免破坏 JSON5 注释<br><br>
+<span class="kw">## Karpathy 规则</span><br>
+1. Think Before Coding — 动手前列出假设和方案<br>
+2. Simplicity First — 最小代码量<br>
+3. Surgical Changes — 只改指定范围<br>
+4. Goal-Driven — 给出验证标准
+    </div>
+    <div class="note">
+      💡 OpenClaw 已经在读取项目根目录的 AGENTS.md 作为工作空间指令。<br>
+      你可以把 Karpathy 的四大原则加进去。
+    </div>
+  </div>
+
+  <div class="card blue">
+    <div class="card-title">🎯 对你的具体收益</div>
+    <table>
+      <tr><th>当前痛点</th><th>Karpathy 原则</th><th>改进效果</th></tr>
+      <tr><td>AI 改配置时动了不该动的格式</td><td>原则 3：Surgical Changes</td><td>减少无意义的 diff</td></tr>
+      <tr><td>AI 写的脚本过于复杂</td><td>原则 2：Simplicity First</td><td>代码短一半，更容易维护</td></tr>
+      <tr><td>任务描述不够精确导致返工</td><td>原则 1：Think Before Coding</td><td>先对齐理解再动手</td></tr>
+      <tr><td>执行后要反复确认效果</td><td>原则 4：Goal-Driven</td><td>带着验证标准做事</td></tr>
+      <tr><td>cron 任务执行结果不明确</td><td>原则 4 + 验证步骤</td><td>自动检查+报告</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📊 数据说话</div>
+    <div class="card-sub">
+      Karpathy 本人说：<br><br>
+      2025年11月 → <strong>80% 手动编码，20% agent</strong><br>
+      2025年12月 → <strong>20% 手动编码，80% agent</strong><br><br>
+      用了这四条规则后："fewer unnecessary changes in diffs, fewer rewrites due to overcomplication, clarifying questions come before implementation rather than after mistakes."
+    </div>
+  </div>
+
+</div>
+
+<div class="footnote">
+  数据来源：Karpathy 2026-01-26 X 推文 · Forrest Chang/andrej-karpathy-skills · mirafLow.ai · ShiftMag · 编译整理：虾飞飞 🦐
+</div>
+
+</div>
+
+<script>
+function switchTab(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>
