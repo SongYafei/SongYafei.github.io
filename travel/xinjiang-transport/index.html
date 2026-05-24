@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>深圳↔乌鲁木齐 · 交通方案（2026-05-24更新）</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;background:#f5f7fa;color:#1a1a2e;padding:16px}
+.container{max-width:860px;margin:0 auto}
+.header{background:linear-gradient(135deg,#1a1a4e 0%,#2d1b69 50%,#764ba2 100%);border-radius:20px;padding:32px 28px;color:#fff;margin-bottom:20px;position:relative;overflow:hidden}
+.header::after{content:'';position:absolute;top:-60%;right:-30%;width:300px;height:300px;background:radial-gradient(circle,rgba(102,126,234,0.15) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+.header h1{font-size:24px;font-weight:700;position:relative}
+.header p{font-size:14px;color:rgba(255,255,255,0.75);margin-top:8px;position:relative}
+.header .meta{font-size:12px;color:rgba(255,255,255,0.4);margin-top:10px;position:relative}
+.tab-bar{display:flex;gap:8px;margin-bottom:20px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab-btn{flex-shrink:0;padding:10px 20px;border-radius:24px;border:1px solid #dde0e8;background:#fff;color:#666;font-size:14px;font-weight:600;cursor:pointer;transition:all .3s ease}
+.tab-btn.active{background:linear-gradient(135deg,#667eea,#764ba2);border-color:transparent;color:#fff;box-shadow:0 4px 20px rgba(102,126,234,0.3)}
+.section{display:none;animation:fadeUp .4s ease}
+.section.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.section-title-d{font-size:17px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;color:#1a1a2e}
+.update-tag{background:#ff6b6b;color:#fff;padding:2px 12px;border-radius:20px;font-size:11px;font-weight:600;margin-left:8px}
+.card{background:#fff;border:1px solid #e8ecf1;border-radius:14px;padding:20px;margin-bottom:14px;transition:all .2s}
+.card:hover{border-color:#667eea;box-shadow:0 4px 20px rgba(102,126,234,0.08)}
+.card.highlight{border-color:#667eea;background:linear-gradient(135deg,#f8f9ff 0%,#f0f2ff 100%)}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.card-title{font-size:16px;font-weight:700;color:#1a1a2e}
+.card-title .badge{display:inline-block;font-size:11px;padding:2px 10px;border-radius:20px;font-weight:600;margin-left:6px;vertical-align:middle}
+.badge-green{background:#e8f5e9;color:#2e7d32}
+.badge-blue{background:#e3f2fd;color:#1565c0}
+.badge-orange{background:#fff3e0;color:#e65100}
+.badge-red{background:#ffebee;color:#c62828}
+.card-price{font-size:22px;font-weight:700;color:#e53935;white-space:nowrap}
+.card-price .per{font-size:12px;font-weight:400;color:#999}
+.card-total{font-size:13px;color:#999;margin-top:2px;text-align:right}
+.route{display:flex;align-items:center;gap:8px;font-size:14px;margin:6px 0;flex-wrap:wrap}
+.route .icon{font-size:16px}
+.route .label{background:#f0f2f5;padding:2px 10px;border-radius:4px;font-size:12px;color:#666}
+.route .arrow{color:#bbb}
+.tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:500}
+.tag-best{background:#e8f5e9;color:#2e7d32}
+.tag-cheap{background:#fff3e0;color:#e65100}
+.tag-blue{background:#e3f2fd;color:#1565c0}
+.tag-red{background:#ffebee;color:#c62828}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{background:#f8f9fa;text-align:left;padding:10px 12px;font-weight:600;color:#666;font-size:13px}
+td{padding:10px 12px;border-top:1px solid #eef1f5}
+.table-price{font-weight:600;color:#e53935;white-space:nowrap}
+.summary-box{background:#f8f9ff;border-left:4px solid #667eea;border-radius:10px;padding:18px;margin-top:16px}
+.summary-box h3{font-size:15px;margin-bottom:10px}
+.summary-box ul{list-style:none;padding:0}
+.summary-box li{padding:5px 0;font-size:14px;display:flex;align-items:baseline;gap:8px;color:#444}
+.summary-box li::before{content:"✓";color:#667eea;font-weight:700}
+.note{font-size:13px;color:#888;padding:10px 14px;background:#fafafa;border-radius:8px;margin-top:8px;line-height:1.5}
+.note strong{color:#555}
+.btn-link{display:inline-block;margin-top:10px;padding:8px 20px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border-radius:8px;text-decoration:none;font-size:13px;font-weight:600;transition:all .2s}
+.btn-link:hover{opacity:0.9}
+.recommend-stamp{display:inline-block;background:linear-gradient(135deg,#ff6b6b,#ee5a24);color:#fff;padding:3px 14px;border-radius:20px;font-size:12px;font-weight:600;margin-left:8px;vertical-align:middle}
+.info-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.info-item{flex:1;min-width:120px;background:#f8f9ff;border-radius:10px;padding:14px;text-align:center;border:1px solid #e8ecf1}
+.info-item .num{font-size:22px;font-weight:700;color:#667eea}
+.info-item .lbl{font-size:12px;color:#888;margin-top:4px}
+.warn-box{background:#fff3e0;border-left:4px solid #ff6b6b;border-radius:8px;padding:14px;margin:10px 0;font-size:13px;color:#6d5300;line-height:1.6}
+.old-price{text-decoration:line-through;color:#bbb;font-size:12px;font-weight:400}
+.price-up{color:#e53935;font-size:11px}
+@media (max-width:600px){body{padding:12px}.header{padding:20px}.header h1{font-size:20px}.card-top{flex-direction:column;gap:6px}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>✈️ 深圳↔乌鲁木齐 · 交通方案
+    <span style="background:rgba(255,255,255,0.15);font-size:12px;padding:3px 12px;border-radius:20px;font-weight:500;vertical-align:middle">2026-05-24 更新</span>
+  </h1>
+  <p>一家三口 · 去程6月13日（周六）· 返程6月21日（周日）· 含6岁儿童</p>
+  <div class="meta">数据来源：飞猪实时查询 · 最近更新：2026-05-24</div>
+</div>
+
+<div class="info-row">
+  <div class="info-item"><div class="num">6月13日</div><div class="lbl">去程·周六</div></div>
+  <div class="info-item"><div class="num">6月21日</div><div class="lbl">返程·周日</div></div>
+  <div class="info-item"><div class="num">9天</div><div class="lbl">行程</div></div>
+  <div class="info-item"><div class="num">3人</div><div class="lbl">一家三口</div></div>
+</div>
+
+<div class="warn-box">
+  <strong>⚠️ 上次查询（5月19日）到今天（5月24日），机票价格已大幅上涨。</strong><br>
+  之前推荐的重庆中转方案（¥1,690/人）已不可用。当前最低直达为 ¥3,110（经停郑州）。
+</div>
+
+<div class="section-title-d">✈️ 去程 · 深圳→乌鲁木齐 <span class="tag tag-blue">6月13日（周六）</span><span class="update-tag">已更新</span></div>
+
+<div class="card highlight">
+  <div class="card-top">
+    <div>
+      <div class="card-title">金鹏航空 经停郑州 <span class="recommend-stamp">🏆 最便宜直达</span></div>
+      <div class="route"><span class="icon">🛩</span> 深圳 07:40 <span class="arrow">→</span> <span class="label">金鹏航空 Y87569</span> <span class="arrow">→</span> 郑州 10:15（经停1.5h）<span class="arrow">→</span> 乌鲁木齐 <strong>16:15</strong></div>
+    </div>
+    <div style="text-align:right">
+      <div class="card-price">¥3,110 <span class="per">/人</span></div>
+      <div class="card-total">3人 ≈ ¥9,330</div>
+      <div class="card-total" style="color:#e53935;font-size:11px">⬆ 上次 ¥2,010 起</div>
+    </div>
+  </div>
+  <div class="note">🕐 总耗时 8h35min（含郑州经停约1.5h）· 周六早班机出发，下午4:15到乌市</div>
+  <a class="btn-link" href="https://a.feizhu.com/0hRR0H" target="_blank">飞猪查看 →</a>
+</div>
+
+<div class="card">
+  <div class="card-top">
+    <div>
+      <div class="card-title">海南航空 直飞 <span class="badge badge-green">最快</span></div>
+      <div class="route"><span class="icon">🛩</span> 深圳 06:50 <span class="arrow">→</span> <span class="label">海南航空 HU7851</span> <span class="arrow">→</span> 乌鲁木齐 <strong>12:30</strong></div>
+    </div>
+    <div style="text-align:right">
+      <div class="card-price">¥3,460 <span class="per">/人</span></div>
+      <div class="card-total">3人 ≈ ¥10,380</div>
+    </div>
+  </div>
+  <div class="note">✅ 5h40min直达，中午就到乌市，下午还能逛 · ⚠️ 06:50起飞需早起</div>
+  <a class="btn-link" href="https://a.feizhu.com/1SdVBs" target="_blank">飞猪查看 →</a>
+</div>
+
+<div class="card">
+  <div class="card-top">
+    <div>
+      <div class="card-title">南航/深航 直达 <span class="badge badge-orange">正常时间</span></div>
+      <div class="route"><span class="icon">🛩</span> 深圳 09:10~10:45 <span class="arrow">→</span> <span class="label">南航/深航</span> <span class="arrow">→</span> 乌鲁木齐 <strong>14:40~16:30</strong></div>
+    </div>
+    <div style="text-align:right">
+      <div class="card-price">¥3,800 <span class="per">/人</span></div>
+      <div class="card-total">3人 ≈ ¥11,400</div>
+    </div>
+  </div>
+  <div class="note">✅ 不用凌晨赶机，上午出发下午到 · 南航CZ5795（09:10→14:40）· 深航ZH9241（10:45→16:30）</div>
+</div>
+
+<div class="section-title-d" style="margin-top:20px;">🛩️ 返程 · 乌鲁木齐→深圳 <span class="tag tag-blue">6月21日（周日）</span><span class="update-tag">已更新</span></div>
+
+<div class="card highlight">
+  <div class="card-top">
+    <div>
+      <div class="card-title">海南航空 直飞 <span class="recommend-stamp">🏆 最推荐</span></div>
+      <div class="route"><span class="icon">🛩</span> 乌鲁木齐 18:55 <span class="arrow">→</span> <span class="label">海南航空 HU7852</span> <span class="arrow">→</span> 深圳 <strong>00:05</strong></div>
+    </div>
+    <div style="text-align:right">
+      <div class="card-price">¥3,460 <span class="per">/人</span></div>
+      <div class="card-total">3人 ≈ ¥10,380</div>
+    </div>
+  </div>
+  <div class="note">✅ 返程中最便宜的直达 · 白天还能在乌市玩到傍晚 · 凌晨到家 · ⬆上次¥3,000</div>
+  <a class="btn-link" href="https://a.feizhu.com/3hrF6b" target="_blank">飞猪查看 →</a>
+</div>
+
+<div class="card">
+  <div class="card-top">
+    <div>
+      <div class="card-title">南航 下午直达</div>
+      <div class="route"><span class="icon">🛩</span> 乌鲁木齐 11:00 <span class="arrow">→</span> <span class="label">南航 CZ6889</span> <span class="arrow">→</span> 深圳 <strong>16:10</strong></div>
+    </div>
+    <div style="text-align:right">
+      <div class="card-price">¥3,800 <span class="per">/人</span></div>
+      <div class="card-total">3人 ≈ ¥11,400</div>
+    </div>
+  </div>
+  <div class="note">✅ 下午4点到家，晚上还能休息整理 · 比海航贵¥340/人</div>
+</div>
+
+<div class="section-title-d" style="margin-top:20px;">📊 往返组合对比 <span class="update-tag">已更新</span></div>
+<table>
+  <tr><th>组合</th><th>去程</th><th>返程</th><th>3人总价</th></tr>
+  <tr style="background:#f8f9ff;">
+    <td><strong>🏆 最佳组合</strong><br><span class="tag tag-best">金鹏经停</span> <span class="tag tag-best">海航直达</span></td>
+    <td class="table-price">¥3,110/人</td>
+    <td class="table-price">¥3,460/人</td>
+    <td class="table-price"><strong>≈¥19,710</strong></td>
+  </tr>
+  <tr>
+    <td><strong>最短时间</strong><br><span class="tag tag-blue">海航直达</span> <span class="tag tag-blue">海航直达</span></td>
+    <td class="table-price">¥3,460/人</td>
+    <td class="table-price">¥3,460/人</td>
+    <td class="table-price"><strong>≈¥20,760</strong></td>
+  </tr>
+  <tr>
+    <td><strong>最舒适</strong><br><span class="tag tag-orange">南航上午</span> <span class="tag tag-blue">海航傍晚</span></td>
+    <td class="table-price">¥3,800/人</td>
+    <td class="table-price">¥3,460/人</td>
+    <td class="table-price"><strong>≈¥21,780</strong></td>
+  </tr>
+</table>
+<div class="note" style="margin-top:12px">
+  <strong>💡 上次报价回顾：</strong>5月19日查询时还有¥1,690/人的重庆中转方案和¥2,011的高铁+飞方案。5月24日查询这些低价方案已不可用，<strong>票价整体上涨约50%</strong>。建议尽快出手，越近越贵。
+</div>
+
+<div class="summary-box">
+  <h3>🦐 虾飞飞建议</h3>
+  <ul>
+    <li><strong>推荐金鹏经停（¥3,110）去 + 海航直达（¥3,460）回</strong>，3人往返≈¥19,710</li>
+    <li><strong>如果预算够，海航去程直达（¥3,460）</strong> 早6:50飞中午12:30到，省了近3小时，3人多花¥1,050</li>
+    <li>距6月13日还有<strong>20天</strong>，价格还在涨，建议尽快订票</li>
+    <li>儿童票（6岁）按成人价50-75%，实际3人总花费可能比估算少一些</li>
+  </ul>
+</div>
+
+<div style="text-align:center;padding:20px;color:#999;font-size:12px">
+  数据来源：飞猪（@fly-ai/flyai-cli）实时查询 · 价格随时浮动，请以实际下单为准 · 上次更新 2026-05-19
+</div>
+</div>
+</body>
+</html>
