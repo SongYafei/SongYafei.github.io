@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>理想汽车股价分析 · 为什么一直不涨</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;background:#0a0a14;color:#e0e0e8;padding:16px}
+.container{max-width:900px;margin:0 auto}
+.header{background:linear-gradient(135deg,#0d0d2b 0%,#1a0a3e 50%,#2d1b69 100%);border-radius:20px;padding:32px 28px;color:#fff;margin-bottom:20px;position:relative;overflow:hidden}
+.header::after{content:'';position:absolute;top:-60%;right:-30%;width:300px;height:300px;background:radial-gradient(circle,rgba(102,126,234,0.12) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+.header h1{font-size:24px;font-weight:700;position:relative;line-height:1.3}
+.header .sub{font-size:14px;color:rgba(255,255,255,0.65);margin-top:8px;position:relative}
+.header .meta{font-size:12px;color:rgba(255,255,255,0.35);margin-top:10px;position:relative}
+
+.tab-bar{display:flex;gap:8px;margin-bottom:20px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
+.tab-btn{flex-shrink:0;padding:10px 20px;border-radius:24px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.5);font-size:14px;font-weight:600;cursor:pointer;transition:all .3s ease}
+.tab-btn.active{background:linear-gradient(135deg,#667eea,#764ba2);border-color:transparent;color:#fff;box-shadow:0 4px 20px rgba(102,126,234,0.3)}
+.section{display:none;animation:fadeUp .4s ease}
+.section.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.card{background:linear-gradient(135deg,rgba(255,255,255,0.06) 0%,rgba(255,255,255,0.02) 100%);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:20px;margin-bottom:14px}
+.card.highlight{border-color:rgba(102,126,234,0.4);background:linear-gradient(135deg,rgba(102,126,234,0.12) 0%,rgba(118,75,162,0.08) 100%)}
+.card.red{border-color:rgba(255,107,107,0.3);background:linear-gradient(135deg,rgba(255,107,107,0.08) 0%,rgba(255,107,107,0.03) 100%)}
+.card.green{border-color:rgba(81,207,102,0.3);background:linear-gradient(135deg,rgba(81,207,102,0.08) 0%,rgba(81,207,102,0.03) 100%)}
+.card-title{font-size:17px;font-weight:700;color:#fff;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.card-sub{font-size:13px;color:rgba(255,255,255,0.55);margin-bottom:8px;line-height:1.7}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:10px 0}
+th{background:rgba(255,255,255,0.04);text-align:left;padding:10px 12px;font-weight:600;color:rgba(255,255,255,0.5);font-size:13px;border-bottom:1px solid rgba(255,255,255,0.06)}
+td{padding:10px 12px;border-top:1px solid rgba(255,255,255,0.04);color:rgba(255,255,255,0.75)}
+.tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:500}
+.tag-green{background:rgba(81,207,102,0.15);color:#51cf66}
+.tag-red{background:rgba(255,107,107,0.15);color:#ff6b6b}
+.tag-blue{background:rgba(102,126,234,0.15);color:#667eea}
+.tag-orange{background:rgba(255,160,0,0.15);color:#ffa000}
+.note{font-size:13px;color:rgba(255,255,255,0.5);padding:12px 14px;background:rgba(255,255,255,0.03);border-radius:8px;margin-top:8px;line-height:1.6}
+.note strong{color:rgba(255,255,255,0.7)}
+.info-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.info-item{flex:1;min-width:120px;background:linear-gradient(135deg,rgba(255,255,255,0.04) 0%,rgba(255,255,255,0.02) 100%);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:14px;text-align:center}
+.info-item .num{font-size:20px;font-weight:700;color:#667eea}
+.info-item .lbl{font-size:12px;color:rgba(255,255,255,0.4);margin-top:4px}
+.divider{height:1px;background:rgba(255,255,255,0.06);margin:20px 0}
+.tip-box{background:rgba(255,160,0,0.06);border-left:4px solid #ffa000;border-radius:8px;padding:14px;margin:10px 0;font-size:13px;color:rgba(255,160,0,0.8);line-height:1.6}
+.footnote{text-align:center;padding:20px;color:rgba(255,255,255,0.15);font-size:12px}
+@media (max-width:600px){body{padding:12px}.header{padding:20px}.header h1{font-size:20px}}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+  <h1>🚗 理想汽车（LI）· 股价为什么不涨</h1>
+  <div class="sub">从基本面的"至暗时刻"到产品周期的反转窗口，一份完整的分析</div>
+  <div class="meta">2026-05-27 · 数据来源：公司财报、雪球分析师共识、公开信息</div>
+</div>
+
+<div class="tab-bar">
+  <div class="tab-btn active" onclick="switchTab('tab-overview')">📋 全景</div>
+  <div class="tab-btn" onclick="switchTab('tab-numbers')">📉 核心数据</div>
+  <div class="tab-btn" onclick="switchTab('tab-reasons')">🔍 不涨原因</div>
+  <div class="tab-btn" onclick="switchTab('tab-outlook')">🔮 后续展望</div>
+</div>
+
+<div id="tab-overview" class="section active">
+  <div class="info-row">
+    <div class="info-item"><div class="num">$18.24</div><div class="lbl">最新股价</div></div>
+    <div class="info-item"><div class="num">$15.71-32.03</div><div class="lbl">52周区间</div></div>
+    <div class="info-item"><div class="num">~$146亿</div><div class="lbl">市值</div></div>
+    <div class="info-item"><div class="num">Hold</div><div class="lbl">共识评级</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📖 一句话总结</div>
+    <div class="card-sub">
+      股价从2024年2月高点至今跌去约<strong>三分之二</strong>，2026年5月18日单日暴跌<strong>14%</strong>创三年新低。<br><br>
+      根源：<strong>利润暴跌86% + 毛利率崩塌 + 产品周期切换阵痛 + 纯电转型不及预期</strong>。<br><br>
+      确定性反转仍需等待H2 2026新车周期验证。
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📐 市场共识（1买入 / 5持有 / 2卖出）</div>
+    <div class="card-sub">
+      华尔街目前对理想整体是<strong>中性偏悲观</strong>。没有积极的买入评级推动，缺少新的资金入场。
+    </div>
+  </div>
+</div>
+
+<div id="tab-numbers" class="section">
+  <div class="card red">
+    <div class="card-title">📉 2025全年：史上最差一年</div>
+    <table>
+      <tr><th>指标</th><th style="text-align:center">2024</th><th style="text-align:center">2025</th><th style="text-align:center">同比</th></tr>
+      <tr><td>交付量</td><td style="text-align:center">~60万辆</td><td style="text-align:center">~48.7万辆</td><td style="text-align:center;color:#ff6b6b">↓ -19%</td></tr>
+      <tr><td>净利润</td><td style="text-align:center">~80亿</td><td style="text-align:center">~11亿</td><td style="text-align:center;color:#ff6b6b">↓ -86%</td></tr>
+      <tr><td>车辆毛利率</td><td style="text-align:center">~20%</td><td style="text-align:center">~16-17%</td><td style="text-align:center;color:#ff6b6b">↓ 4pct</td></tr>
+      <tr><td>自由现金流</td><td style="text-align:center">正值</td><td style="text-align:center">首度转负</td><td style="text-align:center;color:#ff6b6b">⚠️</td></tr>
+    </table>
+  </div>
+
+  <div class="card red">
+    <div class="card-title">🔴 2026 Q1：最黑暗的季度</div>
+    <div class="card-sub">
+      · Q1交付指引仅 <strong>8.5-9万辆</strong>（同比继续下滑）<br>
+      · 车辆毛利率骤降至 <strong>5-7%</strong>（L系列清库每台补贴3-4.5万元）<br>
+      · 预计亏损 <strong>20-30亿元</strong><br>
+      · 单车均价从约25万降至约22万
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✅ 但底子还在</div>
+    <div class="card-sub">
+      · 现金储备 <strong>1,012亿元</strong>，不存在生存风险<br>
+      · 研发投入逆势增长25%，年化约120亿<br>
+      · AI/具身智能布局构建长期壁垒
+    </div>
+  </div>
+</div>
+
+<div id="tab-reasons" class="section">
+  <div class="card red">
+    <div class="card-title">1️⃣ 利润断崖式下跌</div>
+    <div class="card-sub">
+      2024年净利润80亿→2025年11亿，<strong>暴跌86%</strong>。<br><br>
+      利润是股价的锚。当一家公司利润从80亿缩水到11亿，不管理由是"行业价格战"还是"产品周期切换"，市场先跌为敬。<br><br>
+      更可怕的是2026Q1可能亏损20-30亿，<strong>全年大概率GAAP亏损</strong>——一个亏损的汽车公司，华尔街不愿意给高估值。
+    </div>
+  </div>
+
+  <div class="card red">
+    <div class="card-title">2️⃣ 毛利率雪崩</div>
+    <div class="card-sub">
+      理想汽车曾经的核心竞争力是<strong>高毛利率</strong>（20%+），这是它区别于蔚来小鹏的关键标签。<br><br>
+      但在2026年Q1，这一数字可能跌到<strong>5-7%</strong>（个位数）。<br><br>
+      原因：L系列去库存每台补贴3-4.5万 + 购置税补贴 + i6毛利率低于15%目标。<br><br>
+      <strong>当"高毛利"标签被撕掉，股价的估值逻辑也被撕掉了。</strong>
+    </div>
+  </div>
+
+  <div class="card red">
+    <div class="card-title">3️⃣ 交付量持续下滑</div>
+    <div class="card-sub">
+      2024年约60万辆→2025年约48.7万辆（↓19%）→2026Q1指引仅8.5-9万辆。<br><br>
+      增程式市场份额被问界M9等竞品大量蚕食。曾经"一款L9打天下"的局面不复存在。
+    </div>
+  </div>
+
+  <div class="card red">
+    <div class="card-title">4️⃣ 纯电转型不及预期</div>
+    <div class="card-sub">
+      MEGA（纯电MPV）遭遇滑铁卢后，市场对理想的纯电能力产生了质疑。<br><br>
+      i8（纯电SUV）的发布一再推迟。i6的月销能否稳定突破2万台仍是未知数。<br><br>
+      在纯电赛道落后于蔚来、小鹏和传统车企的新能源品牌。
+    </div>
+  </div>
+
+  <div class="card red">
+    <div class="card-title">5️⃣ 竞争格局恶化</div>
+    <div class="card-sub">
+      · 问界M9直接蚕食理想L9的市场<br>
+      · 小米SU7等新车加剧价格战<br>
+      · 比亚迪、吉利等传统车企的新能源品牌持续施压<br>
+      · 理想的"家庭用车"定位被多面夹击
+    </div>
+  </div>
+
+  <div class="card red">
+    <div class="card-title">6️⃣ 催化剂真空期</div>
+    <div class="card-sub">
+      从2026年初到Q2新L9发布前，理想缺乏<strong>积极催化剂</strong>。<br><br>
+      招银国际明确指出：<strong>"在新一代L系列车型推出前，股价缺乏推动其上涨的积极催化剂。"</strong>
+    </div>
+  </div>
+</div>
+
+<div id="tab-outlook" class="section">
+  <div class="card green">
+    <div class="card-title">🔄 反转窗口：2026 H2</div>
+    <div class="card-sub">
+      2026年上半年是至暗时刻，但下半年的新车周期存在清晰的反转逻辑：
+    </div>
+    <table>
+      <tr><th>时间</th><th>事件</th><th>预期影响</th></tr>
+      <tr><td>Q2 2026</td><td>新L9发布</td><td>全面升级（70kWh电池/400km纯电续航/5C超充），有望重夺高端市场</td></tr>
+      <tr><td>H2 2026</td><td>改款L7/L6上市</td><td>产品线更新，提振销量</td></tr>
+      <tr><td>H2 2026</td><td>全新i9 BEV上市</td><td>纯电旗舰车型，检验纯电实力</td></tr>
+      <tr><td>2026全年</td><td>i6月销目标2万+</td><td>走量纯电车型，决定转型成败</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧭 分析师目标价与策略</div>
+    <table>
+      <tr><th>项目</th><th style="text-align:center">数值</th></tr>
+      <tr><td>当前股价</td><td style="text-align:center;color:#ff6b6b">$18.24</td></tr>
+      <tr><td>分析师目标价</td><td style="text-align:center;color:#51cf66">$21-22</td></tr>
+      <tr><td>隐含上行空间</td><td style="text-align:center">~15-21%</td></tr>
+      <tr><td>52周低点</td><td style="text-align:center">$15.71</td></tr>
+    </table>
+    <div class="note" style="margin-top:12px">
+      <strong>当前观察框架：</strong>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <strong>短期（1-3个月）：</strong>观望为主，Q1财报可能再次冲击股价<br><br>
+    <strong>中期布局窗口：</strong>若股价回落至$15-16区间（接近52周低点），可考虑左侧建仓<br><br>
+    <strong>关键观察节点：</strong>Q2新L9发布及初期订单数据 · L系列库存清理进度 · i6月销能否稳定突破2万台
+  </div>
+
+  <div class="card green">
+    <div class="card-title">📌 总结</div>
+    <div class="card-sub">
+      <strong>理想股价不涨的核心原因：</strong><br><br>
+      业绩端：净利润暴跌86%，毛利率从20%+崩到个位数，交付量持续下滑。<br>
+      预期端：纯电转型受挫，竞争格局恶化，缺乏催化剂。<br>
+      估值端：市场共识为Hold，没有新的买入资金入场。<br><br>
+      <strong>但也不是没有希望：</strong>现金储备1012亿无生存风险、H2 2026新车周期存在反转可能、当前估值已较大程度反映利空。<br><br>
+      <strong>需要等待的：</strong>新L9订单数据 → 毛利率修复信号 → 纯电车型市场验证 → 分析师上调评级。
+    </div>
+  </div>
+</div>
+
+<div class="footnote">数据来源：公司财报、雪球分析师报告、招银国际 · 不构成投资建议，投资有风险</div>
+</div>
+<script>
+function switchTab(id) {
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>
