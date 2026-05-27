@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>推荐 3 个刚开源 Star 在慢慢攀升的 GitHub 开源项目</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;background:#f5f7fa;color:#1a1a2e;padding:16px}
+.container{max-width:860px;margin:0 auto}
+.header{background:linear-gradient(135deg,#1a1a4e 0%,#2d1b69 50%,#764ba2 100%);border-radius:20px;padding:28px 24px;color:#fff;margin-bottom:20px}
+.header h1{font-size:20px;font-weight:700;line-height:1.4}
+.header .meta{font-size:12px;color:rgba(255,255,255,0.5);margin-top:8px}
+.header .meta a{color:#667eea}
+.card{background:#fff;border:1px solid #e8ecf1;border-radius:14px;padding:20px;margin-bottom:14px;line-height:1.8;font-size:15px;color:#333}
+.card img{max-width:100%;border-radius:8px;margin:12px 0}
+.card h2{font-size:18px;margin:20px 0 10px;color:#1a1a2e}
+.card h3{font-size:16px;margin:16px 0 8px;color:#2d1b69}
+.card code{background:#f0f2f5;padding:2px 6px;border-radius:4px;font-size:13px}
+.card pre{background:#f8f9fa;padding:12px;border-radius:8px;overflow-x:auto;font-size:13px;border:1px solid #e8ecf1}
+.card blockquote{border-left:4px solid #667eea;padding:8px 16px;margin:12px 0;background:#f8f9ff}
+.tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:500;margin:2px}
+.tag-tech{background:#e3f2fd;color:#1565c0}
+a{color:#667eea}
+.footnote{text-align:center;padding:20px;color:#999;font-size:12px}
+@media (max-width:600px){body{padding:12px}.header{padding:20px}.card{padding:16px;font-size:14px}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>推荐 3 个刚开源 Star 在慢慢攀升的 GitHub 开源项目</h1>
+  <div class="meta">来源：<a href="https://mp.weixin.qq.com/s/OSbXp4djc7iFFKzw7luvaA">逛逛GitHub</a> · 2026-05-28 · <span class="tag tag-tech">开源项目</span> <span class="tag tag-tech">AI助手</span><br>自动归档：<a href="/knowledge/">📚 知识库</a></div>
+</div>
+
+<div class="card">
+
+<h2>01 几分钟就认识你的 AI 桌面助手</h2>
+
+<p>AI Agent 现在都有一个冷启动问题。你装完之后，它对你一无所知，得花好几天甚至几周慢慢教它你是谁、你用什么工具、你的工作流是什么。</p>
+
+<p><strong>OpenHuman</strong> 是一个开源的桌面 AI Agent 助手，目前已经在 GitHub 上斩获了 <strong>7.2K</strong> 多 Star。</p>
+
+<p>它的核心思路是在你安装的那一刻就开始认识你，而不是等你慢慢教。因为它有一个 <strong>Memory Tree 记忆系统</strong>。</p>
+
+<p>你连接的所有数据源——Gmail、Notion、GitHub、Slack、Calendar 等等——都会被标准化成不超过 3k Token 的 Markdown 片段，然后自动构建出一棵层级化的摘要树。</p>
+
+<p>更有意思的是，它还会生成 Obsidian 兼容的 .md 文件，你可以直接用 Obsidian 打开浏览和编辑你的 AI 记忆。</p>
+
+<p>OpenHuman 支持 <strong>118+</strong> 个第三方服务的一键 OAuth 连接，不需要一个个去配 API Key。连上之后每 20 分钟自动同步一次最新数据。</p>
+
+<p>它还有个 <strong>TokenJuice</strong> 智能压缩技术，HTML 转 Markdown、长 URL 缩短、非 ASCII 字符清除，最高能减少 80% 的 Token 消耗。</p>
+
+<p>它还桌面吉祥物，能以真实参会者身份加入 Google Meet 会议。</p>
+
+<pre>curl -fsSL https://raw.githubusercontent.com/tinyhumansai/openhuman/main/scripts/install.sh | bash</pre>
+
+<p>支持 macOS、Windows、Linux，一行命令就能装好。</p>
+
+<p>开源地址：<a href="https://github.com/tinyhumansai/openhuman">https://github.com/tinyhumansai/openhuman</a></p>
+
+<h2>02 隐形浏览器</h2>
+
+<p>反爬检测是个老问题。playwright-stealth、undetected-chromedriver 这些方案用 JS 注入或者配置补丁来伪装，但问题是每次 Chrome 更新就容易失效，而且反检测系统本身也能识别这些手段。</p>
+
+<p><strong>CloakBrowser</strong> 换了个思路：<strong>直接改 Chromium 的 C++ 源码</strong>。</p>
+
+<p>这个项目在 Chromium 源码层面打了几十个补丁。覆盖 Canvas、WebGL、Audio、Fonts、GPU、Screen、WebRTC 等所有主流指纹点，然后编译成独立的浏览器二进制文件。</p>
+
+<p>反检测系统看到的是一个真正的浏览器，因为它确实就是一个真正的浏览器。</p>
+
+<p>效果很猛：reCAPTCHA v3 能拿到 <strong>0.9 分</strong>（普通 Playwright 只有 0.1），Cloudflare Turnstile 直接 PASS，FingerprintJS 也检测不出来。</p>
+
+<p>它还内置了人性化行为模拟：鼠标移动走贝塞尔曲线带缓动和过冲，键盘输入有逐字符延迟和偶尔打错再纠正，滚动是加速-巡航-减速的微步模式。</p>
+
+<p>说白了，它模拟的是一个真实的人类在操作浏览器。用法也很简单，支持 Python 和 JavaScript 双 SDK，从 Playwright 迁移只需要改一行 import。</p>
+
+<p>开源地址：<a href="https://github.com/CloakHQ/CloakBrowser">https://github.com/CloakHQ/CloakBrowser</a></p>
+
+<h2>03 Markdown 转 HTML 神器</h2>
+
+<p>Markdown 写起来舒服，但发出去排版不好看；HTML 排版漂亮，但写起来费劲。花叔的这个开源项目就是来解决这个问题的。</p>
+
+</div>
+
+<div class="footnote">📚 自动归档自 <a href="/knowledge/">知识库</a> · 逛逛GitHub</div>
+</div>
+</body>
+</html>
