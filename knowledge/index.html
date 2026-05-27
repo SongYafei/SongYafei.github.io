@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>知识库 · 公众号文章沉淀</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;background:#f5f7fa;color:#1a1a2e;padding:16px}
+.container{max-width:860px;margin:0 auto}
+.header{background:linear-gradient(135deg,#1a1a4e 0%,#2d1b69 50%,#764ba2 100%);border-radius:20px;padding:32px 28px;color:#fff;margin-bottom:20px;position:relative;overflow:hidden}
+.header::after{content:'';position:absolute;top:-60%;right:-30%;width:300px;height:300px;background:radial-gradient(circle,rgba(102,126,234,0.15) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+.header h1{font-size:24px;font-weight:700;position:relative}
+.header p{font-size:14px;color:rgba(255,255,255,0.75);margin-top:8px;position:relative}
+.header .meta{font-size:12px;color:rgba(255,255,255,0.4);margin-top:10px;position:relative}
+
+.tab-bar{display:flex;gap:8px;margin-bottom:20px;overflow-x:auto;scrollbar-width:none}
+.tab-btn{padding:10px 20px;border-radius:24px;border:1px solid #dde0e8;background:#fff;color:#666;font-size:14px;font-weight:600;cursor:pointer}
+.tab-btn.active{background:linear-gradient(135deg,#667eea,#764ba2);border-color:transparent;color:#fff}
+.section{display:none}
+.section.active{display:block}
+
+.card{background:#fff;border:1px solid #e8ecf1;border-radius:14px;padding:20px;margin-bottom:14px;transition:all .2s}
+.card:hover{border-color:#667eea;box-shadow:0 4px 20px rgba(102,126,234,0.08)}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.card-title{font-size:16px;font-weight:700;color:#1a1a2e}
+.card-title a{color:#667eea;text-decoration:none}
+.card-title a:hover{text-decoration:underline}
+.card .desc{font-size:13px;color:#888;margin-top:6px;line-height:1.5}
+.card .meta-line{font-size:12px;color:#aaa;margin-top:6px}
+.tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:500}
+.tag-tech{background:#e3f2fd;color:#1565c0}
+.tag-finance{background:#e8f5e9;color:#2e7d32}
+.tag-product{background:#fff3e0;color:#e65100}
+.tag-life{background:#f3e5f5;color:#7b1fa2}
+
+@media (max-width:600px){body{padding:12px}.header{padding:20px}}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+  <h1>📚 知识库</h1>
+  <p>公众号文章自动沉淀 · 按分类归纳总结 · AI 自动整理</p>
+  <div class="meta">自动收录中 · 每篇公众号文章都会自动归档到这里</div>
+</div>
+
+<div class="tab-bar">
+  <div class="tab-btn active" onclick="switchTab('tab-all')">📋 全部</div>
+  <div class="tab-btn" onclick="switchTab('tab-tech')">💻 技术</div>
+  <div class="tab-btn" onclick="switchTab('tab-finance')">💰 财经</div>
+  <div class="tab-btn" onclick="switchTab('tab-product')">📱 产品</div>
+  <div class="tab-btn" onclick="switchTab('tab-life')">🌿 生活</div>
+</div>
+
+<div id="tab-all" class="section active">
+  <div class="card">
+    <div class="card-top">
+      <div>
+        <div class="card-title"><a href="tech/2026-05-28-推荐3个刚开源项目.md">推荐 3 个刚开源 Star 在慢慢攀升的 GitHub 开源项目</a></div>
+        <div class="desc">推荐三个新开源项目：OpenHuman AI桌面助手（7.2K Star）、CloakBrowser隐形浏览器（源码级反检测）、花叔的Markdown转HTML工具</div>
+        <div class="meta-line">逛逛GitHub · 2026-05-28 · <span class="tag tag-tech">开源项目</span> <span class="tag tag-tech">AI助手</span></div>
+      </div>
+    </div>
+  </div>
+  <div style="text-align:center;padding:40px;color:#ccc;font-size:13px">— 持续更新中，你发的公众号文章会自动沉淀到这里 —</div>
+</div>
+
+<div id="tab-tech" class="section">
+  <div class="card">
+    <div class="card-top">
+      <div>
+        <div class="card-title"><a href="tech/2026-05-28-推荐3个刚开源项目.md">推荐 3 个刚开源 Star 在慢慢攀升的 GitHub 开源项目</a></div>
+        <div class="desc">推荐三个新开源项目：OpenHuman AI桌面助手（7.2K Star）、CloakBrowser隐形浏览器（源码级反检测）、花叔的Markdown转HTML工具</div>
+        <div class="meta-line">逛逛GitHub · 2026-05-28 · <span class="tag tag-tech">开源项目</span></div>
+      </div>
+    </div>
+  </div>
+  <div style="text-align:center;padding:40px;color:#ccc;font-size:13px">— 暂无更多 —</div>
+</div>
+
+<div id="tab-finance" class="section">
+  <div style="text-align:center;padding:60px 20px;color:#ccc;font-size:14px">
+    <div style="font-size:40px;margin-bottom:10px">💰</div>
+    财经类文章会出现在这里
+  </div>
+</div>
+
+<div id="tab-product" class="section">
+  <div style="text-align:center;padding:60px 20px;color:#ccc;font-size:14px">
+    <div style="font-size:40px;margin-bottom:10px">📱</div>
+    产品/运营类文章会出现在这里
+  </div>
+</div>
+
+<div id="tab-life" class="section">
+  <div style="text-align:center;padding:60px 20px;color:#ccc;font-size:14px">
+    <div style="font-size:40px;margin-bottom:10px">🌿</div>
+    生活方式类文章会出现在这里
+  </div>
+</div>
+
+</div>
+<script>
+function switchTab(id) {
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>
