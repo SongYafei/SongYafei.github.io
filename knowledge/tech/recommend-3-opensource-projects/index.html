@@ -6,36 +6,55 @@
 <title>推荐 3 个刚开源 Star 在慢慢攀升的 GitHub 开源项目</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,"PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;background:#f5f7fa;color:#1a1a2e;padding:16px}
-.container{max-width:860px;margin:0 auto}
-.header{background:linear-gradient(135deg,#1a1a4e 0%,#2d1b69 50%,#764ba2 100%);border-radius:20px;padding:28px 24px;color:#fff;margin-bottom:20px}
-.header h1{font-size:20px;font-weight:700;line-height:1.4}
-.header .meta{font-size:12px;color:rgba(255,255,255,0.5);margin-top:8px}
-.header .meta a{color:#667eea}
-.card{background:#fff;border:1px solid #e8ecf1;border-radius:14px;padding:20px;margin-bottom:14px;line-height:1.8;font-size:15px;color:#333}
-.card img{max-width:100%;border-radius:8px;margin:12px 0}
-.card h2{font-size:18px;margin:20px 0 10px;color:#1a1a2e}
-.card h3{font-size:16px;margin:16px 0 8px;color:#2d1b69}
-.card code{background:#f0f2f5;padding:2px 6px;border-radius:4px;font-size:13px}
-.card pre{background:#f8f9fa;padding:12px;border-radius:8px;overflow-x:auto;font-size:13px;border:1px solid #e8ecf1}
-.card blockquote{border-left:4px solid #667eea;padding:8px 16px;margin:12px 0;background:#f8f9ff}
-.tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:500;margin:2px}
-.tag-tech{background:#e3f2fd;color:#1565c0}
-a{color:#667eea}
-.footnote{text-align:center;padding:20px;color:#999;font-size:12px}
-@media (max-width:600px){body{padding:12px}.header{padding:20px}.card{padding:16px;font-size:14px}}
+body{font-family:"Georgia","Noto Serif SC","Source Han Serif SC","PingFang SC",serif;background:#f7f3eb;color:#2c2c2c;padding:0;line-height:1.9}
+.container{max-width:720px;margin:0 auto;padding:0 20px}
+
+/* Header bar */
+.header-bar{background:linear-gradient(135deg,#1a1a4e 0%,#2d1b69 100%);padding:28px 24px;text-align:center;margin-bottom:0}
+.header-bar .back{display:inline-block;color:rgba(255,255,255,0.4);font-size:12px;text-decoration:none;margin-bottom:8px;font-family:-apple-system,sans-serif}
+.header-bar .back:hover{color:#667eea}
+.header-bar h1{font-size:20px;font-weight:700;color:#fff;line-height:1.4;max-width:640px;margin:0 auto;font-family:-apple-system,"PingFang SC",sans-serif}
+.header-bar .meta{font-size:11px;color:rgba(255,255,255,0.35);margin-top:10px;font-family:-apple-system,"PingFang SC",sans-serif}
+.header-bar .meta a{color:#667eea}
+
+/* Article content */
+.article{background:#fcf9f5;padding:40px 32px 48px;border-radius:4px;margin:0 auto;max-width:680px}
+.article p{margin:14px 0;font-size:16px;color:#2c2c2c;text-align:justify}
+.article h2{font-size:19px;margin:32px 0 14px;color:#1a1a2e;font-weight:700;padding-bottom:6px;border-bottom:2px solid #e8e0d4;font-family:-apple-system,"PingFang SC",sans-serif}
+.article h3{font-size:17px;margin:24px 0 10px;color:#2d1b69;font-family:-apple-system,"PingFang SC",sans-serif}
+.article .highlight{background:#f3efe8;border-left:4px solid #667eea;padding:14px 18px;margin:18px 0;border-radius:0 6px 6px 0;color:#444;font-size:15px;line-height:1.8}
+.article .quote{color:#666;font-style:italic;padding:12px 20px;margin:16px 0;border-left:3px solid #ccc;font-size:15px}
+.article code{background:#ece8e0;padding:2px 6px;border-radius:4px;font-size:14px;font-family:"SF Mono","Fira Code",monospace}
+.article pre{background:#f3efe8;padding:14px 18px;border-radius:6px;overflow-x:auto;font-size:14px;border:1px solid #e8e0d4}
+.article ul,.article ol{padding-left:24px;margin:10px 0}
+.article li{margin:6px 0}
+.article img{max-width:100%;border-radius:6px;margin:16px 0;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+
+.tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;font-family:-apple-system,sans-serif}
+.tag-tech{background:rgba(102,126,234,0.12);color:#667eea}
+.tag-finance{background:rgba(81,207,102,0.12);color:#2e7d32}
+.tag-life{background:rgba(210,168,255,0.12);color:#7b1fa2}
+
+.footnote{text-align:center;padding:24px;color:#999;font-size:12px;font-family:-apple-system,sans-serif}
+.footnote a{color:#667eea}
+
+@media(max-width:600px){
+  .article{padding:24px 16px 32px}
+  .article p{font-size:15px}
+  .header-bar{padding:20px 16px}
+  .header-bar h1{font-size:18px}
+}
 </style>
 </head>
 <body>
-<div class="container">
 
-<div class="header">
+<div class="header-bar">
+  <a class="back" href="/knowledge/">← 返回知识库</a>
   <h1>推荐 3 个刚开源 Star 在慢慢攀升的 GitHub 开源项目</h1>
   <div class="meta">来源：<a href="https://mp.weixin.qq.com/s/OSbXp4djc7iFFKzw7luvaA">逛逛GitHub</a> · 2026-05-28 · <span class="tag tag-tech">开源项目</span> <span class="tag tag-tech">AI助手</span><br>自动归档：<a href="/knowledge/">📚 知识库</a></div>
 </div>
 
-<div class="card">
-
+<div class="article">
 <h2>01 几分钟就认识你的 AI 桌面助手</h2>
 
 <p>AI Agent 现在都有一个冷启动问题。你装完之后，它对你一无所知，得花好几天甚至几周慢慢教它你是谁、你用什么工具、你的工作流是什么。</p>
@@ -81,10 +100,8 @@ a{color:#667eea}
 <h2>03 Markdown 转 HTML 神器</h2>
 
 <p>Markdown 写起来舒服，但发出去排版不好看；HTML 排版漂亮，但写起来费劲。花叔的这个开源项目就是来解决这个问题的。</p>
-
 </div>
 
-<div class="footnote">📚 自动归档自 <a href="/knowledge/">知识库</a> · 逛逛GitHub</div>
-</div>
+<div class="footnote">📚 自动归档自 <a href="/knowledge/">知识库</a> · 📚 自动归档自 <a href="/knowledge/">知识库</a> · 逛逛GitHub</div>
 </body>
 </html>
