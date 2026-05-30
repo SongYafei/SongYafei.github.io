@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>推荐 3 个 GitHub 上刚开源但实用的项目</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Georgia","Noto Serif SC","PingFang SC",serif;background:#f7f3eb;color:#2c2c2c;line-height:1.9}
+.container{max-width:740px;margin:0 auto;padding:0 20px}
+.header-bar{background:linear-gradient(135deg,#1a1a4e 0%,#2d1b69 100%);padding:28px 24px;text-align:center}
+.header-bar h1{font-size:20px;font-weight:700;color:#fff;max-width:680px;margin:0 auto;font-family:-apple-system,sans-serif}
+.header-bar .meta{font-size:11px;color:rgba(255,255,255,0.35);margin-top:10px;font-family:-apple-system,sans-serif}
+.header-bar .meta a{color:#667eea}
+.article{background:#fcf9f5;padding:36px 28px 40px;border-radius:4px;margin:20px auto;max-width:700px}
+.article .back{display:inline-block;color:#667eea;font-size:12px;text-decoration:none;margin-bottom:16px;font-family:-apple-system,sans-serif}
+.tag-tech{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;background:rgba(102,126,234,0.12);color:#1a56db;font-weight:500;font-family:-apple-system,sans-serif}
+</style>
+</head>
+<body>
+<div class="header-bar">
+  <h1>推荐 3 个 GitHub 上刚开源但实用的项目</h1>
+  <div class="meta"><a href="https://mp.weixin.qq.com/s/wYnPHnxdEeKaMNRmLYFv2Q" target="_blank">逛逛GitHub</a> · 2026-05-30 · <span class="tag-tech">开源项目</span></div>
+</div>
+<div class="container">
+<div class="article">
+  <p>推荐 3 个 GitHub 上刚开源但实用的项目，收藏一波。</p>
+  <p>==============================</p>
+  <p>原创 逛逛 逛逛 [逛逛GitHub](javascript:void\(0\);)</p>
+  <p>**极简到极致的 Markdown 笔记工具**</p>
+  <p>最近刷 Hacker News 的时候，看到一个笔记工具：files.md。</p>
+  <p>这是一个极简的 Markdown 笔记应用，定位是 Obsidian 的开源替代品。</p>
+  <p>作者 Artem Zakirullin 花了 5 年时间打磨，目前在 GitHub 上拿到了 2000 多个 Star。</p>
+  <p>它就是你本地的一堆 .md 文件，加了一层很薄的 Web 界面。</p>
+  <p>**没有插件市场，没有模板系统，没有第二大脑的幻觉。** 作者的观点很直接：笔记越多不等于理解越深，工具越简单反而越能激发创造力。</p>
+  <p>**浏览器打开 app.files.md 就能用，作者承诺 10 年后打开 HTML 文件照样能跑**</p>
+  <p>**所有笔记就是本地的 .md 文件，可以用 iCloud、Dropbox、Google Drive 同步，也可以用官方提供的 Go 二进制文件自建服务端**</p>
+  <p>**项目自带 llms.txt 文件，复制到 CLAUDE.md 里，AI Agent 就能直接理解和操作你的笔记库。**</p>
+  <p>**有中文开发者在 X 上说，这才是 files.md 真正区别于 Obsidian 的地方：你的笔记库变成了 AI 能操作的知识库。**</p>
+  <p>而且还支持 Telegram 机器人快速记录想法、知识图谱关联、聊天式快速输入。</p>
+  <p>代码量极小，一个人就能看懂整个项目。</p>
+  <p>对 Obsidian 重度用户来说，files.md 可能太简陋了。</p>
+  <p>但如果你一直在找一个不被功能绑架的、真正属于你自己的笔记空间，这个项目值得试试。</p>
+  <p>开源地址：https://github.com/zakirullin/files.md</p>
+  <p>**一份给 AI Agent 的生产级生存指南**</p>
+  <p>agents-best-practices 是一个 Agent Skill，它是一套开发生产级 Agent 所需要的完整知识体系。</p>
+  <p>从架构设计、工具权限、上下文管理到安全评估。</p>
+  <p>这个项目的核心观点很清晰：**模型负责提议行动，Harness 负责验证、授权、执行和记录。**</p>
+  <p>模型不是操作者，它只是建议者。有三大使用场景：</p>
+  <p>**生成 MVP Agent 蓝图：给定一个业务场景，输出最小可用的生产级安全 Agent 架构**</p>
+  <p>**审计现有 Agent：诊断你已有 Agent 的脆弱性、成本过高、调试困难等问题，给出修复优先级**</p>
+  <p>**设计工具、权限和连接器：教你怎么安全地让 Agent 接入 Slack、Linear、Google Drive、内部 API**</p>
+  <p>项目里 14 篇参考文档把 Agent 开发的方方面面都覆盖了。</p>
+  <p>8 条运行时哲学规则每一条都是实战经验。</p>
+  <p>比如"反复失败应成为 Harness 特性"，不要靠反复改 Prompt 来解决问题，而是从验证器、工具、文档层面根治。</p>
+  <p>安装也很简单，支持 Claude Code 和 Codex CLI，一行命令搞定。</p>
+  <p>有人用这个 Skill 做 Agent 系统的 code review 后，代码输出质量显著提升了。</p>
+  <p>开源地址：https://github.com/DenisSergeevitch/agents-best-practices</p>
+  <p>**跨平台桌面应用的终极指南**</p>
+  <p>Raycast 用起来丝滑得像原生应用，但它底层其实是 WebView + Node.js。</p>
+  <p>----------------------------------------------</p>
+  <p>有人直接反编译了 Raycast Beta.app，把答案扒了出来。</p>
+  <p>native-feel-skill 是一个 Agent Skill，专门教你怎么设计跨平台桌面应用，让它在 macOS 和 Windows 上运行时的体验跟原生应用几乎没有区别。</p>
+  <p>作者 yetone 也是 avante.nvim 插件的作者。</p>
+  <p>项目发布不到两天就在 GitHub 上拿到了 1000 多个 Star。</p>
+  <p>...</p>
+
+  <p style="font-size:12px;color:#999;margin-top:24px">阅读全文：<a href="https://mp.weixin.qq.com/s/wYnPHnxdEeKaMNRmLYFv2Q" target="_blank">微信公众号原文 →</a></p>
+</div>
+</div>
+</body>
+</html>
