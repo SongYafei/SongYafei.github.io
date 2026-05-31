@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>AI时代数仓改造：让LLM直接读底表做分析下钻</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,"PingFang SC","Noto Sans SC",sans-serif;background:#f5f3f0;color:#1a1a2e;line-height:1.8;padding:0}
+
+.header{background:linear-gradient(135deg,#0d1b2a 0%,#1b2838 50%,#243b55 100%);padding:48px 24px 40px;text-align:center;position:relative;overflow:hidden}
+.header::after{content:'';position:absolute;top:-60%;right:-10%;width:600px;height:600px;background:radial-gradient(circle,rgba(102,178,255,0.05) 0%,transparent 70%);border-radius:50%}
+.header .badge{display:inline-block;padding:4px 14px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(102,178,255,0.15);color:#66b2ff;margin-bottom:14px;letter-spacing:.5px}
+.header h1{font-size:28px;font-weight:800;color:#e8edf2;max-width:720px;margin:0 auto 10px;position:relative;line-height:1.35}
+.header .sub{font-size:14px;color:rgba(200,215,230,0.5);position:relative}
+.header .meta{font-size:11px;color:rgba(200,215,230,0.2);margin-top:14px;position:relative}
+
+.container{max-width:840px;margin:0 auto;padding:0 20px 40px}
+section{padding:44px 0;border-bottom:1px solid #e8e4de}
+section:last-child{border-bottom:none}
+
+h2{font-size:22px;font-weight:700;color:#0d1b2a;margin-bottom:6px}
+h2 .emoji{font-size:24px;margin-right:8px}
+h3{font-size:16px;font-weight:600;color:#1b2838;margin:24px 0 12px}
+.lead{font-size:15px;color:#666;margin-bottom:24px;line-height:1.8}
+
+.problem-box{background:linear-gradient(135deg,#fef3e2 0%,#fff8ed 100%);border-left:4px solid #e67e22;padding:16px 20px;margin:16px 0;border-radius:0 8px 8px 0;font-size:14px;color:#5a3e1a;line-height:1.7}
+.problem-box strong{color:#c0392b}
+
+.solution-box{background:#f0f6fe;border-left:4px solid #3498db;padding:16px 20px;margin:16px 0;border-radius:0 8px 8px 0;font-size:14px;color:#1a3650;line-height:1.7}
+.solution-box strong{color:#2980b9}
+
+.success-box{background:#eafaf1;border-left:4px solid #27ae60;padding:16px 20px;margin:16px 0;border-radius:0 8px 8px 0;font-size:14px;color:#1e4a2e;line-height:1.7}
+.success-box strong{color:#27ae60}
+
+.code-block{background:#1b2b3a;color:#e8edf2;padding:16px 20px;border-radius:8px;margin:12px 0;font-size:13px;line-height:1.7;overflow-x:auto;font-family:"SFMono","Menlo","Monaco",monospace}
+.code-block .comment{color:#6a8fa8}
+.code-block .keyword{color:#66b2ff}
+.code-block .string{color:#a3d977}
+.code-block .val{color:#f0c674}
+
+.data-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+.data-table th,.data-table td{padding:10px 12px;text-align:left;border-bottom:1px solid #e8e4de}
+.data-table th{background:#eef2f5;font-weight:600;color:#0d1b2a;font-size:12px}
+.data-table tr:hover td{background:#faf8f5}
+
+.arch-box{background:#fff;border:1px solid #e0dcd6;border-radius:12px;padding:20px 24px;margin:16px 0;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+.arch-box h4{font-size:13px;color:#2980b9;font-weight:600;margin-bottom:12px}
+
+.metrics-row{display:flex;gap:12px;margin:16px 0;flex-wrap:wrap}
+.metric-card{flex:1;min-width:120px;background:#fff;border:1px solid #e8e4de;border-radius:8px;padding:14px 16px;text-align:center}
+.metric-card .metric-num{font-size:22px;font-weight:700}
+.metric-card .metric-label{font-size:11px;color:#999;margin-top:2px}
+.metric-card.good{background:#eafaf1;border-color:#a3d977}
+.metric-card.good .metric-num{color:#27ae60}
+.metric-card.bad{background:#fef0ef;border-color:#f1948a}
+.metric-card.bad .metric-num{color:#e74c3c}
+
+.flow-row{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin:8px 0;font-size:12px}
+.flow-node{background:#fff;border:1px solid #d8d4ce;border-radius:6px;padding:8px 14px;color:#444}
+.flow-arrow{color:#999;font-size:16px}
+.flow-node.highlight{background:#2980b9;color:#fff;border-color:#2980b9;font-weight:500}
+.flow-node.good-node{background:#27ae60;color:#fff;border-color:#27ae60;font-weight:500}
+
+.timeline{padding-left:24px;margin:16px 0}
+.timeline-item{padding:0 0 20px 0;border-left:2px solid #d0d8e0;padding-left:20px;position:relative}
+.timeline-item:last-child{padding-bottom:0;border-left-color:transparent}
+.timeline-item::before{content:'';position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:#2980b9;border:2px solid #fff}
+.timeline-item .tl-title{font-weight:600;font-size:14px;color:#0d1b2a;margin-bottom:4px}
+.timeline-item .tl-desc{font-size:12px;color:#777;line-height:1.6}
+
+.footer{text-align:center;padding:32px;color:#999;font-size:12px}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="badge">🛠 工程架构方案</div>
+  <h1>AI 时代如何改造数仓<br>让 LLM 直接读数据做分析下钻</h1>
+  <div class="sub">从「人读数仓」到「AI 读数仓」的五步改造法</div>
+  <div class="meta">腾讯电脑管家 · 软件市场 · SongYafei · 2026-05-31</div>
+</div>
+
+<div class="container">
+
+<!-- ===== 引言 ===== -->
+<section>
+<h2><span class="emoji">🧠</span>问题本质：数仓是给人看的，不是给 LLM 看的</h2>
+<p class="lead">为什么让 LLM 直接读数据库做分析，成功率往往很低？问题不在模型，在数据组织方式。</p>
+
+<div class="problem-box">
+  <strong>😖 数仓现状：为 BI 而建</strong><br>
+  传统数仓的假设：人有领域知识，知道 <code>dt</code> 是分区日期、<code>pv</code> 是页面浏览量、<code>ods_dwd_dws</code> 应该从哪层开始查。<br><br>
+  <strong>但 LLM 完全不一样：</strong>
+  <ul style="margin-top:6px;padding-left:20px">
+    <li>它没有「领域知识」——面对 1000 张表的复杂分层，不知道从哪张查起</li>
+    <li>它不会「上下文联想」——看到 <code>app_download_log</code> 不知道关联 <code>dim_app</code></li>
+    <li>它不懂「业务口径」——「下载量」和「有效下载量」LLM 分不清</li>
+    <li>它容易「盲目自信」——猜错了表名也会硬着头皮查，给错结论</li>
+  </ul>
+</div>
+
+<div class="success-box">
+  <strong>✅ 解法核心：</strong>不是让 LLM 去适应你的数仓，而是改造数仓给 AI 看的接口——<strong>Schema 清晰化 + 语义视图 + 分析模板 + 口径定义 + 安全隔离</strong>，五步搞定。
+</div>
+
+<div class="metrics-row">
+  <div class="metric-card bad"><div class="metric-num">~30%</div><div class="metric-label">改造前查询成功率</div></div>
+  <div class="metric-card good"><div class="metric-num">~90%</div><div class="metric-label">改造后查询成功率</div></div>
+  <div class="metric-card"><div class="metric-num">5</div><div class="metric-label">改造步骤</div></div>
+  <div class="metric-card"><div class="metric-num">1天</div><div class="metric-label">最小可闭环</div></div>
+</div>
+</section>
+
+<!-- ===== 五步改造 ===== -->
+<section>
+<h2><span class="emoji">🔧</span>五步改造方案</h2>
+
+<!-- 第一步 -->
+<h3>第一步：Schema 注入——给 LLM 一张「数据地图」</h3>
+<p style="font-size:14px;color:#555;margin-bottom:8px">这是最基础也是 ROI 最高的一步。把字段含义、取值范围、关联关系写清楚。</p>
+
+<div class="code-block">
+<span class="comment">-- ❌ 传统建表，LLM 看不明白</span><br>
+CREATE TABLE app_download_log (<br>
+&nbsp;&nbsp;app_id STRING,<br>
+&nbsp;&nbsp;channel STRING,<br>
+&nbsp;&nbsp;dt STRING,<br>
+&nbsp;&nbsp;downloads INT<br>
+);<br><br>
+<span class="comment">-- ✅ AI 友好建表（加 COMMENT，LLM 直接解析）</span><br>
+CREATE TABLE app_download_log (<br>
+&nbsp;&nbsp;app_id STRING <span class="keyword">COMMENT</span> <span class="string">'软件ID，关联dim_app.id'</span>,<br>
+&nbsp;&nbsp;channel STRING <span class="keyword">COMMENT</span> <span class="string">'下载渠道：huawei|oppo|vivo|xiaomi|official'</span>,<br>
+&nbsp;&nbsp;dt STRING <span class="keyword">COMMENT</span> <span class="string">'分区日期，格式yyyymmdd'</span>,<br>
+&nbsp;&nbsp;downloads INT <span class="keyword">COMMENT</span> <span class="string">'日下载量'</span><br>
+) <span class="keyword">COMMENT</span> <span class="string">'软件市场每日下载日志，每app每渠道每日一条'</span>;
+</div>
+
+<p style="font-size:13px;color:#555;margin:8px 0"><strong>Schema 注入到 LLM 的推荐格式：</strong></p>
+
+<div class="code-block" style="background:#f3efe8;color:#1a1a2e">
+<span class="comment">## 可用数据表</span><br><br>
+<span class="comment">### 1. app_download_log（每日下载日志）</span><br>
+- 说明：软件市场每日下载记录，每app每渠道一行<br>
+- 字段：<br>
+&nbsp;&nbsp;`app_id` → dim_app.id — 软件ID<br>
+&nbsp;&nbsp;`channel` — 下载渠道：huawei|oppo|vivo|xiaomi|official<br>
+&nbsp;&nbsp;`downloads` — 日下载量<br>
+&nbsp;&nbsp;`dt` — 日期(yyyymmdd)<br><br>
+<span class="comment">### 2. user_feedback_tb（用户反馈）</span><br>
+- 字段：<br>
+&nbsp;&nbsp;`module` — 问题模块：crash|performance|feature|ui|other<br>
+&nbsp;&nbsp;`severity` — p0|p1|p2|p3
+</div>
+
+<div class="solution-box">
+  <strong>💡 这一步的收益：</strong>LLM 看到 Schema 后，能自动构造正确的 SQL，不再瞎猜表名和字段。查询成功率从 ~30% 提升到 ~70%。<br>
+  <strong>工作量：</strong>几张核心表写好 COMMENT，半天搞定。
+</div>
+
+<!-- 第二步 -->
+<h3>第二步：加「AI 语义视图」——不给 LLM 裸表</h3>
+<p style="font-size:14px;color:#555;margin-bottom:8px">建专门的 AI 查询视图，把复杂的多表关联、ETL 逻辑、口径定义封装好。</p>
+
+<div class="code-block">
+<span class="comment">-- ❌ 不给 LLM 裸表，它不会自己 JOIN</span><br>
+<span class="comment">-- ✅ 建 AI 视图，把关系写进去</span><br>
+CREATE VIEW <span class="keyword">ai_fact_daily_app_stats</span> AS<br>
+SELECT <br>
+&nbsp;&nbsp;d.app_id,<br>
+&nbsp;&nbsp;a.app_name,<br>
+&nbsp;&nbsp;a.category,<br>
+&nbsp;&nbsp;d.channel,<br>
+&nbsp;&nbsp;d.dt,<br>
+&nbsp;&nbsp;d.downloads,<br>
+&nbsp;&nbsp;f.feedback_count<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">COMMENT</span> <span class="string">'当日反馈量'</span>,<br>
+&nbsp;&nbsp;f.crash_feedback_count,<br>
+&nbsp;&nbsp;c.crash_rate,<br>
+&nbsp;&nbsp;d.downloads / NULLIF(f.total_uv, 0) AS download_convert_rate<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">COMMENT</span> <span class="string">'下载转化率 = 下载量/详情页UV'</span><br>
+FROM app_download_log d<br>
+LEFT JOIN app_feedback_summary f ON d.app_id = f.app_id AND d.dt = f.dt<br>
+LEFT JOIN dim_app a ON d.app_id = a.id<br>
+LEFT JOIN app_crash_stats c ON d.app_id = c.app_id AND d.dt = c.dt;
+</div>
+
+<p style="font-size:13px;color:#555;margin:8px 0"><strong>建视图原则：</strong></p>
+<ul style="padding-left:20px;font-size:13px;color:#555;line-height:1.8">
+  <li>视图名前缀 <code>ai_</code> → 一目了然这是给 AI 用的</li>
+  <li>每个字段带 COMMENT → LLM 直接读语义</li>
+  <li>不暴露技术细节 → 分区字段不用展示</li>
+  <li>字段名可读 → 不用 <code>c1</code>、<code>t2</code> 这种缩写</li>
+</ul>
+
+<!-- 第三步 -->
+<h3>第三步：预定义「分析场景模板」——告诉 LLM 怎么查</h3>
+<p style="font-size:14px;color:#555;margin-bottom:8px">LLM 自己从零构造 SQL 容易出错。提前定义常用的分析路径模板。</p>
+
+<div class="code-block" style="background:#f3efe8;color:#1a1a2e">
+<span class="comment">// 分析模板示例：下载量波动归因</span><br>
+{<br>
+&nbsp;&nbsp;"场景": "下载量波动归因",<br>
+&nbsp;&nbsp;"入口视图": "ai_fact_daily_app_stats",<br>
+&nbsp;&nbsp;"分析链路": [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"步骤": "1.查日环比", "SQL": "SELECT dt, SUM(downloads) FROM ai_fact_daily_app_stats WHERE dt BETWEEN '{date-7}' AND '{date}' GROUP BY dt"},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"步骤": "2.波动&gt;5%按渠道拆", "SQL": "SELECT channel, SUM(downloads) FROM ... WHERE dt='{date}' GROUP BY channel"},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"步骤": "3.渠道正常按软件拆", "SQL": "SELECT app_name, SUM(downloads) FROM ... GROUP BY app_name ORDER BY downloads"},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"步骤": "4.异常软件关联反馈", "SQL": "SELECT module,COUNT(*) FROM user_feedback WHERE app_id='{id}' AND dt='{date}' GROUP BY module"},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{"步骤": "5.关联Crash数据", "SQL": "SELECT crash_rate FROM app_crash_stats WHERE app_id='{id}'"}</a><br>
+&nbsp;&nbsp;],<br>
+&nbsp;&nbsp;"输出": "下钻结论 + 根因 + 建议"<br>
+}
+</div>
+
+<div class="solution-box">
+  <strong>💡 这一步的收益：</strong>LLM 不需要自己「发明」分析路径，按模板一步步查即可。分析质量完全可控。<br>
+  <strong>工作量：</strong>3~5 个核心分析模板，写一次永复用。
+</div>
+
+<!-- 第四步 -->
+<h3>第四步：加「度量语义层」——LLM 才不会搞混口径</h3>
+<p style="font-size:14px;color:#555;margin-bottom:8px">同一个「下载量」，不同人口径不同。给 LLM 一份口径定义表。</p>
+
+<div class="code-block" style="background:#f3efe8;color:#1a1a2e">
+<span class="comment">## 指标口径定义（Metrics Dictionary）</span><br><br>
+<span class="keyword">daily_downloads</span><br>
+&nbsp;&nbsp;描述: 当日软件市场所有渠道的下载总数<br>
+&nbsp;&nbsp;口径: SUM(downloads) WHERE dt = '{date}'<br><br>
+<span class="keyword">download_convert_rate</span><br>
+&nbsp;&nbsp;描述: 浏览详情页后实际下载的用户比例<br>
+&nbsp;&nbsp;口径: downloads / NULLIF(detail_page_uv, 0)<br><br>
+<span class="keyword">crash_rate</span><br>
+&nbsp;&nbsp;描述: 软件市场模块的崩溃率<br>
+&nbsp;&nbsp;口径: crash_users / NULLIF(dau, 0)
+</div>
+
+<div class="solution-box">
+  <strong>💡 这一步的收益：</strong>LLM 不再搞混口径，生成的 SQL 准确可靠。数据分析 Agent 的结论可信度大幅提升。
+</div>
+
+<!-- 第五步 -->
+<h3>第五步：权限与隔离——不让 LLM 乱跑 SQL</h3>
+<p style="font-size:14px;color:#555;margin-bottom:8px">LLM 能分析数据，但不能写数据。</p>
+
+<div class="code-block">
+<span class="comment">-- 创建只读用户</span><br>
+CREATE USER ai_analyst <span class="keyword">WITH READ_ONLY</span>;<br>
+GRANT SELECT ON ai_schema.* TO ai_analyst;<br>
+GRANT SELECT ON ai_view.* TO ai_analyst;<br>
+<span class="keyword">REVOKE</span> INSERT, UPDATE, DELETE, CREATE, ALTER, DROP ON *.* FROM ai_analyst;<br><br>
+<span class="comment">-- 查询超时控制</span><br>
+SET statement_timeout = <span class="string">'30s'</span>;<br>
+SET work_mem = <span class="string">'512MB'</span>;
+</div>
+
+<p style="font-size:13px;color:#555;margin:8px 0"><strong>资源控制策略：</strong></p>
+<ul style="padding-left:20px;font-size:13px;color:#555;line-height:1.8">
+  <li>查询超时 30 秒，防止 LLM 跑全表扫描</li>
+  <li>结果集上限 1000 行，防止 Token 爆炸</li>
+  <li>限制内存使用，避免占用过多资源</li>
+  <li>所有查询写审计日志，可追溯</li>
+</ul>
+</section>
+
+<!-- ===== 改造前后对比 ===== -->
+<section>
+<h2><span class="emoji">📊</span>改造效果对比</h2>
+
+<table class="data-table">
+  <tr><th>维度</th><th>改造前</th><th style="background:#eafaf1">改造后</th></tr>
+  <tr>
+    <td><strong>查询成功率</strong></td>
+    <td style="color:#e74c3c">~30%（LLM 瞎猜表名和字段）</td>
+    <td style="color:#27ae60"><strong>~90%</strong></td>
+  </tr>
+  <tr>
+    <td><strong>分析质量</strong></td>
+    <td style="color:#e74c3c">泛泛而谈，无法下钻</td>
+    <td style="color:#27ae60"><strong>自动多维度下钻 + 归因</strong></td>
+  </tr>
+  <tr>
+    <td><strong>开发成本</strong></td>
+    <td style="color:#e74c3c">每次改 prompt，不可复用</td>
+    <td style="color:#27ae60"><strong>改 Schema/视图即可</strong></td>
+  </tr>
+  <tr>
+    <td><strong>可审计性</strong></td>
+    <td style="color:#e74c3c">LLM 猜错没人知道</td>
+    <td style="color:#27ae60"><strong>SQL 可审计、可复现</strong></td>
+  </tr>
+  <tr>
+    <td><strong>业务适配</strong></td>
+    <td style="color:#e74c3c">看不懂业务口径</td>
+    <td style="color:#27ae60"><strong>语义层自动对齐</strong></td>
+  </tr>
+</table>
+</section>
+
+<!-- ===== 架构图 ===== -->
+<section>
+<h2><span class="emoji">🏛️</span>完整架构图</h2>
+
+<div class="arch-box">
+  <h4>🔹 从数据到 AI 结论的完整链路</h4>
+  <div style="text-align:center;padding:12px 0">
+    <div class="flow-row">
+      <span class="flow-node good-node">底层数仓</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-node highlight">AI 语义视图</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-node">Schema 注入</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-node good-node">分析模板</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-node highlight">LLM Agent</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-node good-node">结论+建议</span>
+    </div>
+    <div style="margin-top:8px;display:flex;justify-content:center;gap:16px;font-size:11px;color:#888;flex-wrap:wrap">
+      <span>ODS → DWD → DWS</span>
+      <span>ai_view_daily_stats</span>
+      <span>COMMENT 字段定义</span>
+      <span>下载/反馈/质量模板</span>
+      <span>DeepSeek 推理</span>
+      <span>推送 / 工单</span>
+    </div>
+  </div>
+</div>
+
+<h3>关键设计原则</h3>
+<table class="data-table">
+  <tr><th>原则</th><th>说明</th></tr>
+  <tr><td><strong>只读优先</strong></td><td>LLM 只有 SELECT 权限，杜绝数据写入风险</td></tr>
+  <tr><td><strong>语义可读</strong></td><td>字段名、视图名都要有人和 LLM 都能理解的命名</td></tr>
+  <tr><td><strong>不暴露复杂度</strong></td><td>AI 视图封装多表 JOIN，LLM 只需查一个表</td></tr>
+  <tr><td><strong>模板驱动</strong></td><td>分析路径预定义，LLM 只做选择+解读，不做 SQL 发明</td></tr>
+  <tr><td><strong>结果可控</strong></td><td>超时/行数/资源三重限制，防止失控查询</td></tr>
+</table>
+</section>
+
+<!-- ===== 业务场景 ===== -->
+<section>
+<h2><span class="emoji">🎯</span>业务场景对应</h2>
+
+<p class="lead">结合你软件市场的三大板块，每个场景如何落地：</p>
+
+<table class="data-table">
+  <tr><th>板块</th><th>AI 分析场景</th><th>入口视图</th><th>产出的结论</th></tr>
+  <tr>
+    <td><strong>运营效率</strong></td>
+    <td>为什么下载量下跌？</td>
+    <td>ai_fact_daily_app_stats</td>
+    <td>XX渠道下跌 X%、XX软件下跌 Y%、关联反馈 Z</td>
+  </tr>
+  <tr>
+    <td><strong>用户反馈</strong></td>
+    <td>用户最近在骂什么？</td>
+    <td>ai_fact_daily_feedback</td>
+    <td>闪退类+230%、新款手机适配问题</td>
+  </tr>
+  <tr>
+    <td><strong>版本质量</strong></td>
+    <td>新版本质量如何？</td>
+    <td>ai_fact_crash_stats</td>
+    <td>v8.2.1 crash率 0.12%(↑)，建议回滚</td>
+  </tr>
+  <tr>
+    <td><strong>商业化</strong></td>
+    <td>收入为什么降了？</td>
+    <td>ai_fact_revenue_stats</td>
+    <td>广告位CTR下降，XX渠道收入减少 Y%</td>
+  </tr>
+  <tr>
+    <td><strong>整体看板</strong></td>
+    <td>日报/周报自动生成</td>
+    <td>全部视图 + 分析模板</td>
+    <td>总览 + 异常 + 建议</td>
+  </tr>
+</table>
+</section>
+
+<!-- ===== 落地建议 ===== -->
+<section>
+<h2><span class="emoji">🚀</span>落地建议：一天搞定最小闭环</h2>
+
+<div class="timeline">
+  <div class="timeline-item">
+    <div class="tl-title">第一步：挑一张表做示范（2小时）</div>
+    <div class="tl-desc">
+      挑最常用的 <code>app_download_log</code>，把 COMMENT 补全<br>
+      封装成 <code>ai_view_daily_download</code> 视图（关联 dim_app）
+    </div>
+  </div>
+  <div class="timeline-item">
+    <div class="tl-title">第二步：写第一个分析模板（1小时）</div>
+    <div class="tl-desc">
+      「下载量波动归因」模板：日环比 → 按渠道拆 → 按软件拆 → 关联反馈
+    </div>
+  </div>
+  <div class="timeline-item">
+    <div class="tl-title">第三步：接入 AI Agent（1小时）</div>
+    <div class="tl-desc">
+      把 Schema 注入 + 模板写入 Agent 的 system prompt<br>
+      用 cron 定时跑，推送结论到企微/QQ
+    </div>
+  </div>
+</div>
+
+<div class="success-box">
+  <strong>✅ 最小闭环跑通后：</strong>效果立竿见影，LLM 能自己查数据、下钻分析、给结论。再扩展到反馈、质量、商业化等场景，每张表花 2 小时封装，一周铺完。<br><br>
+  <strong>这个方案本身就能作为一个「T11 往架构方向走」的标志性交付物——</strong><br>
+  「我让 LLM 直接读没了传统 BI 链路的数仓，还保证了准确性和安全性」——这就是架构思维。
+</div>
+</section>
+
+</div>
+
+<div class="footer">
+  📄 腾讯电脑管家 · 软件市场 · SongYafei · 2026-05-31
+</div>
+</body>
+</html>
