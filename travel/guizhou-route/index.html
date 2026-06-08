@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>贵州行程路线图 · 安顺屯堡深度游</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,"PingFang SC","Noto Sans SC",sans-serif;background:#f5f3f0;color:#1a1a2e;line-height:1.7}
+.header-bar{background:linear-gradient(135deg,#1a3a2a 0%,#3a6a5a 100%);padding:36px 20px 28px;text-align:center}
+.header-bar .back{display:inline-block;color:rgba(255,255,255,0.35);font-size:12px;text-decoration:none;margin-bottom:8px}
+.header-bar h1{font-size:22px;font-weight:700;color:#fff;margin:0 auto 6px;line-height:1.3}
+.header-bar .sub{font-size:13px;color:rgba(255,255,255,0.45)}
+.header-bar .meta{font-size:11px;color:rgba(255,255,255,0.25);margin-top:8px}
+.container{max-width:780px;margin:0 auto;padding:0 16px 32px}
+section{padding:28px 0;border-bottom:1px solid #e8e4de}
+section:last-child{border-bottom:none}
+h2{font-size:18px;font-weight:700;color:#1a3a2a;margin-bottom:12px}
+h3{font-size:15px;font-weight:600;color:#2d5a4a;margin:16px 0 8px}
+.map-container{background:#fff;border-radius:14px;padding:24px 20px 20px;margin:12px 0;box-shadow:0 2px 12px rgba(0,0,0,0.06);text-align:center}
+#route-map{width:100%;max-width:600px;height:auto;margin:0 auto;display:block;border-radius:8px}
+.map-legend{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:12px;font-size:11px}
+.dot{display:inline-block;width:12px;height:12px;border-radius:50%;flex-shrink:0}
+.dot.red{background:#e74c3c}
+.dot.orange{background:#e67e22}
+.dot.green{background:#27ae60}
+.dot.blue{background:#3498db}
+.dot.purple{background:#9b59b6}
+.city-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+@media(max-width:580px){.city-grid{grid-template-columns:1fr}}
+.city-card{background:#fff;border:1px solid #e0dcd6;border-radius:10px;padding:14px 16px;position:relative;overflow:hidden}
+.city-card .city-name{font-size:15px;font-weight:700;margin-bottom:2px}
+.city-card .city-tag{font-size:10px;color:#999;margin-bottom:6px}
+.city-card .city-detail{font-size:12px;color:#555;line-height:1.6}
+.city-card .city-stay{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;background:#f3efe8;color:#666;margin-top:6px}
+.timeline-card{background:#fff;border:1px solid #e0dcd6;border-radius:10px;padding:16px 18px;margin:10px 0}
+.timeline-card .tl-day{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px dashed #f0ece6}
+.timeline-card .tl-day:last-child{border-bottom:none;padding-bottom:0}
+.timeline-card .tl-icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;color:#fff}
+.timeline-card .tl-content{flex:1}
+.timeline-card .tl-title{font-weight:600;font-size:13px;color:#1a3a2a}
+.timeline-card .tl-desc{font-size:12px;color:#666;line-height:1.6;margin-top:2px}
+.timeline-card .tl-drive{font-size:11px;color:#999;margin-top:2px}
+.budget-table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
+.budget-table th,.budget-table td{padding:8px 10px;text-align:left;border-bottom:1px solid #e8e4de}
+.budget-table th{background:#eef2f0;font-weight:600;color:#1a3a2a;font-size:12px}
+.success-box{background:#eafaf1;border-left:4px solid #27ae60;padding:14px 16px;margin:12px 0;border-radius:0 8px 8px 0;font-size:13px;color:#1e4a2e}
+.footer{text-align:center;padding:24px;color:#999;font-size:12px}
+.footer a{color:#2d5a4a}
+</style></head>
+<body>
+<div class="header-bar">
+  <a class="back" href="/travel/">← 返回旅游方案</a>
+  <h1>🗺️ 贵州行程 · 路线总览</h1>
+  <div class="sub">6月16日~6月21日 · 6天5晚 · 4城5站</div>
+  <div class="meta">📅 更新于 2026-06-08</div>
+</div>
+<div class="container">
+<section>
+<h2>📍 路线总览</h2>
+<div class="success-box">
+<strong>深圳 → 安顺（2天）→ 荔波（1天）→ 西江苗寨（1天）→ 贵阳（1天）→ 返程</strong><br>
+全线每天车程≤2.5h，不走回头路，带娃轻松
+</div>
+<div class="map-container">
+<svg id="route-map" viewBox="0 0 580 440" xmlns="http://www.w3.org/2000/svg" style="max-width:580px;font-family:-apple-system,sans-serif">
+<rect width="580" height="440" fill="#f0f7f3" rx="12"/>
+<line x1="70" y1="370" x2="100" y2="210" stroke="#bdc3c7" stroke-width="2.5" stroke-dasharray="6,4"/>
+<polygon points="102,210 94,218 110,218" fill="#bdc3c7"/>
+<line x1="155" y1="210" x2="290" y2="230" stroke="#bdc3c7" stroke-width="2.5" stroke-dasharray="6,4"/>
+<polygon points="292,230 284,222 283,238" fill="#bdc3c7"/>
+<line x1="345" y1="235" x2="420" y2="150" stroke="#bdc3c7" stroke-width="2.5" stroke-dasharray="6,4"/>
+<polygon points="422,150 413,144 414,160" fill="#bdc3c7"/>
+<line x1="440" y1="105" x2="260" y2="80" stroke="#bdc3c7" stroke-width="2.5" stroke-dasharray="6,4"/>
+<polygon points="258,80 266,88 267,72" fill="#bdc3c7"/>
+<circle cx="70" cy="370" r="20" fill="#e74c3c" opacity="0.9"/>
+<text x="70" y="370" text-anchor="middle" dy="5" fill="#fff" font-size="10" font-weight="700">深圳</text>
+<text x="70" y="400" text-anchor="middle" fill="#888" font-size="9">出发 ✈</text>
+<circle cx="145" cy="210" r="22" fill="#e67e22" opacity="0.9"/>
+<text x="145" y="210" text-anchor="middle" dy="4" fill="#fff" font-size="10" font-weight="700">安顺</text>
+<text x="145" y="237" text-anchor="middle" fill="#888" font-size="9">Day 2~3 · 2天</text>
+<circle cx="300" cy="230" r="18" fill="#27ae60" opacity="0.9"/>
+<text x="300" y="230" text-anchor="middle" dy="4" fill="#fff" font-size="9" font-weight="700">荔波</text>
+<text x="300" y="257" text-anchor="middle" fill="#888" font-size="9">Day 4 · 1天</text>
+<circle cx="425" cy="130" r="18" fill="#3498db" opacity="0.9"/>
+<text x="425" y="130" text-anchor="middle" dy="4" fill="#fff" font-size="9" font-weight="700">西江</text>
+<text x="425" y="157" text-anchor="middle" fill="#888" font-size="9">Day 5 · 1天</text>
+<circle cx="240" cy="70" r="22" fill="#9b59b6" opacity="0.9"/>
+<text x="240" y="70" text-anchor="middle" dy="4" fill="#fff" font-size="10" font-weight="700">贵阳</text>
+<text x="240" y="97" text-anchor="middle" fill="#888" font-size="9">Day 6 · 返程</text>
+<text x="78" y="288" fill="#999" font-size="9" transform="rotate(-78,78,288)">✈ 1h50min</text>
+<text x="210" y="208" fill="#999" font-size="9" transform="rotate(4,210,208)">🚗 2.5h</text>
+<text x="350" y="198" fill="#999" font-size="9" transform="rotate(-30,350,198)">🚗 2h</text>
+<text x="370" y="102" fill="#999" font-size="9" transform="rotate(-12,370,102)">🚗 2.5h</text>
+</svg>
+<div class="map-legend">
+<span><span class="dot red"></span> 深圳</span>
+<span><span class="dot orange"></span> 安顺(2天)</span>
+<span><span class="dot green"></span> 荔波(1天)</span>
+<span><span class="dot blue"></span> 西江(1天)</span>
+<span><span class="dot purple"></span> 贵阳(返程)</span>
+</div>
+</div>
+</section>
+<section>
+<h2>🏙 各城市概况</h2>
+<div class="city-grid">
+<div class="city-card" style="border-left:4px solid #e74c3c">
+<div class="city-name">🛫 深圳</div>
+<div class="city-tag">出发地</div>
+<div class="city-detail">6/16下午飞贵阳，¥280直达17:05→18:55</div>
+</div>
+<div class="city-card" style="border-left:4px solid #e67e22">
+<div class="city-name">🏘 安顺</div>
+<div class="city-tag">深度游核心 · 住2晚</div>
+<div class="city-detail">云峰八寨·本寨·云山屯·旧州古镇·鲍家屯·地戏<br>周边：黄果树瀑布(30min车程)</div>
+<div class="city-stay">⏱ 6/16晚~6/18 · 2天2晚</div>
+</div>
+<div class="city-card" style="border-left:4px solid #27ae60">
+<div class="city-name">🌊 荔波</div>
+<div class="city-tag">途经1天</div>
+<div class="city-detail">小七孔景区，地球腰带上的绿宝石<br>卧龙潭·水上森林·68级跌水</div>
+<div class="city-stay">⏱ 6/19 · 1天</div>
+</div>
+<div class="city-card" style="border-left:4px solid #3498db">
+<div class="city-name">🏘 西江千户苗寨</div>
+<div class="city-tag">途中停留</div>
+<div class="city-detail">世界最大苗族聚居区<br>白天逛寨子+晚上万家灯火夜景</div>
+<div class="city-stay">⏱ 6/19晚~6/20 · 1天1晚</div>
+</div>
+<div class="city-card" style="grid-column:span 2;border-left:4px solid #9b59b6">
+<div class="city-name">🍜 贵阳</div>
+<div class="city-tag">终点 + 返程</div>
+<div class="city-detail">黔灵山看猴子·青云路夜市吃丝娃娃肠旺面·花溪牛肉粉</div>
+<div class="city-stay">⏱ 6/20下午~6/21 · 1天1晚</div>
+</div>
+</div>
+</section>
+<section>
+<h2>📅 逐日路线</h2>
+<div class="timeline-card">
+<div class="tl-day"><div class="tl-icon" style="background:#e74c3c">D1</div><div class="tl-content"><div class="tl-title">6/16（周二）— 深圳→贵阳→安顺</div><div class="tl-desc">17:05深圳飞（¥280）→ 18:55到贵阳 → 驱车1h到安顺 → 晚上逛顾府街吃夺夺粉火锅</div><div class="tl-drive">✈ 1h50min + 🚗 1h  |  🏨 安顺市区</div></div></div>
+<div class="tl-day"><div class="tl-icon" style="background:#e67e22">D2</div><div class="tl-content"><div class="tl-title">6/17（周三）— 安顺 · 屯堡深度游</div><div class="tl-desc">上午：本寨（石头碉楼迷宫）+ 云山屯（山巅屯堡）→ 中午屯堡农家饭 → 下午：雷屯地戏表演 + 博物馆 → 晚上回安顺</div><div class="tl-drive">🚗 市区→屯堡30min  |  🏨 安顺市区</div></div></div>
+<div class="tl-day"><div class="tl-icon" style="background:#e67e22">D3</div><div class="tl-content"><div class="tl-title">6/18（周四）— 旧州古镇 + 黄果树瀑布</div><div class="tl-desc">上午：旧州古镇（打铁铺/豆腐坊）+ 鲍家屯（古水利）→ 下午：黄果树瀑布（~4h，雨季水量最大）→ 住黄果树附近</div><div class="tl-drive">🚗 安顺→旧州40min → 黄果树50min  |  🏨 黄果树附近</div></div></div>
+<div class="tl-day"><div class="tl-icon" style="background:#27ae60">D4</div><div class="tl-content"><div class="tl-title">6/19（周五）— 黄果树→荔波小七孔→西江苗寨</div><div class="tl-desc">早起驱车2.5h到荔波 → 游小七孔（踩水/瀑布/卧龙潭）→ 下午晚些驱车2h到西江苗寨 → 晚上看万家灯火夜景</div><div class="tl-drive">🚗 黄果树→荔波2.5h → 西江2h  |  🏨 西江苗寨民宿</div></div></div>
+<div class="tl-day"><div class="tl-icon" style="background:#3498db">D5</div><div class="tl-content"><div class="tl-title">6/20（周六）— 西江苗寨→贵阳</div><div class="tl-desc">上午逛白天苗寨+梯田+蜡染体验 → 中午长桌宴吃酸汤鱼 → 下午驱车2.5h回贵阳 → 晚上青云路夜市</div><div class="tl-drive">🚗 西江→贵阳2.5h  |  🏨 贵阳</div></div></div>
+<div class="tl-day"><div class="tl-icon" style="background:#9b59b6">D6</div><div class="tl-content"><div class="tl-title">6/21（周日）— 贵阳→深圳</div><div class="tl-desc">上午黔灵山看猴子 → 中午花溪牛肉粉 → 下午去机场 → 18:05飞回深圳（¥180起）或 08:00直达（¥620）</div><div class="tl-drive">✈ 1h50min 到家</div></div></div>
+</div>
+</section>
+<section>
+<h2>💰 预算速览</h2>
+<table class="budget-table">
+<tr><th>项目</th><th>金额</th></tr>
+<tr><td>✈️ 往返机票（3人）</td><td>¥1,380~¥2,820</td></tr>
+<tr><td>🏨 住宿（5晚×¥280）</td><td>~¥1,400</td></tr>
+<tr><td>🚗 当地交通（租车≈5天）</td><td>~¥1,500</td></tr>
+<tr><td>🎫 门票（屯堡+黄果树+小七孔+苗寨+黔灵山）</td><td>~¥650</td></tr>
+<tr><td>🍜 餐饮（6天×¥250）</td><td>~¥1,500</td></tr>
+<tr><td style="font-weight:700"><strong>总计</strong></td><td style="font-weight:700;color:#c0392b"><strong>约 ¥6,430 ~ ¥7,870</strong></td></tr>
+</table>
+</section>
+</div>
+<div class="footer">
+<a href="/travel/guizhou-anshun-tunpu/">← 查看完整攻略</a> · 虾飞飞 @ 2026-06-08
+</div>
+</body></html>
