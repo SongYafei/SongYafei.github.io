@@ -83,44 +83,70 @@ h3{font-size:15px;font-weight:600;color:#2d5a4a;margin:16px 0 8px}
 <strong>深圳🚄→安顺（2天）→黄果树（1天）→荔波（1天）→西江苗寨（1天）→贵阳🚄→深圳</strong><br>
 全程不走回头路，每天车程≤2.5h
 </div>
-<div class="map-container">
-<svg viewBox="0 0 580 440" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:-apple-system,sans-serif">
-<rect width="580" height="440" fill="#f0f7f3" rx="12"/>
-<line x1="70" y1="370" x2="100" y2="210" stroke="#bdc3c7" stroke-width="2.5" stroke-dasharray="6,4"/>
-<polygon points="102,210 94,218 110,218" fill="#bdc3c7"/>
-<line x1="155" y1="210" x2="290" y2="230" stroke="#bdc3c7" stroke-width="2.5" stroke-dasharray="6,4"/>
-<polygon points="292,230 284,222 283,238" fill="#bdc3c7"/>
-<line x1="345" y1="235" x2="420" y2="150" stroke="#bdc3c7" stroke-width="2.5" stroke-dasharray="6,4"/>
-<polygon points="422,150 413,144 414,160" fill="#bdc3c7"/>
-<line x1="440" y1="105" x2="260" y2="80" stroke="#bdc3c7" stroke-width="2.5" stroke-dasharray="6,4"/>
-<polygon points="258,80 266,88 267,72" fill="#bdc3c7"/>
-<circle cx="70" cy="370" r="20" fill="#e74c3c" opacity="0.9"/>
-<text x="70" y="370" text-anchor="middle" dy="5" fill="#fff" font-size="10" font-weight="700">深圳</text>
-<text x="70" y="398" text-anchor="middle" fill="#888" font-size="8">出发 🚄</text>
-<circle cx="145" cy="210" r="22" fill="#e67e22" opacity="0.9"/>
-<text x="145" y="210" text-anchor="middle" dy="4" fill="#fff" font-size="10" font-weight="700">安顺</text>
-<text x="145" y="237" text-anchor="middle" fill="#888" font-size="9">Day 1~3</text>
-<circle cx="300" cy="230" r="18" fill="#27ae60" opacity="0.9"/>
-<text x="300" y="230" text-anchor="middle" dy="4" fill="#fff" font-size="9" font-weight="700">荔波</text>
-<text x="300" y="257" text-anchor="middle" fill="#888" font-size="9">Day 4</text>
-<circle cx="425" cy="130" r="18" fill="#3498db" opacity="0.9"/>
-<text x="425" y="130" text-anchor="middle" dy="4" fill="#fff" font-size="9" font-weight="700">西江</text>
-<text x="425" y="157" text-anchor="middle" fill="#888" font-size="9">Day 5</text>
-<circle cx="240" cy="70" r="22" fill="#9b59b6" opacity="0.9"/>
-<text x="240" y="70" text-anchor="middle" dy="4" fill="#fff" font-size="10" font-weight="700">贵阳</text>
-<text x="240" y="97" text-anchor="middle" fill="#888" font-size="9">返程 🚄</text>
-<text x="78" y="288" fill="#999" font-size="9" transform="rotate(-78,78,288)">🚄 4h29min</text>
-<text x="210" y="208" fill="#999" font-size="9" transform="rotate(4,210,208)">🚗 2.5h</text>
-<text x="350" y="198" fill="#999" font-size="9" transform="rotate(-30,350,198)">🚗 2h</text>
-<text x="370" y="102" fill="#999" font-size="9" transform="rotate(-12,370,102)">🚗 2.5h</text>
-</svg>
-<div class="map-legend">
-<span><span class="dot red"></span> 深圳</span>
-<span><span class="dot orange"></span> 安顺(3天)</span>
-<span><span class="dot green"></span> 荔波(1天)</span>
-<span><span class="dot blue"></span> 西江(1天)</span>
-<span><span class="dot purple"></span> 贵阳(返程)</span>
-</div>
+<div class="map-container" style="padding:10px">
+<div id="route-map" style="width:100%;height:380px;border-radius:10px;overflow:hidden"></div>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  (function(){
+    var map = L.map('route-map', { zoomControl: true, attributionControl: false }).setView([26.0, 108.3], 7);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18
+    }).addTo(map);
+    
+    var points = [
+      { name:'深圳', day:'出发 🚄', lat:22.5431, lng:114.0579, icon:'red', desc:'6/16 G3732 08:56→13:25' },
+      { name:'安顺', day:'Day 1~3', lat:26.2532, lng:105.9467, icon:'orange', desc:'6/16~18 屯堡+深度游，住2晚' },
+      { name:'黄果树', day:'Day 3', lat:25.9849, lng:105.667, icon:'orange', desc:'6/18 瀑布 🏞️' },
+      { name:'荔波', day:'Day 4', lat:25.4107, lng:107.8833, icon:'green', desc:'6/19 小七孔 🌊' },
+      { name:'西江苗寨', day:'Day 5', lat:26.4911, lng:108.1833, icon:'blue', desc:'6/19晚~20 苗寨夜景🏮' },
+      { name:'贵阳', day:'返程 🚄', lat:26.647, lng:106.6302, icon:'purple', desc:'6/20~21 G3735 13:46→18:17' },
+    ];
+    
+    var colors = { red:'#e74c3c', orange:'#e67e22', green:'#27ae60', blue:'#3498db', purple:'#9b59b6' };
+    var markers = [];
+    points.forEach(function(p, i) {
+      var icon = L.divIcon({
+        className: '',
+        html: '<div style="width:36px;height:36px;border-radius:50%;background:'+colors[p.icon]+';display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.3);border:2px solid #fff">'+p.day.replace(/ .*/,'')+'</div>',
+        iconSize: [36, 36],
+        iconAnchor: [18, 18]
+      });
+      var m = L.marker([p.lat, p.lng], { icon: icon }).addTo(map);
+      m.bindPopup('<b>'+p.name+'</b><br>'+p.day+'<br><span style="font-size:11px;color:#888">'+p.desc+'</span>');
+      markers.push(m);
+    });
+    
+    // 路线：深圳→贵阳(🚄) 贵阳→安顺(🚗) 安顺→黄果树(🚗) 黄果树→荔波(🚗) 荔波→西江(🚗) 西江→贵阳(🚗)
+    var route = [
+      [points[0], points[5], '#e74c3c', '🚄 4h29min'],
+      [points[5], points[1], '#e67e22', '🚗 1h'],
+      [points[1], points[2], '#e67e22', '🚗 30min'],
+      [points[2], points[3], '#27ae60', '🚗 2h'],
+      [points[3], points[4], '#3498db', '🚗 2h'],
+      [points[4], points[5], '#9b59b6', '🚗 2.5h'],
+    ];
+    route.forEach(function(r) {
+      var line = L.polyline([[r[0].lat, r[0].lng], [r[1].lat, r[1].lng]], {
+        color: r[2], weight: 3, opacity: 0.7, dashArray: '8,6'
+      }).addTo(map);
+      var midLat = (r[0].lat + r[1].lat) / 2;
+      var midLng = (r[0].lng + r[1].lng) / 2;
+      L.marker([midLat, midLng], {
+        icon: L.divIcon({
+          className: '',
+          html: '<span style="background:rgba(255,255,255,0.9);padding:2px 6px;border-radius:8px;font-size:10px;font-weight:600;color:#555;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,0.1)">'+r[3]+'</span>',
+          iconSize: [0, 0],
+          iconAnchor: [0, 0]
+        })
+      }).addTo(map);
+    });
+    
+    // 缩放到所有marker
+    var group = L.featureGroup(markers);
+    map.fitBounds(group.getBounds().pad(0.1));
+  })();
+</script>
 </div>
 </section>
 
