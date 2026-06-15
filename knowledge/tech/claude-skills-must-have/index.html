@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Claude千万别裸装，这几个skills必须装上！</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Georgia","Noto Serif SC","Source Han Serif SC","PingFang SC",serif;background:#f7f3eb;color:#2c2c2c;padding:0;line-height:1.9}
+.container{max-width:720px;margin:0 auto;padding:0 20px}
+.header-bar{background:linear-gradient(135deg,#1a1a4e 0%,#2d1b69 100%);padding:28px 24px;text-align:center;margin-bottom:0}
+.header-bar .back{display:inline-block;color:rgba(255,255,255,0.4);font-size:12px;text-decoration:none;margin-bottom:8px;font-family:-apple-system,sans-serif}
+.header-bar .back:hover{color:#667eea}
+.header-bar h1{font-size:20px;font-weight:700;color:#fff;line-height:1.4;max-width:640px;margin:0 auto;font-family:-apple-system,"PingFang SC",sans-serif}
+.header-bar .meta{font-size:11px;color:rgba(255,255,255,0.35);margin-top:10px;font-family:-apple-system,"PingFang SC",sans-serif}
+.header-bar .meta a{color:#667eea}
+.article{background:#fcf9f5;padding:40px 32px 48px;border-radius:4px;margin:0 auto;max-width:680px}
+.article p{margin:14px 0;font-size:16px;color:#2c2c2c;text-align:justify}
+.article h2{font-size:19px;margin:32px 0 14px;color:#1a1a2e;font-weight:700;padding-bottom:6px;border-bottom:2px solid #e8e0d4;font-family:-apple-system,"PingFang SC",sans-serif}
+.article h3{font-size:17px;margin:24px 0 10px;color:#1a1a2e;font-weight:600}
+.article ul{margin:10px 0 14px 20px;font-size:15px;color:#333}
+.article li{margin:6px 0}
+.article .highlight{background:#f3efe8;border-left:4px solid #667eea;padding:14px 18px;margin:18px 0;border-radius:0 6px 6px 0;color:#444;font-size:15px;line-height:1.8}
+.article .tag-inline{display:inline-block;background:#e8e0d4;padding:2px 10px;border-radius:4px;font-size:13px;font-family:monospace;color:#555}
+.tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;font-family:-apple-system,sans-serif}
+.tag-tech{background:rgba(102,126,234,0.12);color:#667eea}
+.tag-hot{background:rgba(231,76,60,0.10);color:#e74c3c}
+.tag-tool{background:rgba(39,174,96,0.10);color:#27ae60}
+.footnote{text-align:center;padding:24px;color:#999;font-size:12px;font-family:-apple-system,sans-serif}
+.footnote a{color:#667eea}
+@media(max-width:600px){.article{padding:24px 16px 32px}.article p{font-size:15px}.header-bar{padding:20px 16px}.header-bar h1{font-size:18px}.article h2{font-size:17px}}
+</style>
+</head>
+<body>
+
+<div class="header-bar">
+  <a class="back" href="../">← 知识库</a>
+  <h1>Claude千万别裸装，这几个skills必须装上！</h1>
+  <div class="meta">2026-06-15 · <span class="tag tag-tech">AI</span> <span class="tag tag-tool">Claude Code</span> <span class="tag tag-hot">Skills</span></div>
+</div>
+
+<div class="container">
+<div class="article">
+
+<h2>📌 来源</h2>
+<p>小红书笔记原文 + 博主冷逸《最值得安装的20个Skills》、霍格沃兹《Claude Code这16个官方Skill，用了半年我总结出最值得装的7个》</p>
+<p>链接：<a href="https://www.xiaohongshu.com/discovery/item/6a255ee8000000001c02788b">小红书原文</a></p>
+
+<h2>🔰 核心观点</h2>
+<div class="highlight">
+<p><strong>Claude Code不装Skills，用的就是残血版。</strong>Skills让AI从"聊天的助手"变成"能干活的生产力工具"。Skill本质是一个文件夹+一个SKILL.md文件，Claude按需加载。</p>
+</div>
+
+<h2>🎯 必装Skills清单</h2>
+
+<h3>🥇 第一梯队 · 元Skill（入口级）</h3>
+<table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:14px">
+<tr style="background:#ece6dc"><th style="padding:8px 10px;text-align:left;border-bottom:1px solid #ddd">Skill</th><th style="padding:8px 10px;text-align:left;border-bottom:1px solid #ddd">说明</th><th style="padding:8px 10px;text-align:left;border-bottom:1px solid #ddd">安装命令</th></tr>
+<tr><td style="padding:8px 10px;border-bottom:1px solid #eee"><strong>skill-creator</strong></td><td style="padding:8px 10px;border-bottom:1px solid #eee">教你怎么创建Skill的"元Skill"</td><td style="padding:8px 10px;border-bottom:1px solid #eee"><code>npx skills add anthropics/skills --skill skill-creator</code></td></tr>
+<tr><td style="padding:8px 10px;border-bottom:1px solid #eee"><strong>find-skills</strong></td><td style="padding:8px 10px;border-bottom:1px solid #eee">技能搜索引擎，问它需要什么skill</td><td style="padding:8px 10px;border-bottom:1px solid #eee"><code>npx skills add vercel-labs/skills --skill find-skills</code></td></tr>
+</table>
+
+<h3>🥈 第二梯队 · 必装实用Skill</h3>
+<table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:14px">
+<tr style="background:#ece6dc"><th style="padding:8px 10px;text-align:left;border-bottom:1px solid #ddd">分类</th><th style="padding:8px 10px;text-align:left;border-bottom:1px solid #ddd">Skill</th><th style="padding:8px 10px;text-align:left;border-bottom:1px solid #ddd">用途</th></tr>
+<tr><td style="padding:8px 10px;border-bottom:1px solid #eee">📄 文档</td><td style="padding:8px 10px;border-bottom:1px solid #eee"><strong>PDF</strong></td><td style="padding:8px 10px;border-bottom:1px solid #eee">文本/表格提取、OCR、合并拆分、加密</td></tr>
+<tr><td style="padding:8px 10px;border-bottom:1px solid #eee">📊 表格</td><td style="padding:8px 10px;border-bottom:1px solid #eee"><strong>xlsx</strong></td><td style="padding:8px 10px;border-bottom:1px solid #eee">Excel/CSV读取、清洗、图表、直接输出.xlsx</td></tr>
+<tr><td style="padding:8px 10px;border-bottom:1px solid #eee">📝 文档</td><td style="padding:8px 10px;border-bottom:1px solid #eee"><strong>docx</strong></td><td style="padding:8px 10px;border-bottom:1px solid #eee">Word创建/编辑/样式/格式保留</td></tr>
+<tr><td style="padding:8px 10px;border-bottom:1px solid #eee">🖼 演示</td><td style="padding:8px 10px;border-bottom:1px solid #eee"><strong>pptx</strong></td><td style="padding:8px 10px;border-bottom:1px solid #eee">生成PPT演示文稿（含图表）</td></tr>
+<tr><td style="padding:8px 10px;border-bottom:1px solid #eee">🎨 设计</td><td style="padding:8px 10px;border-bottom:1px solid #eee"><strong>frontend-design</strong></td><td style="padding:8px 10px;border-bottom:1px solid #eee">前端设计规范（官方下载量5.2万+）</td></tr>
+<tr><td style="padding:8px 10px;border-bottom:1px solid #eee">🧪 测试</td><td style="padding:8px 10px;border-bottom:1px solid #eee"><strong>webapp-testing</strong></td><td style="padding:8px 10px;border-bottom:1px solid #eee">Playwright网页自动化测试</td></tr>
+<tr><td style="padding:8px 10px;border-bottom:1px solid #eee">🔌 MCP</td><td style="padding:8px 10px;border-bottom:1px solid #eee"><strong>mcp-builder</strong></td><td style="padding:8px 10px;border-bottom:1px solid #eee">编写MCP协议</td></tr>
+<tr><td style="padding:8px 10px;border-bottom:1px solid #eee">💻 代码</td><td style="padding:8px 10px;border-bottom:1px solid #eee"><strong>code-review</strong></td><td style="padding:8px 10px;border-bottom:1px solid #eee">代码审查（质量/安全/性能）</td></tr>
+<tr><td style="padding:8px 10px;border-bottom:1px solid #eee">🐙 GitHub</td><td style="padding:8px 10px;border-bottom:1px solid #eee"><strong>Github</strong></td><td style="padding:8px 10px;border-bottom:1px solid #eee">直连GitHub管理repo/issue/PR</td></tr>
+</table>
+
+<h3>🥉 第三梯队 · 社区精选Skill</h3>
+<ul>
+<li><strong>Humanizer-zh</strong>（藏师傅）— 去AI味，识别修复24种AI写作痕迹，适合新媒体 → <code>github.com/op7418/Humanizer-zh</code></li>
+<li><strong>baoyu-skills</strong>（宝玉）— 内容创作合集（公众号/小红书/X）→ <code>github.com/jimliu/baoyu-skills</code></li>
+<li><strong>knowledge-site-creator</strong>（向阳乔木）— 一句话生成知识型网站 → <code>github.com/joeseesun/qiaomu-knowledge-site-creator</code></li>
+<li><strong>cangjie-skill</strong>（仓颉）— 书籍蒸馏成可复用skill → <code>github.com/kangarooking/cangjie-skill</code></li>
+<li><strong>nuwa-skill</strong>（女娲·花叔）— 蒸馏任何人的思维 → <code>github.com/alchaincyf/nuwa-skill</code></li>
+<li><strong>ebook-maker-skill</strong>（阿真）— 从调研到成书全流程 → <code>github.com/irenerachel/ebook-maker-skill</code></li>
+<li><strong>web-access</strong>（一泽）— 直连本地Chrome浏览器带登录态 → <code>github.com/eze-is/web-access</code></li>
+<li><strong>Claude-to-IM-skill</strong>（归藏）— 连接IM平台（飞书/TG/Discord/企微）→ <code>npx skills add op7418/Claude-to-IM-skill</code></li>
+<li><strong>remotion-best-practices</strong> — 一句话写React视频脚本渲染MP4 → <code>npx skills add remotion-dev/skills</code></li>
+<li><strong>last30days-skill</strong> — 抓取海外10+社区评论 → <code>github.com/mvanhorn/last30days-skill</code></li>
+<li><strong>xiaohu-wechat-format</strong>（小互）— 公众号自动排版（内置30套主题）→ <code>github.com/xiaohuailabs/xiaohu-wechat-format</code></li>
+<li><strong>ui-ux-pro-max</strong> — UI/UX设计（70k star）→ <code>github.com/nextlevelbuilder/ui-ux-pro-max-skill</code></li>
+</ul>
+
+<h2>⚙️ Skill的工作原理</h2>
+<p>"渐进式披露"三层架构：</p>
+<ol>
+<li><strong>第一层（元数据）</strong>：YAML格式的name+description，Claude启动时仅加载这部分到系统提示（约100 tokens/skill），不占上下文</li>
+<li><strong>第二层（核心指令）</strong>：Claude判断任务匹配后，按需加载完整的SKILL.md内容（操作步骤、注意事项、示例）</li>
+<li><strong>第三层（脚本+资源）</strong>：需要精确逻辑的任务，Skill目录内可包含 scripts/ 目录和 references/ 目录</li>
+</ol>
+
+<div class="highlight">
+<p>💡 一个形象的比喻：<strong>MCP像"厨房+厨具"</strong>（连接能力），<strong>Skill是"菜谱"</strong>（做事方法）。光有厨房只能保证你能做饭，有菜谱才能保证你不炸厨房，而且每次做出来的味儿都一样稳定。</p>
+</div>
+
+<h2>🎯 安装方式</h2>
+<table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:14px">
+<tr style="background:#ece6dc"><th style="padding:8px 10px;text-align:left;border-bottom:1px solid #ddd">方式</th><th style="padding:8px 10px;text-align:left;border-bottom:1px solid #ddd">命令</th></tr>
+<tr><td style="padding:8px 10px;border-bottom:1px solid #eee">ClawHub安装</td><td style="padding:8px 10px;border-bottom:1px solid #eee"><code>npx clawhub@latest install skill名称</code></td></tr>
+<tr><td style="padding:8px 10px;border-bottom:1px solid #eee">GitHub安装</td><td style="padding:8px 10px;border-bottom:1px solid #eee"><code>npx skills add 仓库地址 --skill 技能名</code></td></tr>
+<tr><td style="padding:8px 10px;border-bottom:1px solid #eee">Claude Code /plugin</td><td style="padding:8px 10px;border-bottom:1px solid #eee"><code>/plugin marketplace add anthropics/skills</code></td></tr>
+<tr><td style="padding:8px 10px;border-bottom:1px solid #eee">手动放置</td><td style="padding:8px 10px;border-bottom:1px solid #eee">SKILL.md → <code>~/.claude/skills/&lt;技能名&gt;/</code> 或 <code>.claude/skills/&lt;技能名&gt;/</code></td></tr>
+</table>
+
+<h2>💡 最佳实践</h2>
+<ul>
+<li><strong>别贪多</strong>：Skills是自动激活的，装多了Claude在不同skills之间做判断时容易冲突。官方推荐5-8个高频Skills足够</li>
+<li><strong>信号要明确</strong>：请求里带上明确的信号词。说"提取这个PDF里的表格"比"帮我看一下这个文档"激活更准</li>
+<li><strong>自己造最有价值</strong>：把你过去一周重复做了3次以上的工作拆出来，封装成自己的Skill——这是"会用AI"和"能带团队用AI"的分界线</li>
+<li><strong>skill-creator + find-skills 是入口</strong>：有了这两个元skill，后面对Skill的生态探索效率能翻倍</li>
+</ul>
+
+<h2>📚 Skill市场推荐</h2>
+<ul>
+<li><a href="https://skills.sh">skills.sh</a></li>
+<li><a href="https://www.skillhub.club">skillhub.club</a></li>
+<li><a href="https://clawhub.ai">clawhub.ai</a></li>
+<li>Anthropic官方仓库：<a href="https://github.com/anthropics/skills">github.com/anthropics/skills</a></li>
+</ul>
+
+</div>
+</div>
+
+<div class="footnote">
+  <p>收录于 <a href="../">SongYafei 知识库</a> · Tech / AI工具分类</p>
+</div>
+</body>
+</html>
