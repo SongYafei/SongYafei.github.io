@@ -59,6 +59,14 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 .card-icon.product{background:rgba(255,160,0,0.12)}
 .card-icon.life{background:rgba(210,168,255,0.12)}
 
+/* Delete button */
+.card-del{width:28px;height:28px;border-radius:8px;border:none;background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.15);font-size:13px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;flex-shrink:0;opacity:0;line-height:1;margin-left:auto;margin-right:-4px}
+.card:hover .card-del{opacity:1}
+.card-del:hover{background:rgba(239,68,68,0.15);color:#ef4444}
+.card-del.copied{background:rgba(81,207,102,0.15);color:#51cf66;opacity:1}
+.toast{position:fixed;bottom:40px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.85);backdrop-filter:blur(12px);color:#fff;padding:10px 20px;border-radius:12px;font-size:13px;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1}
+
 /* Empty state */
 .empty-state{text-align:center;padding:80px 20px;color:rgba(255,255,255,0.12)}
 .empty-state .icon{font-size:48px;margin-bottom:16px;opacity:0.5}
@@ -569,6 +577,44 @@ const cards = document.querySelectorAll('.card').length;
 document.getElementById('totalCount').textContent = cards;
 
 // 卡片入场动画（交错出现）
+// 删除按钮：点击复制删除请求
+document.querySelectorAll('.card').forEach((card) => {
+  const del = document.createElement('button');
+  del.className = 'card-del';
+  del.innerHTML = '🗑';
+  del.title = '请求删除此文章';
+  
+  const onclickMatch = card.getAttribute('onclick')?.match(/'([^']+)'/);
+  const href = card.querySelector('.card-title a')?.getAttribute('href');
+  const path = onclickMatch?.[1] || href || '';
+  
+  del.addEventListener('click', function(e){
+    e.stopPropagation();
+    const text = `删除知识库: \`${path}\``;
+    navigator.clipboard.writeText(text).then(() => {
+      this.classList.add('copied');
+      this.innerHTML = '✓';
+      const toast = document.getElementById('delToast');
+      toast.textContent = '✅ 已复制删除请求，发回给我';
+      toast.classList.add('show');
+      setTimeout(() => {
+        this.classList.remove('copied');
+        this.innerHTML = '🗑';
+        toast.classList.remove('show');
+      }, 2000);
+    });
+  });
+  const cardTop = card.querySelector('.card-top');
+  if(cardTop) cardTop.appendChild(del);
+});
+
+// Toast for delete notification
+const toast = document.createElement('div');
+toast.className = 'toast';
+toast.id = 'delToast';
+toast.textContent = '✅ 已复制删除请求';
+document.body.appendChild(toast);
+
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry, i) => {
     if(entry.isIntersecting){
