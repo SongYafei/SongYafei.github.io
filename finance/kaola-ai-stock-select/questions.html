@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI选股攻略 — 问题链</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#f5f6f8;--surface:#fff;--outer-shell:rgba(0,0,0,0.04);--hairline:rgba(0,0,0,0.06);--text:#0f1119;--text-secondary:#6b7280;--text-tertiary:#9ca3af;--accent:#1a6b4c;--accent-light:#ecfdf5;--amber:#b45309;--radius-outer:20px;--radius-inner:calc(20px - 6px);--font:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;--ease-spring:cubic-bezier(0.32,0.72,0,1)}
+html{-webkit-font-smoothing:antialiased}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.7;padding:40px 20px}
+.container{max-width:720px;margin:0 auto}
+h1{font-size:26px;font-weight:700;letter-spacing:-0.02em;line-height:1.2}
+h2{font-size:17px;font-weight:600;letter-spacing:-0.01em;margin-bottom:14px}
+.shell{background:var(--outer-shell);padding:6px;border-radius:var(--radius-outer);margin-bottom:24px;transition:all 0.5s var(--ease-spring)}
+.inner{background:var(--surface);border-radius:var(--radius-inner);padding:32px;box-shadow:inset 0 1px 1px rgba(255,255,255,0.15)}
+@media(max-width:600px){body{padding:24px 12px}.inner{padding:20px 16px}}
+.eyebrow{display:inline-block;background:#f0f1f3;color:var(--text-secondary);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.18em;padding:4px 12px;border-radius:20px;margin-bottom:12px}
+p{font-size:14px;color:var(--text-secondary);margin-bottom:10px}
+.qchain{padding:16px 0;border-bottom:1px solid var(--hairline);display:flex;gap:14px}
+.qchain:last-child{border-bottom:none}
+.qchain .num{flex-shrink:0;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:6px;font-size:13px;font-weight:700;color:#fff}
+.qchain .num.l1{background:var(--accent)}
+.qchain .num.l2{background:var(--amber)}
+.qchain .num.l3{background:#1e40af}
+.qchain .body{flex:1}
+.qchain .body .q{font-size:15px;font-weight:600;margin-bottom:3px}
+.qchain .body .hint{font-size:13px;color:var(--text-secondary);line-height:1.6}
+.footnote{font-size:11px;color:var(--text-tertiary);margin-top:20px;padding-top:16px;border-top:1px solid var(--hairline)}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="shell" style="margin-top:8px;">
+    <div class="inner" style="padding:32px;">
+      <div class="eyebrow">B层 · 问题链</div>
+      <h1>AI选股攻略 · 深度追问</h1>
+      <p style="margin-top:10px;">从读到思 · 三层递进问题</p>
+    </div>
+  </div>
+
+  <div class="shell">
+    <div class="inner">
+      <h2>🌱 第一层 · 理解与复述</h2>
+
+      <div class="qchain">
+        <div class="num l1">1</div>
+        <div class="body">
+          <div class="q">考拉说的"逻辑硬"具体指什么？</div>
+          <div class="hint">回想四问框架的四个维度，用自己的话解释"逻辑硬"为什么比K线图形更可靠。</div>
+        </div>
+      </div>
+
+      <div class="qchain">
+        <div class="num l1">2</div>
+        <div class="body">
+          <div class="q">AI在考拉的选股方法中扮演什么角色？人扮演什么角色？</div>
+          <div class="hint">人机协作的具体分工：AI做什么（情报分析、产业链拆解），人做什么（决策、择时、最终判断）。</div>
+        </div>
+      </div>
+
+      <div class="qchain">
+        <div class="num l1">3</div>
+        <div class="body">
+          <div class="q">为什么说"让市场先帮你验货"？具体怎么做？</div>
+          <div class="hint">前排涨停说明有资金认可逻辑 → 等涨完回调 → 回调确认后再介入，而不是追前排。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="shell">
+    <div class="inner">
+      <h2>🔍 第二层 · 分析与思辨</h2>
+
+      <div class="qchain">
+        <div class="num l2">4</div>
+        <div class="body">
+          <div class="q">AI拆产业链 + 四问筛选这个流程，有没有什么盲区？</div>
+          <div class="hint">比如：AI给出的产业链信息是否实时准确？AI能否判断政策执行力度？四个条件判断本身是否也容易陷入主观偏差？</div>
+        </div>
+      </div>
+
+      <div class="qchain">
+        <div class="num l2">5</div>
+        <div class="body">
+          <div class="q">考拉说"中报是照妖镜"，但如果在7月中报前某票已经涨了很多，中报业绩也不错，是追还是不追？</div>
+          <div class="hint">好业绩可能已被提前定价——思考"预期差"的概念：中报超预期才涨，符合预期可能利好出尽。</div>
+        </div>
+      </div>
+
+      <div class="qchain">
+        <div class="num l2">6</div>
+        <div class="body">
+          <div class="q">考拉的方法偏左侧（事倍分析后再决策），但右侧追涨也是一种策略。什么情况下考拉的方法会失效？</div>
+          <div class="hint">比如：短线游资主导的题材炒作、政策驱动的突然爆发（来不及产业链分析）、流动性危机导致所有板块一起跌。</div>
+        </div>
+      </div>
+
+      <div class="qchain">
+        <div class="num l2">7</div>
+        <div class="body">
+          <div class="q">"护城河深、订单满、缺口大、需求放大"这四个条件全满足的行业有哪些？当前市场能找到标的吗？</div>
+          <div class="hint">想想AI算力产业链、半导体国产替代、新能源（储能/光伏）、创新药等方向是否满足。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="shell">
+    <div class="inner">
+      <h2>🚀 第三层 · 延伸与迁移</h2>
+
+      <div class="qchain">
+        <div class="num l3">8</div>
+        <div class="body">
+          <div class="q">能否把这个"AI拆产业链 → 四问筛选 → 盘面验证"的流程自动化？比如在OpenClaw上做一个选股Workflow？</div>
+          <div class="hint">输入任意热门政策/消息 → AI自动拆产业链 → 输出最肥环节 → 自动查F10和财务数据 → 生成关注清单。</div>
+        </div>
+      </div>
+
+      <div class="qchain">
+        <div class="num l3">9</div>
+        <div class="body">
+          <div class="q">考拉的方法和你正在做的"A股AI操盘建议（14:00）"本质逻辑是一样还是不一样？</div>
+          <div class="hint">两者都是人机协作：AI提供情报/数据分析，人做最终决策。只是考拉侧重选股（找标的），你的AI判断侧重择时（什么时候加减仓）。</div>
+        </div>
+      </div>
+
+      <div class="qchain">
+        <div class="num l3">10</div>
+        <div class="body">
+          <div class="q">考拉说"别再追着问别人买什么票了"——那你每天问我"中国中铁补不补仓"本质上是不是在追着问？怎么把决策权真正收回来？</div>
+          <div class="hint">AI应该给的是多维度分析框架和判断逻辑，而不是告诉"买"或"不买"。你可以把四问框架变成一个可执行的投资清单，每次AI触发提醒时附上四问的答案让你自己判断。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footnote">
+    B层问题链 · 基于考拉"AI选股攻略"视频内容衍生
+  </div>
+</div>
+</body>
+</html>
