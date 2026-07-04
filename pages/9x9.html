@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>九九乘法小达人</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family: -apple-system, 'PingFang SC', 'Noto Sans SC', sans-serif;
+    background: linear-gradient(180deg, #FFECD2 0%, #FCB69F 100%);
+    min-height: 100dvh;
+    padding: 20px 16px;
+  }
+  .container{max-width: 800px;margin:0 auto}
+
+  /* ===== 头顶 ===== */
+  .header{text-align: center;margin-bottom: 16px}
+  .header h1{
+    font-size: 28px;font-weight: 800;
+    color: #E85D3A;
+    text-shadow: 0 2px 0 #fff, 0 3px 6px rgba(0,0,0,.08);
+  }
+  .header p{font-size: 15px;color: #9B5E3C;margin-top: 2px;font-weight: 500}
+
+  /* ===== 星星统计 ===== */
+  .stars{
+    display: flex;gap: 12px;justify-content: center;
+    margin-bottom: 16px;flex-wrap: wrap;
+  }
+  .star-item{
+    display: flex;align-items: center;gap: 6px;
+    background: rgba(255,255,255,.6);backdrop-filter: blur(6px);
+    padding: 6px 14px;border-radius: 20px;
+    font-size: 14px;font-weight: 600;color: #7A4A2A;
+  }
+
+  /* ===== Tab 按钮 ===== */
+  .tabs{
+    display: flex;gap: 8px;margin-bottom: 14px;
+  }
+  .tab{
+    flex: 1;padding: 12px 8px;text-align: center;
+    border-radius: 14px;font-size: 16px;font-weight: 700;
+    cursor: pointer;transition: .25s;
+    background: rgba(255,255,255,.55);color: #9B5E3C;
+    border: 2px solid transparent;user-select: none;
+  }
+  .tab.active{
+    background: #fff;color: #E85D3A;
+    border-color: #E85D3A;
+    box-shadow: 0 4px 16px rgba(232,93,58,.15);
+  }
+  .tab:active{transform: scale(.93)}
+
+  /* ===== ===== ===== */
+  /* 口诀表 — 传统竖排排版 */
+  /* ===== ===== ===== */
+
+  .table-card{
+    background: rgba(255,255,255,.92);
+    border-radius: 20px;padding: 18px 14px;
+    box-shadow: 0 8px 32px rgba(0,0,0,.06);
+  }
+  .table-title{
+    font-size: 15px;font-weight: 700;color: #c0734a;
+    text-align: center;margin-bottom: 10px;
+  }
+  /* 传统竖排：每个数字一列，显示该数字 x 1~9 */
+  .trad-grid{
+    display: flex;gap: 4px;justify-content: center;
+  }
+  .trad-col{
+    flex: 1;min-width: 0;
+    display: flex;flex-direction: column;gap: 3px;
+  }
+  .trad-col-header{
+    font-weight: 800;font-size: 15px;
+    color: #fff;text-align: center;
+    padding: 5px 0;border-radius: 8px;
+    background: linear-gradient(135deg, #FF9A9E, #FAD0C4);
+  }
+  .trad-cell{
+    aspect-ratio: auto;min-height: 44px;
+    display: flex;flex-direction: column;
+    align-items: center;justify-content: center;
+    border-radius: 8px;font-size: 11px;font-weight: 600;
+    cursor: pointer;transition: .2s;padding: 2px 1px;
+    background: #f8f4f0;color: #6B4226;
+    line-height: 1.3;
+  }
+  .trad-cell .eq{font-size: 10px;color: #a08070}
+  .trad-cell.mastered{
+    background: #C8E6C9;color: #2E7D32;
+  }
+  .trad-cell.mastered .eq{color: #558B2F}
+  .trad-cell.learning{
+    background: #FFF3E0;color: #E65100;
+  }
+  .trad-cell.learning .eq{color: #BF360C}
+  .trad-cell:active{transform: scale(.88)}
+
+  /* ===== 练习/挑战 卡片 ===== */
+  .card{
+    background: rgba(255,255,255,.92);
+    border-radius: 20px;padding: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,.06);
+    text-align: center;
+  }
+  .hint{font-size: 14px;color: #a08070;margin-bottom: 8px}
+
+  .big-question{
+    font-size: 48px;font-weight: 900;
+    color: #E85D3A;margin: 12px 0;
+    letter-spacing: 4px;
+  }
+  .input-row{
+    display: flex;gap: 10px;justify-content: center;flex-wrap: wrap;
+  }
+  .input-row input{
+    width: 130px;padding: 14px;font-size: 24px;
+    text-align: center;font-weight: 700;
+    border: 3px solid #F0C4B0;border-radius: 14px;
+    outline: none;transition: .2s;background: #fff;
+  }
+  .input-row input:focus{border-color: #E85D3A;box-shadow: 0 0 0 4px rgba(232,93,58,.15)}
+  .input-row button{
+    padding: 14px 32px;font-size: 18px;font-weight: 700;
+    border: none;border-radius: 14px;cursor: pointer;transition: .2s;
+    background: linear-gradient(135deg, #FF9A9E, #FAD0C4);
+    color: #6B2A1A;
+  }
+  .input-row button:active{transform: scale(.92)}
+  .input-row button:disabled{opacity:.4;cursor:not-allowed}
+
+  .result-text{font-size: 20px;font-weight: 700;min-height: 30px;margin-top: 12px}
+  .result-text.correct{color: #4CAF50}
+  .result-text.wrong{color: #F44336}
+
+  .setup-row{
+    display: flex;gap: 10px;justify-content: center;
+    align-items: center;margin: 10px 0;flex-wrap: wrap;
+  }
+  .setup-row label{font-size: 15px;color: #7A4A2A;font-weight: 600}
+  .setup-row input{width: 60px;padding: 8px;border: 2px solid #E0C0B0;border-radius: 10px;text-align: center;font-size: 18px;font-weight: 700}
+  .setup-row input:focus{border-color: #E85D3A;outline: none}
+  .btn-start{
+    padding: 8px 20px;font-size: 15px;font-weight: 700;
+    border: none;border-radius: 12px;cursor: pointer;
+    background: #E85D3A;color: #fff;
+    box-shadow: 0 4px 12px rgba(232,93,58,.3);
+  }
+  .btn-start:active{transform: scale(.92)}
+
+  .timer{font-size: 14px;color: #a08070;margin-bottom: 6px}
+  .timer span{color: #E85D3A;font-weight: 700}
+
+  .panel{display: none}
+  .panel.active{display: block}
+
+  /* ===== 撒花动画 ===== */
+  @keyframes fall{
+    0%{transform: translateY(-30px) rotate(0);opacity:1}
+    100%{transform: translateY(80px) rotate(720deg);opacity:0}
+  }
+  .confetti{
+    position: fixed;top: -30px;font-size: 28px;pointer-events: none;z-index: 999;
+    animation: fall 1.8s ease-out forwards;
+  }
+
+  /* ===== iPad 横竖屏适配 ===== */
+  @media (min-width: 600px){
+    body{padding: 30px 24px}
+    .trad-cell{font-size: 13px;min-height: 52px;padding: 4px 2px}
+    .trad-cell .eq{font-size: 12px}
+    .trad-col-header{font-size: 18px;padding: 8px 0}
+    .big-question{font-size: 56px}
+    .table-card{padding: 22px 18px}
+    .tab{font-size: 18px}
+  }
+  @media (min-width: 1024px){
+    .container{max-width: 900px}
+    .trad-cell{min-height: 58px;font-size: 14px}
+    .trad-cell .eq{font-size: 13px}
+  }
+</style>
+</head>
+<body>
+<div class="container" id="app">
+
+  <!-- 头顶 -->
+  <div class="header">
+    <h1>🌟 乘法口诀小达人</h1>
+    <p>每天练一练，乘法顶呱呱！</p>
+  </div>
+
+  <!-- 星星统计 -->
+  <div class="stars">
+    <div class="star-item">🥇 已掌握 <strong id="sMastered">0</strong></div>
+    <div class="star-item">📖 学习中 <strong id="sLearning">0</strong></div>
+    <div class="star-item">⬜ 未练习 <strong id="sUnknown">81</strong></div>
+  </div>
+
+  <!-- Tab -->
+  <div class="tabs">
+    <div class="tab active" data-tab="table" onclick="switchTab('table')">📖 口诀表</div>
+    <div class="tab" data-tab="practice" onclick="switchTab('practice')">✏️ 练一练</div>
+    <div class="tab" data-tab="challenge" onclick="switchTab('challenge')">⚡ 小挑战</div>
+  </div>
+
+  <!-- ========== 口诀表 ========== -->
+  <div class="panel active" id="panel-table">
+    <div class="table-card">
+      <div class="table-title">🔢 九九乘法口诀表 &nbsp;|&nbsp; 点击格子开始练习</div>
+      <div class="trad-grid" id="tableGrid"></div>
+    </div>
+  </div>
+
+  <!-- ========== 练习模式 ========== -->
+  <div class="panel" id="panel-practice">
+    <div class="card">
+      <div class="hint" id="pHint">选一个数字开始练习 👇</div>
+      <div class="setup-row" id="pSetup">
+        <label>学 ×</label>
+        <input type="number" id="pNum" min="1" max="9" value="3">
+        <button class="btn-start" onclick="startPractice()">开始练</button>
+      </div>
+      <div class="big-question" id="pQ">3 × 4 = ?</div>
+      <div class="input-row" id="pInput">
+        <input type="number" id="pA" placeholder="?" autofocus>
+        <button onclick="checkP()">✓ 检查</button>
+      </div>
+      <div class="result-text" id="pR"></div>
+    </div>
+  </div>
+
+  <!-- ========== 挑战模式 ========== -->
+  <div class="panel" id="panel-challenge">
+    <div class="card">
+      <div class="hint">⚡ 全部81道题随机出</div>
+      <div class="setup-row" id="cSetup">
+        <label>出几题</label>
+        <input type="number" id="cCount" value="10" min="5" max="81">
+        <button class="btn-start" onclick="startChallenge()">开始！</button>
+      </div>
+      <div class="timer">⏱️ <span id="cTimer">0</span> 秒 &nbsp;|&nbsp; 第 <span id="cIdx">0</span>/<span id="cTotal">10</span> 题</div>
+      <div class="big-question" id="cQ" style="display:none">1 × 1 = ?</div>
+      <div class="input-row" id="cInput" style="display:none">
+        <input type="number" id="cA" placeholder="?" autofocus>
+        <button onclick="checkC()">✓ 检查</button>
+      </div>
+      <div class="result-text" id="cR"></div>
+    </div>
+  </div>
+
+  <div style="text-align:center;padding:18px 0 8px;font-size:13px;color:#b08870">
+    💪 坚持就是胜利！
+  </div>
+</div>
+
+<script>
+// ===== 数据存储 =====
+const KV = {};
+const STORAGE_KEY = 'multi168456';
+
+function loadD(){
+  try{const r=localStorage.getItem(STORAGE_KEY);if(r)Object.assign(KV,JSON.parse(r))}catch(e){}
+}
+function saveD(){
+  try{localStorage.setItem(STORAGE_KEY,JSON.stringify(KV))}catch(e){}
+}
+function k(a,b){return Math.max(a,b)+'_'+Math.min(a,b)}
+function st(a,b){
+  const s=KV[k(a,b)];if(!s)return {c:0,w:0,t:0};
+  const p=s.split(',').map(Number);return {c:p[0]||0,w:p[1]||0,t:p[2]||0};
+}
+function rec(a,b,ok){
+  const key=k(a,b),s=st(a,b);
+  if(ok)s.c++;else s.w++;
+  s.t++;KV[key]=[s.c,s.w,s.t].join(',');saveD();
+}
+function cs(a,b){
+  const s=st(a,b);if(s.t===0)return 'u';
+  return (s.c/s.t>=0.8&&s.t>=3)?'m':'l';
+}
+function cellLabel(a,b){
+  const s=st(a,b);return s.t>0?s.c+'/'+s.t:'';
+}
+
+// ===== 传统竖排口诀表 =====
+function renderTable(){
+  const g=document.getElementById('tableGrid');g.innerHTML='';
+  // 传统竖排：每列是一个乘数
+  for(let i=1;i<=9;i++){
+    const col=document.createElement('div');col.className='trad-col';
+    const hdr=document.createElement('div');hdr.className='trad-col-header';
+    hdr.textContent=i+'的';col.appendChild(hdr);
+    for(let j=1;j<=9;j++){
+      const d=document.createElement('div');
+      d.className='trad-cell '+cs(i,j);
+      const label=cellLabel(i,j);
+      d.innerHTML=`${i}×${j}=${i*j}<span class="eq">${label?'('+label+')':''}</span>`;
+      d.onclick=()=>practiceFrom(i,j);
+      col.appendChild(d);
+    }
+    g.appendChild(col);
+  }
+  updateStats();
+}
+
+// ===== 统计 & 更新 =====
+function updateStats(){
+  let m=0,l=0,u=0;
+  for(let i=1;i<=9;i++)for(let j=1;j<=9;j++){
+    const s=cs(i,j);if(s==='m')m++;else if(s==='l')l++;else u++;
+  }
+  document.getElementById('sMastered').textContent=m;
+  document.getElementById('sLearning').textContent=l;
+  document.getElementById('sUnknown').textContent=u;
+}
+
+// ===== Tab 切换 =====
+function switchTab(t){
+  document.querySelectorAll('.tab').forEach(el=>el.classList.toggle('active',el.dataset.tab===t));
+  document.querySelectorAll('.panel').forEach(el=>el.classList.toggle('active',el.id==='panel-'+t));
+  if(t==='table'){renderTable();updateStats()}
+  setTimeout(()=>{
+    const inp=document.querySelector('.panel.active input[type=number]');
+    if(inp)inp.focus()
+  },300);
+}
+
+// ===== 练习 =====
+let pNum=3,questions=[],pIdx=0;
+function practiceFrom(a,b){
+  switchTab('practice');
+  document.getElementById('pNum').value=a;
+  startPractice();
+}
+function startPractice(){
+  pNum=parseInt(document.getElementById('pNum').value)||3;
+  pNum=Math.max(1,Math.min(9,pNum));
+  document.getElementById('pSetup').style.display='none';
+  // 从不会到会排序
+  const qs=[];
+  for(let j=1;j<=9;j++)if(cs(pNum,j)==='u')qs.push(j);
+  for(let j=1;j<=9;j++)if(cs(pNum,j)==='l')qs.push(j);
+  for(let j=1;j<=9;j++)if(cs(pNum,j)==='m')qs.push(j);
+  questions=qs;pIdx=0;
+  document.getElementById('pHint').textContent=`💡 学习 ${pNum} 的乘法 (${questions.length}题，从不会的开始)`;
+  nextP();
+}
+function nextP(){
+  if(pIdx>=questions.length){
+    document.getElementById('pQ').textContent='🎉 太棒啦！全部做完了！';
+    document.getElementById('pInput').style.display='none';
+    document.getElementById('pR').className='result-text correct';
+    document.getElementById('pR').textContent='点击其它数字继续练习 👆';
+    celebrate();return;
+  }
+  const c=questions[pIdx];
+  document.getElementById('pQ').textContent=`${pNum} × ${c} = ?`;
+  document.getElementById('pA').value='';document.getElementById('pR').textContent='';
+  document.getElementById('pInput').style.display='flex';
+  document.getElementById('pA').focus();
+}
+function checkP(){
+  const ans=parseInt(document.getElementById('pA').value);if(isNaN(ans))return;
+  const c=questions[pIdx],correct=pNum*c,ok=ans===correct;
+  rec(pNum,c,ok);
+  const el=document.getElementById('pR');
+  if(ok){el.className='result-text correct';el.textContent='✅ 正确！';pIdx++;setTimeout(nextP,600)}
+  else{el.className='result-text wrong';el.textContent=`❌ 不对哦，${pNum}×${c}=${correct}，加油！`;pIdx++;setTimeout(nextP,800)}
+  document.getElementById('pA').value='';
+  updateStats();
+}
+
+// ===== 挑战 =====
+let cQuestions=[],cIdx=0,cCorrect=0,cTotal=0,cStart=0,cTimer=null;
+function startChallenge(){
+  cTotal=parseInt(document.getElementById('cCount').value)||10;
+  cTotal=Math.max(5,Math.min(81,cTotal));
+  document.getElementById('cSetup').style.display='none';
+  document.getElementById('cTotal').textContent=cTotal;
+  const all=[];
+  for(let i=1;i<=9;i++)for(let j=1;j<=9;j++){
+    const s=cs(i,j);all.push({a:i,b:j,p:s==='u'?0:(s==='l'?1:2),r:Math.random()});
+  }
+  all.sort((x,y)=>x.p!==y.p?x.p-y.p:x.r-y.r);
+  cQuestions=all.slice(0,cTotal);cIdx=0;cCorrect=0;
+  cStart=Date.now();
+  if(cTimer)clearInterval(cTimer);
+  cTimer=setInterval(()=>{document.getElementById('cTimer').textContent=Math.floor((Date.now()-cStart)/1000)},500);
+  nextC();
+}
+function nextC(){
+  if(cIdx>=cQuestions.length){
+    clearInterval(cTimer);
+    const sec=Math.floor((Date.now()-cStart)/1000);
+    document.getElementById('cQ').style.display='none';document.getElementById('cInput').style.display='none';
+    document.getElementById('cR').className='result-text correct';
+    document.getElementById('cR').textContent=`🎉 挑战完成！${cCorrect}/${cTotal} 正确，用时 ${sec} 秒！`;
+    if(cCorrect===cTotal)celebrate();
+    document.getElementById('cSetup').style.display='flex';return;
+  }
+  const q=cQuestions[cIdx];
+  document.getElementById('cQ').style.display='block';document.getElementById('cInput').style.display='flex';
+  document.getElementById('cQ').textContent=`${q.a} × ${q.b} = ?`;
+  document.getElementById('cIdx').textContent=cIdx+1;
+  document.getElementById('cA').value='';document.getElementById('cR').textContent='';
+  document.getElementById('cA').focus();
+}
+function checkC(){
+  const ans=parseInt(document.getElementById('cA').value);if(isNaN(ans))return;
+  const q=cQuestions[cIdx],correct=q.a*q.b,ok=ans===correct;
+  rec(q.a,q.b,ok);if(ok)cCorrect++;
+  const el=document.getElementById('cR');
+  if(ok){el.className='result-text correct';el.textContent='✅ 正确！'}
+  else{el.className='result-text wrong';el.textContent=`❌ ${q.a}×${q.b}=${correct}`}
+  cIdx++;updateStats();setTimeout(nextC,500);
+}
+
+function celebrate(){
+  const emojis=['🎉','🌟','⭐','💯','👏','🎊','✨','🥳','🏆'];
+  for(let i=0;i<18;i++){
+    setTimeout(()=>{
+      const el=document.createElement('div');el.className='confetti';
+      el.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+      el.style.left=Math.random()*80+10+'%';
+      el.style.animationDuration=(1+Math.random())+'s';
+      document.body.appendChild(el);setTimeout(()=>el.remove(),2200);
+    },i*100);
+  }
+}
+
+// 键盘 Enter
+document.addEventListener('keydown',function(e){
+  if(e.key!=='Enter')return;
+  const p=document.querySelector('.panel.active');
+  if(!p)return;
+  if(p.id==='panel-practice')checkP();
+  else if(p.id==='panel-challenge')checkC();
+});
+
+loadD();renderTable();
+</script>
+</body>
+</html>
