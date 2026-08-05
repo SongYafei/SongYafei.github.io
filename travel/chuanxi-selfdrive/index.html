@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>平顶山→成都→川西大环线 · 自驾攻略（含稻城亚丁 · 3大3小 · 8.8-8.20）</title>
+<title>平顶山→成都→稻城亚丁 · 自驾攻略（3大3小 · 8.8-8.16）</title>
 <style>
-:root{--bg:#f7f5f2;--fg:#26221e;--muted:#8a8178;--card:#ffffff;--line:#ece5dc;--accent:#d3542f;--accent2:#2e86ab;--accent3:#7d8c3d;--gold:#c9a227;--shadow:0 2px 12px rgba(60,40,20,.07);--radius:14px}
+:root{--bg:#f7f5f2;--fg:#26221e;--muted:#8a8178;--card:#ffffff;--line:#ece5dc;--accent:#d3542f;--accent2:#2e86ab;--accent3:#7d8c3d;--gold:#c9a227;--purple:#7d5ba6;--shadow:0 2px 12px rgba(60,40,20,.07);--radius:14px}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--fg);line-height:1.7;-webkit-font-smoothing:antialiased}
-.hero{background:linear-gradient(135deg,#1e3a5f 0%,#2e86ab 55%,#7d8c3d 130%);color:#fff;padding:44px 22px 34px;text-align:center;position:relative;overflow:hidden}
+.hero{background:linear-gradient(135deg,#1e3a5f 0%,#2e86ab 55%,#7d5ba6 130%);color:#fff;padding:44px 22px 34px;text-align:center;position:relative;overflow:hidden}
 .hero::after{content:'';position:absolute;bottom:-40px;left:-30px;right:-30px;height:120px;background:linear-gradient(180deg,transparent,rgba(255,255,255,.08));border-radius:50%}
 .hero h1{font-size:23px;font-weight:700;letter-spacing:.03em;margin-bottom:8px}
 .hero .sub{font-size:13px;opacity:.85;margin-bottom:16px}
@@ -22,6 +22,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 .ic-blue{background:#e7f2f8;color:var(--accent2)}
 .ic-green{background:#eef2e0;color:var(--accent3)}
 .ic-gold{background:#faf3dc;color:var(--gold)}
+.ic-purple{background:#f0e9f7;color:var(--purple)}
 .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:6px}
 .stat{background:#faf7f3;border:1px solid var(--line);border-radius:10px;padding:10px 6px;text-align:center}
 .stat b{display:block;font-size:17px;color:var(--accent)}
@@ -31,16 +32,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 .day.blue{border-left-color:var(--accent2)}.day.blue::before{background:var(--accent2)}
 .day.green{border-left-color:var(--accent3)}.day.green::before{background:var(--accent3)}
 .day.gold{border-left-color:var(--gold)}.day.gold::before{background:var(--gold)}
-.day.purple{border-left-color:#7d5ba6}.day.purple::before{background:#7d5ba6}
+.day.purple{border-left-color:var(--purple)}.day.purple::before{background:var(--purple)}
 .day .dhead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:4px}
 .day .date{font-size:15px;font-weight:700}
 .day .tag{font-size:10.5px;background:#fdeee7;color:var(--accent);padding:2px 8px;border-radius:12px;font-weight:600}
 .day .route{font-size:13.5px;color:var(--accent);font-weight:600;margin-bottom:6px}
-.day.purple .route{color:#7d5ba6}.day.purple .tag{background:#f0e9f7;color:#7d5ba6}
+.day.purple .route{color:var(--purple)}.day.purple .tag{background:#f0e9f7;color:var(--purple)}
 .day ul{list-style:none;padding:0}
 .day li{font-size:13.5px;padding:2px 0;padding-left:18px;position:relative}
 .day li::before{content:'·';position:absolute;left:4px;color:var(--accent);font-weight:700}
-.day.purple li::before{color:#7d5ba6}
+.day.purple li::before{color:var(--purple)}
 .day li b{color:var(--fg)}
 .day .stay{margin-top:6px;font-size:12.5px;background:#faf7f3;border:1px dashed var(--line);border-radius:8px;padding:6px 10px;color:#5a514a}
 .hotel{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:13.5px}
@@ -73,20 +74,22 @@ td b{color:var(--accent)}
 .map-dist{font-size:11px;fill:#8a8178;paint-order:stroke;stroke:#faf7f3;stroke-width:3px}
 .legend{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:10px;font-size:12px;color:var(--muted)}
 .legend i{display:inline-block;width:18px;height:4px;border-radius:2px;margin-right:5px;vertical-align:middle}
+.removed{background:#f7f3f0;border:1px dashed #d8cfc6;border-radius:10px;padding:10px 14px;font-size:12.5px;color:#7a6f63;margin-top:10px}
+.removed b{color:#a0522d}
 @media(max-width:480px){.stat-grid{grid-template-columns:repeat(2,1fr)}.hero{padding:36px 16px 28px}.hero h1{font-size:20px}}
 </style>
 </head>
 <body>
 
 <div class="hero">
-  <h1>🏔️ 平顶山 → 成都 → 川西大环线 · 自驾攻略</h1>
-  <div class="sub">3 大 3 小全家游 · 含稻城亚丁 · 8.8 出发 8.20 到家 · 长途一天直达（3 人轮换）</div>
+  <h1>🏔️ 平顶山 → 成都 → 稻城亚丁 · 自驾攻略</h1>
+  <div class="sub">3 大 3 小全家游 · 8.8 出发 8.16 返程 · 三星堆+稻城亚丁双打卡</div>
   <div class="badges">
     <span class="badge">👨‍👩‍👧‍👦 3大3小 · 6人</span>
-    <span class="badge">📅 8.8 → 8.20（13天）</span>
+    <span class="badge">📅 8.8 → 8.16（9天）</span>
     <span class="badge">🚗 7座车 · ~3,900km</span>
-    <span class="badge">⛰️ 最高海拔 4,700m</span>
-    <span class="badge">💴 6人约 1.8-1.9 万</span>
+    <span class="badge">⛰️ 最高海拔 4,100m</span>
+    <span class="badge">💴 6人约 1.7-1.9 万</span>
   </div>
 </div>
 
@@ -102,57 +105,47 @@ td b{color:var(--accent)}
 </div>
 
 <div class="card" id="plan">
-  <h2><span class="ic ic-orange">🗓️</span> 行程总览（13 天：8.8 → 8.20）</h2>
+  <h2><span class="ic ic-orange">🗓️</span> 行程总览（9 天：8.8 → 8.16）</h2>
   <div style="background:#faf7f3;border:1px solid var(--line);border-radius:12px;padding:14px 10px 8px;margin-bottom:16px">
-    <svg viewBox="0 0 760 640" style="width:100%;height:auto;display:block" role="img" aria-label="大环线行程线路图">
-      <rect x="4" y="4" width="752" height="632" rx="12" fill="#faf7f3"/>
+    <svg viewBox="0 0 760 520" style="width:100%;height:auto;display:block" role="img" aria-label="南线行程线路图">
+      <rect x="4" y="4" width="752" height="512" rx="12" fill="#faf7f3"/>
       <!-- 去程 蓝 -->
       <path d="M640,70 C560,120 520,150 480,190 C430,240 360,330 300,400" stroke="#2e86ab" stroke-width="3.5" fill="none" class="flow"/>
-      <!-- 川西大环线 绿 -->
-      <path d="M300,400 C255,360 210,320 160,290 C120,260 105,300 105,360 C95,400 80,430 70,460 C95,500 120,520 150,545 C190,565 240,585 280,595" stroke="#7d8c3d" stroke-width="3.5" fill="none" class="flow"/>
+      <!-- 川西南线 绿(去) -->
+      <path d="M300,400 C265,430 235,455 210,480 C190,500 200,505 185,470 C170,435 140,400 100,380" stroke="#7d8c3d" stroke-width="3.5" fill="none" class="flow"/>
       <!-- 返程 橙 -->
-      <path d="M280,595 C240,585 190,565 150,545 C120,520 95,500 70,460 C80,430 95,400 105,360 C120,330 150,310 200,505 C220,480 260,440 300,400 C355,340 425,270 470,215 C500,180 560,130 630,85" stroke="#d3542f" stroke-width="3.5" fill="none" class="flow rev"/>
+      <path d="M100,380 C140,400 170,435 185,470 C200,505 190,500 210,480 C235,455 265,430 300,400 C355,340 425,270 470,215 C500,180 560,130 630,85" stroke="#d3542f" stroke-width="3.5" fill="none" class="flow rev"/>
       <!-- 距离标注 -->
       <text x="560" y="118" class="map-dist">530km</text>
       <text x="398" y="300" class="map-dist">750km</text>
-      <text x="238" y="330" class="map-dist">200km</text>
-      <text x="300" y="470" class="map-dist">400km</text>
-      <text x="168" y="585" class="map-dist">650km</text>
-      <text x="345" y="500" class="map-dist">330km</text>
+      <text x="245" y="445" class="map-dist">420km</text>
+      <text x="360" y="462" class="map-dist">330km</text>
       <!-- 节点 -->
       <circle cx="640" cy="70" r="7" fill="#d3542f" stroke="#fff" stroke-width="2"/>
       <text x="652" y="75" class="map-node">平顶山 · 出发/到家</text>
       <circle cx="480" cy="190" r="6" fill="#2e86ab" stroke="#fff" stroke-width="2"/>
       <text x="492" y="195" class="map-node">西安（途经）</text>
       <circle cx="300" cy="400" r="9" fill="#c9a227" stroke="#fff" stroke-width="2.5"/>
-      <text x="314" y="406" class="map-node">成都 · 住5晚</text>
-      <circle cx="160" cy="290" r="6" fill="#7d8c3d" stroke="#fff" stroke-width="2"/>
-      <text x="160" y="277" class="map-node" text-anchor="middle">四姑娘山</text>
-      <circle cx="105" cy="360" r="6" fill="#7d8c3d" stroke="#fff" stroke-width="2"/>
-      <text x="93" y="365" class="map-node" text-anchor="end">丹巴</text>
-      <circle cx="70" cy="460" r="6" fill="#7d8c3d" stroke="#fff" stroke-width="2"/>
-      <text x="58" y="465" class="map-node" text-anchor="end">新都桥</text>
-      <circle cx="150" cy="545" r="6" fill="#7d8c3d" stroke="#fff" stroke-width="2"/>
-      <text x="150" y="532" class="map-node" text-anchor="middle">理塘</text>
-      <circle cx="280" cy="595" r="8" fill="#7d5ba6" stroke="#fff" stroke-width="2.5"/>
-      <text x="294" y="600" class="map-node">稻城亚丁 ⭐新增</text>
-      <circle cx="200" cy="505" r="6" fill="#d3542f" stroke="#fff" stroke-width="2"/>
-      <text x="212" y="510" class="map-node">康定</text>
+      <text x="314" y="406" class="map-node">成都 · 住4晚</text>
+      <circle cx="210" cy="480" r="6" fill="#7d8c3d" stroke="#fff" stroke-width="2"/>
+      <text x="198" y="487" class="map-node" text-anchor="end">康定</text>
+      <circle cx="100" cy="380" r="8" fill="#7d5ba6" stroke="#fff" stroke-width="2.5"/>
+      <text x="88" y="370" class="map-node" text-anchor="end">稻城亚丁 ⭐</text>
     </svg>
     <div class="legend">
       <span><i style="background:#2e86ab"></i>去程 8/8</span>
-      <span><i style="background:#7d8c3d"></i>川西大环线 8/11-17</span>
-      <span><i style="background:#d3542f"></i>返程 8/18-20</span>
+      <span><i style="background:#7d8c3d"></i>川西南线 8/11-14</span>
+      <span><i style="background:#d3542f"></i>返程 8/16</span>
     </div>
   </div>
   <div class="stat-grid">
-    <div class="stat"><b>13天</b><span>8.8 周六出发</span></div>
-    <div class="stat"><b>3900km</b><span>往返+大环线</span></div>
+    <div class="stat"><b>9天</b><span>8.8 周六出发</span></div>
+    <div class="stat"><b>3900km</b><span>往返+亚丁</span></div>
     <div class="stat"><b>3.5天</b><span>成都+三星堆</span></div>
-    <div class="stat"><b>6.5天</b><span>大环线含亚丁</span></div>
+    <div class="stat"><b>1天</b><span>亚丁短线</span></div>
   </div>
   <div style="height:10px"></div>
-  <p style="font-size:13px;color:var(--muted);margin-bottom:16px">💡 单程 1,250km 一天直达（3 大人轮流开）。川西走「大环线」：成都→四姑娘山→丹巴→新都桥→理塘→<b>稻城亚丁</b>→折返新都桥→康定→成都。比小环线多 600km、多 4-5 天，但能看到"蓝色星球最后一片净土"。带娃节奏：每天车程尽量 ≤4h，只有新都桥→亚丁一天是 9h 长路（可分两天）。</p>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:16px">💡 为了 8/16 准时返程 + 保住三星堆和稻城亚丁，川西段改为<b>318 南线直达往返</b>：成都→康定→理塘→稻城亚丁→原路折返。删掉了四姑娘山、丹巴、墨石、塔公。行程紧凑：8/12 和 8/14 两天各 8-9h 山路，其余每天 ≤5h，带娃请做好心理准备。</p>
 
   <div class="day">
     <div class="dhead"><span class="date">Day 1 · 8/8 周六</span><span class="tag">🚗 长途赶路</span></div>
@@ -188,161 +181,114 @@ td b{color:var(--accent)}
   </div>
 
   <div class="day green">
-    <div class="dhead"><span class="date">Day 4 · 8/11 周二</span><span class="tag">⛰️ 进川西</span></div>
-    <div class="route">成都 → 四姑娘山镇（约 200km · 4h · 都汶高速+熊猫大道G350）</div>
+    <div class="dhead"><span class="date">Day 4 · 8/11 周二</span><span class="tag">⛰️ 进高原</span></div>
+    <div class="route">成都 → 雅安 → 康定（约 300km · 4.5h · 雅康高速）</div>
     <ul>
-      <li>经都江堰、映秀、卧龙走中国熊猫大道，翻<b>巴朗山</b>（或隧道）</li>
-      <li>下午<b>猫鼻梁观景台</b>看四姑娘山全景，抵达四姑娘山镇（3,200m）</li>
-      <li><b>第一晚别洗澡</b>防高反，晚上牦牛肉火锅</li>
+      <li>上午出发走雅康高速（轻松的一天，让孩子适应海拔爬升）</li>
+      <li>下午到康定（2,560m），逛<b>情歌广场</b>、吃牦牛汤锅，适应高原</li>
+      <li>今晚开始进入高原区，<b>不洗澡、不剧烈运动</b>，早点睡为明天长路蓄力</li>
     </ul>
-    <div class="stay">🏨 宿：四姑娘山镇 · 供氧/地暖（2 间房 约 ¥500-800/晚）</div>
-  </div>
-
-  <div class="day green">
-    <div class="dhead"><span class="date">Day 5 · 8/12 周三</span><span class="tag">🏞️ 四姑娘山</span></div>
-    <div class="route">双桥沟一日 → 丹巴甲居藏寨（约 120km · 2.5-3.5h）</div>
-    <ul>
-      <li>上午：<b>双桥沟</b>（门票+观光车 ¥150，全程大巴不费腿）：红杉林→布达拉峰→四姑娜措→隆珠措</li>
-      <li>下午 3 点出沟去丹巴（熊猫大道尾段易堵，预留时间）</li>
-      <li>傍晚<b>甲居藏寨</b>（¥50），住藏式民宿，海拔仅 1,800m 全家睡个好觉</li>
-    </ul>
-    <div class="stay">🏨 宿：丹巴 · 甲居藏寨民宿（2 间房 约 ¥500-700/晚）</div>
-  </div>
-
-  <div class="day green">
-    <div class="dhead"><span class="date">Day 6 · 8/13 周四</span><span class="tag">🌄 草原石林</span></div>
-    <div class="route">丹巴 → 八美墨石公园 → 塔公草原 → 新都桥（约 150km · 3-4h）</div>
-    <ul>
-      <li>早上拍<b>甲居晨雾</b>（中国最美乡村之首）</li>
-      <li>经八美到<b>墨石公园</b>（¥60，穿红/白衣出片），下午<b>塔公草原</b>看雅拉雪山+塔公寺同框</li>
-      <li>傍晚到<b>新都桥</b>（3,400m"摄影家的天堂"）看日落</li>
-    </ul>
-    <div class="stay">🏨 宿：新都桥（2 间房 约 ¥500-800/晚，旺季提前订）</div>
+    <div class="stay">🏨 宿：康定市区（2 间房 约 ¥400-600/晚，2,560m 低海拔适应）</div>
   </div>
 
   <div class="day purple">
-    <div class="dhead"><span class="date">Day 7 · 8/14 周五</span><span class="tag">🛣️ 长路日</span></div>
-    <div class="route">新都桥 → 理塘 → 稻城 → 香格里拉镇（约 400km · 8-9h · G318+S217）</div>
+    <div class="dhead"><span class="date">Day 5 · 8/12 周三</span><span class="tag">🛣️ 长路日</span></div>
+    <div class="route">康定 → 新都桥(途经) → 理塘 → 香格里拉镇（约 420km · 8-9h · G318+S217）</div>
     <ul>
-      <li><b>今天是大环线最累的一天</b>：翻高尔寺山、剪子弯山（天路十八弯）、卡子拉山（4,718m）4 座 4000m 大山，国道限速 30-60，弯多落石，带娃务必慢开</li>
-      <li>理塘（4,014m"天空之城"）午餐逛勒通古镇，<b>不过夜</b>（海拔太高）；继续南下经稻城县→<b>香格里拉镇</b></li>
-      <li>傍晚到香格里拉镇（2,900m）——亚丁景区门口最低海拔住宿点，全家休息恢复</li>
-      <li>📌 想更轻松可拆两天：Day7 宿雅江（2,900m），Day8 再到香格里拉镇</li>
+      <li><b>全程最累的一天</b>：翻折多山（4,298m）、高尔寺山、剪子弯山（天路十八弯）、卡子拉山（4,718m），国道限速 30-60，弯多落石，带娃务必慢开</li>
+      <li>新都桥（3,400m）可停 15 分钟拍照"摄影家天堂"，理塘（4,014m"天空之城"）午餐逛勒通古镇，<b>不过夜</b></li>
+      <li>傍晚到香格里拉镇（2,900m）——亚丁门口低海拔住宿点，全家休息恢复</li>
+      <li>📌 孩子晕车提前吃药；司机每 2h 换班</li>
     </ul>
     <div class="stay">🏨 宿：香格里拉镇（连住 2 晚 · 2 间房 约 ¥600-1,000/晚）</div>
   </div>
 
   <div class="day purple">
-    <div class="dhead"><span class="date">Day 8 · 8/15 周六</span><span class="tag">🌟 稻城亚丁（短线）</span></div>
+    <div class="dhead"><span class="date">Day 6 · 8/13 周四</span><span class="tag">🌟 稻城亚丁（短线）</span></div>
     <div class="route">亚丁景区短线一日：冲古寺 + 珍珠海（海拔 3,900-4,100m）</div>
     <ul>
       <li><b>7:00-8:30 入园最佳</b>（避人流+上午天气稳），私家车须提前小程序预约通行</li>
       <li>游客中心→观光车（38km 盘山路 50 分钟，晕车提前吃药）→扎灌崩→徒步 0.5km 冲古寺→<b>珍珠海</b>（1.5km 木栈道平缓，2-3h 往返，仙乃日雪山倒影，<b>老人小孩无压力</b>）</li>
       <li>看仙乃日神山、冲古草甸（《从你的全世界路过》取景地）；午后雷阵雨说来就来，<b>带雨具</b></li>
       <li>🎉 <b>8-10 月免门票</b>（原 ¥146），只需观光车 ¥120/人</li>
-      <li>晚上回香格里拉镇，早点睡养体力</li>
+      <li>傍晚出沟，香格里拉镇晚餐，早睡</li>
     </ul>
     <div class="stay">🏨 宿：香格里拉镇（同前）</div>
   </div>
 
   <div class="day purple">
-    <div class="dhead"><span class="date">Day 9 · 8/16 周日</span><span class="tag">🏃 二进亚丁/机动</span></div>
-    <div class="route">机动日：二进亚丁长线 或 香格里拉镇休闲 → 宿稻城</div>
+    <div class="dhead"><span class="date">Day 7 · 8/14 周五</span><span class="tag">🛣️ 长路日</span></div>
+    <div class="route">香格里拉镇 → 稻城(加油) → 理塘 → 康定（约 420km · 8-9h）</div>
     <ul>
-      <li><b>方案A（体力派）</b>：二进亚丁走<b>长线</b>——洛绒牛场→牛奶海→五色海（12km 往返 5-7h，海拔 4,600m+，<b>不建议带小孩走</b>；大人去的话孩子留酒店或走短线）</li>
-      <li><b>方案B（带娃推荐）</b>：睡到自然醒，上午逛<b>尊胜塔林</b>（免费）或亚丁村观景，下午出发前往稻城县（约 80km）</li>
-      <li>稻城县（3,750m）休整一晚，<b>务必县城加满油</b>（亚丁景区内无加油站）</li>
-    </ul>
-    <div class="stay">🏨 宿：稻城县（2 间房 约 ¥400-600/晚，海拔偏高当晚别洗澡）</div>
-  </div>
-
-  <div class="day green">
-    <div class="dhead"><span class="date">Day 10 · 8/17 周一</span><span class="tag">🚗 返程北上</span></div>
-    <div class="route">稻城 → 理塘 → 新都桥 → 康定（约 400km · 8h）</div>
-    <ul>
-      <li>原路返回翻 4 座大山，理塘午餐，傍晚到康定（2,560m）</li>
-      <li>或分两天走（Day10 宿新都桥，Day11 到成都），看体力</li>
+      <li><b>原路折返，又是 8-9h 山路</b>，3 人轮流开；稻城县城务必<b>加满油</b>（亚丁无加油站）</li>
+      <li>理塘午餐，翻回 4 座大山，傍晚到康定（2,560m）</li>
+      <li>今晚是川西最后一晚，好好休息</li>
     </ul>
     <div class="stay">🏨 宿：康定（2 间房 约 ¥400-600/晚）</div>
   </div>
 
   <div class="day green">
-    <div class="dhead"><span class="date">Day 11 · 8/18 周二</span><span class="tag">🚗 回成都</span></div>
-    <div class="route">康定 → 泸定 → 成都（约 330km · 5-6h）</div>
+    <div class="dhead"><span class="date">Day 8 · 8/15 周六</span><span class="tag">🚗 回成都</span></div>
+    <div class="route">康定 → 泸定 → 成都（约 300km · 4.5-5h · 雅康高速）</div>
     <ul>
-      <li>可停<b>泸定桥</b>（¥10 上桥，孩子会兴奋），中午康定/泸定午餐</li>
-      <li>下午雅康高速，傍晚到成都，晚上采购返程零食</li>
+      <li>可停<b>泸定桥</b>（¥10 上桥，孩子会兴奋），中午泸定/雅安午餐</li>
+      <li>下午到成都（约 3-4 点），晚上休整+采购返程零食，<b>早点休息</b></li>
     </ul>
     <div class="stay">🏨 宿：成都（2 间房 约 ¥600-900/晚）</div>
   </div>
 
   <div class="day gold">
-    <div class="dhead"><span class="date">Day 12 · 8/19 周三</span><span class="tag">🛋️ 成都休整</span></div>
-    <div class="route">成都休整日：恢复体力，为返程长途蓄力</div>
-    <ul>
-      <li>睡到自然醒，孩子可去<b>成都科技馆/自然博物馆</b>放电（需预约）</li>
-      <li>下午逛街购物+大人按摩放松；傍晚加满油、检查车况</li>
-      <li>晚上早睡，第二天 1,250km 返程</li>
-    </ul>
-    <div class="stay">🏨 宿：成都（同前）</div>
-  </div>
-
-  <div class="day gold">
-    <div class="dhead"><span class="date">Day 13 · 8/20 周四</span><span class="tag">🏠 返程到家</span></div>
+    <div class="dhead"><span class="date">Day 9 · 8/16 周日</span><span class="tag">🏠 返程到家</span></div>
     <div class="route">成都 → 平顶山（约 1,250km · 13-14h）</div>
     <ul>
-      <li><b>凌晨 5:00 出发</b>，3 人轮流驾驶，每 2-3 小时换人</li>
+      <li><b>凌晨 5:00 出发</b>（周日晚高峰返程车多，越早越好），3 人轮流驾驶，每 2-3 小时换人</li>
       <li>中午西安服务区午餐，翻秦岭慢行，晚 9-10 点到家 🎉</li>
     </ul>
-    <div class="stay">🏠 到家啦！13 天的大环线完美收官</div>
+    <div class="stay">🏠 到家啦！9 天拿下三星堆+稻城亚丁</div>
   </div>
 
-  <div class="warn">🚨 <b>重要变更说明</b>：加入稻城亚丁后，川西段从 800km 小环线变成 1,400km 大环线，<b>返程由 8/16 顺延至 8/20</b>。如果返程日期无法变更，则只能放弃亚丁（保持原 9 天小环线）或放弃四姑娘山/丹巴（改走成都→新都桥→亚丁往返的"南线"）。</div>
+  <div class="removed">🗑️ <b>本次删减</b>：为保住三星堆（已定）+ 稻城亚丁 + 8/16 返程，川西段从"小环线"改为"318 南线直达往返"，删除：<b>四姑娘山双桥沟、丹巴甲居藏寨、墨石公园、塔公草原</b>。这些点都顺路能看到（新都桥、理塘沿途风光仍在），只是不停留过夜。如果不想这么赶，备选是<b>删亚丁、保留四姑娘山小环线</b>（回到 9 天轻松版）。</div>
 </div>
 
 <div class="card" id="car">
   <h2><span class="ic ic-blue">🚗</span> 车辆方案（6 人必看）</h2>
-  <div class="step"><div class="num">A</div><p><b>1 辆 7 座 MPV（推荐）</b>：传祺 M8 / 别克 GL8 / 本田奥德赛。3 大 3 小正好 6 座，3 个大人轮流开。租车约 ¥400-600/天 × 13 天 ≈ ¥5,200-7,800（含保险）。亚丁段 38km 盘山观光车无需自驾。</p></div>
-  <div class="step"><div class="num">B</div><p><b>2 辆 5 座 SUV</b>：油费+过路费翻倍（约 ¥8,800），且 3 大人分两车后轮换紧张，不推荐。</p></div>
-  <div class="step"><div class="num">C</div><p><b>高铁/飞机 + 当地租车</b>：平顶山西高铁或郑州飞成都（6 人往返约 ¥4,000-6,000），到成都租 7 座车走环线（13 天约 ¥6,000）。省去 2,500km 长途，适合孩子小；但亚丁段山路+租还车略折腾。</p></div>
-  <div class="tip">💡 大环线里程长、山路多，<b>强烈建议 SUV 或 MPV 底盘高一些的车</b>；出发前全面检查刹车、轮胎、备胎，山区加油站少，<b>每个县城都加满油再走</b>。</div>
+  <div class="step"><div class="num">A</div><p><b>1 辆 7 座 MPV/SUV（推荐）</b>：传祺 M8 / 别克 GL8 / 汉兰达。3 大 3 小正好 6 座，3 个大人轮流开。租车约 ¥400-600/天 × 9 天 ≈ ¥3,600-5,400（含保险）。亚丁段 38km 盘山观光车无需自驾。</p></div>
+  <div class="step"><div class="num">B</div><p><b>2 辆 5 座 SUV</b>：油费+过路费翻倍（约 ¥7,600），3 大人分两车轮换紧张，不推荐。</p></div>
+  <div class="step"><div class="num">C</div><p><b>高铁/飞机 + 当地租车</b>：平顶山西高铁或郑州飞成都（6 人往返约 ¥4,000-6,000），到成都租 7 座车走南线（9 天约 ¥4,000）。省去 2,500km 长途，适合孩子小；但亚丁段山路+租还车略折腾。</p></div>
+  <div class="tip">💡 南线要翻 4 座 4000m+ 大山，<b>建议 SUV 或底盘高些的车</b>；出发前全面检查刹车、轮胎、备胎；山区加油站少，<b>稻城县城加满再进亚丁</b>。</div>
 </div>
 
 <div class="card" id="hotel">
   <h2><span class="ic ic-blue">🏨</span> 住宿清单（6 人 · 2 间房/晚 · 提前一周订！）</h2>
   <div class="hotel"><div class="h-name"><b>成都（8/8-8/10 三晚）</b><span>春熙路/太古里：全季、亚朵、桔子水晶</span></div><div class="h-price">¥700-1,100/晚</div></div>
-  <div class="hotel"><div class="h-name"><b>四姑娘山镇（8/11）</b><span>优先供氧/地暖：云顶星空、空山民宿</span></div><div class="h-price">¥500-800/晚</div></div>
-  <div class="hotel"><div class="h-name"><b>丹巴甲居藏寨（8/12）</b><span>藏式民宿：澜峰酒店、甲居星空民宿</span></div><div class="h-price">¥500-700/晚</div></div>
-  <div class="hotel"><div class="h-name"><b>新都桥（8/13）</b><span>摄影天堂大酒店、贡嘎宗庄园</span></div><div class="h-price">¥500-800/晚</div></div>
-  <div class="hotel"><div class="h-name"><b>香格里拉镇（8/14-8/15 两晚）</b><span>⭐ 亚丁门口低海拔住宿点（2,900m）：亚丁日瓦大酒店、华美达等</span></div><div class="h-price">¥600-1,000/晚</div></div>
-  <div class="hotel"><div class="h-name"><b>稻城县（8/16）</b><span>县城酒店（3,750m，当晚别洗澡）</span></div><div class="h-price">¥400-600/晚</div></div>
-  <div class="hotel"><div class="h-name"><b>康定（8/17）</b><span>市区酒店（2,560m）</span></div><div class="h-price">¥400-600/晚</div></div>
-  <div class="hotel"><div class="h-name"><b>成都（8/18-8/19 两晚）</b><span>休整+返程前夜，市区任意位置</span></div><div class="h-price">¥600-900/晚</div></div>
-  <p style="font-size:12px;color:var(--muted);margin-top:12px">💡 共 12 晚 × 2 间。暑期房源紧张越临近越贵，<b>出发前 7 天订完所有住宿</b>；优先"家庭房/亲子房"（1 大床+1 小床睡 3 人）。川西各晚务必确认<b>供氧/地暖</b>，香格里拉镇两晚是恢复体力的关键，选好一点。</p>
+  <div class="hotel"><div class="h-name"><b>康定（8/11 一晚）</b><span>市区酒店（2,560m 低海拔适应）：康定情歌大酒店等</span></div><div class="h-price">¥400-600/晚</div></div>
+  <div class="hotel"><div class="h-name"><b>香格里拉镇（8/12-8/13 两晚）</b><span>⭐ 亚丁门口低海拔（2,900m）：亚丁日瓦大酒店、华美达</span></div><div class="h-price">¥600-1,000/晚</div></div>
+  <div class="hotel"><div class="h-name"><b>康定（8/14 一晚）</b><span>返程中转，市区任意酒店</span></div><div class="h-price">¥400-600/晚</div></div>
+  <div class="hotel"><div class="h-name"><b>成都（8/15 一晚）</b><span>返程前夜，市区任意位置</span></div><div class="h-price">¥600-900/晚</div></div>
+  <p style="font-size:12px;color:var(--muted);margin-top:12px">💡 共 8 晚 × 2 间。暑期房源紧张越临近越贵，<b>出发前 7 天订完所有住宿</b>；优先"家庭房/亲子房"（1 大床+1 小床睡 3 人）。康定/香格里拉镇确认有<b>供氧/地暖</b>。</p>
 </div>
 
 <div class="card" id="ticket">
   <h2><span class="ic ic-gold">🎫</span> 门票预约攻略（重点！）</h2>
-  <div class="step"><div class="num">1</div><p><b>稻城亚丁（新增·8-10月免门票！）</b>：「稻城亚丁」微信小程序实名预约，<b>提前 3 天</b>，私家车通行也需预约（每日限流 1.2-1.5 万人，约满关闭）。门票 <b>8/1-10/31 全国免收</b>（原 ¥146），观光车 ¥120/人必买（8.8 折后 ¥105.6），短线不需电瓶车、长线另加 ¥80（折后 ¥70）。入园最佳 7:00-8:30。<b>8/12 左右预约 8/15 的亚丁</b>。</p></div>
+  <div class="step"><div class="num">1</div><p><b>稻城亚丁（8-10月免门票！）</b>：「稻城亚丁」微信小程序实名预约，<b>提前 3 天</b>，私家车通行也需预约（每日限流 1.2-1.5 万人，约满关闭）。门票 <b>8/1-10/31 全国免收</b>（原 ¥146），观光车 ¥120/人必买（8.8 折后 ¥105.6），短线不需电瓶车。入园最佳 7:00-8:30。<b>8/10 左右预约 8/13 的亚丁</b>。</p></div>
   <div class="step"><div class="num">2</div><p><b>三星堆博物馆（必抢）</b>：官方公众号/小程序实名预约。成人 ¥72、学生 ¥36、1.3m 以下免票。每天<b>20:00 放票</b>（约第 3 天），暑期延时 8:30-20:00。<b>8/8 晚 8 点抢 8/10 的票，6 张票 2 账号同时抢</b>，提前录好 6 人身份证。</p></div>
-  <div class="step"><div class="num">3</div><p><b>四姑娘山双桥沟</b>：小程序「四姑娘山景区」提前 1-3 天约，门票+观光车 ¥150/成人，儿童半价，8/9 左右约 8/12 的。</p></div>
-  <div class="step"><div class="num">4</div><p><b>成都大熊猫基地</b>：公众号预约，¥55/成人、儿童半价、1.3m 以下免，提前 3-5 天约上午场。</p></div>
-  <div class="step"><div class="num">5</div><p><b>墨石 ¥60 / 甲居 ¥50 / 泸定桥 ¥10</b>：现场或携程/美团买即可，儿童按身高免/半价。</p></div>
+  <div class="step"><div class="num">3</div><p><b>成都大熊猫基地</b>：公众号预约，¥55/成人、儿童半价、1.3m 以下免，提前 3-5 天约上午场。</p></div>
+  <div class="step"><div class="num">4</div><p><b>泸定桥 ¥10</b>：现场买即可；康定、新都桥、理塘沿途风光免费。</p></div>
   <div class="tip">🎓 <b>学生党福利</b>：2026 届中高考生凭准考证+身份证，甘孜州 A 级景区免首道门票（到 8/31）；学龄儿童带学生证买学生票。亚丁 8-10 月本身全免，叠加更省！</div>
 </div>
 
 <div class="card" id="budget">
-  <h2><span class="ic ic-green">💰</span> 预算估算（3大3小 · 6 人 · 13 天）</h2>
+  <h2><span class="ic ic-green">💰</span> 预算估算（3大3小 · 6 人 · 9 天）</h2>
   <table>
     <tr><th>项目</th><th>明细</th><th>费用</th></tr>
     <tr><td>🚗 油费+过路费</td><td>7座车 ~3,900km（油费≈¥3,100 + 高速费≈¥1,300）</td><td><b>¥4,400</b></td></tr>
-    <tr><td>🏨 住宿</td><td>12 晚 × 2 间 × 均价 ¥300-400</td><td><b>¥7,200-9,600</b></td></tr>
-    <tr><td>🎫 门票+观光车</td><td>亚丁观光车 3大3小≈¥540（免门票）+ 三星堆/熊猫/双桥沟/甲居/墨石 ≈¥1,600</td><td><b>≈¥2,100</b></td></tr>
-    <tr><td>🍜 餐饮</td><td>13 天 × 6 人 × ¥55</td><td><b>≈¥4,300</b></td></tr>
-    <tr><td>🛒 杂项</td><td>氧气瓶×10、零食、晕车药、停车、纪念品</td><td><b>≈¥1,300</b></td></tr>
-    <tr><td colspan="2">合计</td><td><b>¥19,300-21,700（人均约 ¥3,300-3,600）</b></td></tr>
+    <tr><td>🏨 住宿</td><td>8 晚 × 2 间 × 均价 ¥300-400</td><td><b>¥4,800-6,400</b></td></tr>
+    <tr><td>🎫 门票+观光车</td><td>亚丁观光车 3大3小≈¥540（免门票）+ 三星堆/熊猫/泸定桥 ≈¥800</td><td><b>≈¥1,340</b></td></tr>
+    <tr><td>🍜 餐饮</td><td>9 天 × 6 人 × ¥55</td><td><b>≈¥3,000</b></td></tr>
+    <tr><td>🛒 杂项</td><td>氧气瓶×10、零食、晕车药、停车、纪念品</td><td><b>≈¥1,200</b></td></tr>
+    <tr><td colspan="2">合计</td><td><b>¥14,700-16,300（人均约 ¥2,500-2,700）</b></td></tr>
   </table>
-  <p style="font-size:12px;color:var(--muted);margin-top:10px">※ 若需租 7 座车另加 ¥5,200-7,800；亚丁免门票已省 ¥876（6人）；儿童免票/半价以各景区标准为准，实际可能更低。</p>
+  <p style="font-size:12px;color:var(--muted);margin-top:10px">※ 若需租 7 座车另加 ¥3,600-5,400；亚丁免门票已省 ¥876（6人）；儿童免票/半价以各景区标准为准，实际可能更低。</p>
 </div>
 
 <div class="card" id="tips">
@@ -350,19 +296,19 @@ td b{color:var(--accent)}
   <ul class="check">
     <li><b>🚸 儿童安全</b>：12 岁以下必须安全座椅/增高垫；全程儿童锁；山路弯多备晕车药、垃圾袋；孩子坐中间排别坐第三排</li>
     <li><b>长途安全</b>：3 人严格轮流开，每 2-3 小时换人；服务区必停；犯困立即下高速休息；备红牛/咖啡</li>
-    <li><b>🧒 亚丁段高反最需注意</b>：亚丁徒步区海拔 3,900-4,600m，是全行程最高点。全家提前 3 天吃红景天；<b>孩子不建议走长线牛奶海</b>（4,600m 徒步 12km），走短线珍珠海最合适；孩子喊头疼/呕吐立即吸氧下撤到香格里拉镇（2,900m）</li>
-    <li><b>8 月雨季</b>：G318 新都桥-理塘段弯多落石，出发前查「甘孜交警」实时路况；午后亚丁多雷阵雨，上午进沟；<b>坚决不夜间跑山路</b></li>
-    <li><b>加油</b>：亚丁景区内无加油站，<b>稻城县城是最后一个加油站</b>，进亚丁前务必加满；全程县城加满再走</li>
-    <li><b>车辆</b>：出发前检查刹车、轮胎、备胎、玻璃水；大环线 1,400km 山路建议 SUV/MPV</li>
+    <li><b>🧒 高反</b>：亚丁徒步区 3,900-4,100m 是全程最高点。全家提前 3 天吃红景天；<b>孩子只走短线珍珠海</b>（长线牛奶海 4,600m 12km 徒步绝对不建议带娃）；孩子喊头疼/呕吐立即吸氧下撤到香格里拉镇（2,900m）</li>
+    <li><b>8 月雨季</b>：G318 折多山-理塘段弯多落石，出发前查「甘孜交警」实时路况；午后亚丁多雷阵雨，上午进沟；<b>坚决不夜间跑山路</b>（8/12、8/14 两天务必天亮前出发）</li>
+    <li><b>加油</b>：亚丁景区内无加油站，<b>稻城县城是最后一个加油站</b>，进亚丁前务必加满</li>
+    <li><b>车辆</b>：出发前检查刹车、轮胎、备胎、玻璃水；南线 850km 山路建议 SUV/MPV</li>
     <li><b>衣物</b>：昼夜温差 5-25℃，洋葱式穿搭：冲锋衣+薄羽绒+速干衣；孩子多备 2 套换洗；墨镜、帽子、高倍防晒（高原紫外线强）</li>
     <li><b>证件</b>：身份证（进藏区检查站，儿童带户口本/身份证）、驾驶证、行驶证；学生证/准考证省门票</li>
     <li><b>导航</b>：提前下载四川+甘孜离线地图（山区信号差）</li>
     <li><b>尊重民俗</b>：不摸小孩头、不踩寺庙门槛、转经筒顺时针、拍照先征得同意</li>
   </ul>
-  <div class="warn">🚨 <b>特别提醒</b>：① 加亚丁后总里程 ~3,900km，是普通自驾的 2 倍强度，司机务必休息好；② 若遇暴雨/泥石流预警，川西路段临时管制以交警通告为准；③ 孩子高反别硬扛，立即下撤，行程可随时调整（Day9 机动日就是缓冲）。</div>
+  <div class="warn">🚨 <b>特别提醒</b>：① 本方案 8/12、8/14 两天各 8-9h 山路，是全行程最硬的两天，司机务必前一晚早睡、白天轮换；② 若遇暴雨/泥石流预警，川西路段临时管制以交警通告为准——<b>8/14 若被堵，8/16 返程会非常被动</b>，出发前和 8/13 晚上都要查一次路况；③ 孩子高反别硬扛，立即下撤，行程可随时调整。</div>
 </div>
 
-<div class="footer">📝 给表妹的全家川西大环线计划 · 更新于 2026.8.5（含稻城亚丁版）· 价格为参考，以实际预订为准</div>
+<div class="footer">📝 给表妹的全家川西计划 · 更新于 2026.8.5（9天南线版：三星堆+稻城亚丁）· 价格为参考，以实际预订为准</div>
 </div>
 </body>
 </html>
