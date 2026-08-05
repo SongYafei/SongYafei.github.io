@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>平顶山→成都→川西 · 自驾攻略（8.8-8.17）</title>
+<style>
+:root{--bg:#f7f5f2;--fg:#26221e;--muted:#8a8178;--card:#ffffff;--line:#ece5dc;--accent:#d3542f;--accent2:#2e86ab;--accent3:#7d8c3d;--gold:#c9a227;--shadow:0 2px 12px rgba(60,40,20,.07);--radius:14px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--fg);line-height:1.7;-webkit-font-smoothing:antialiased}
+.hero{background:linear-gradient(135deg,#1e3a5f 0%,#2e86ab 55%,#7d8c3d 130%);color:#fff;padding:44px 22px 34px;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;bottom:-40px;left:-30px;right:-30px;height:120px;background:linear-gradient(180deg,transparent,rgba(255,255,255,.08));border-radius:50%}
+.hero h1{font-size:23px;font-weight:700;letter-spacing:.03em;margin-bottom:8px}
+.hero .sub{font-size:13px;opacity:.85;margin-bottom:16px}
+.hero .badges{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.hero .badge{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);padding:7px 14px;border-radius:24px;font-size:12.5px;backdrop-filter:blur(4px)}
+.wrap{max-width:760px;margin:0 auto;padding:20px 16px 60px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px 20px;margin-bottom:18px}
+.card h2{font-size:17px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.card h2 .ic{width:26px;height:26px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font-size:14px;flex:none}
+.ic-orange{background:#fdeee7;color:var(--accent)}
+.ic-blue{background:#e7f2f8;color:var(--accent2)}
+.ic-green{background:#eef2e0;color:var(--accent3)}
+.ic-gold{background:#faf3dc;color:var(--gold)}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:6px}
+.stat{background:#faf7f3;border:1px solid var(--line);border-radius:10px;padding:10px 6px;text-align:center}
+.stat b{display:block;font-size:17px;color:var(--accent)}
+.stat span{font-size:11px;color:var(--muted)}
+.day{border-left:3px solid var(--accent);padding:0 0 0 16px;margin:0 0 18px;position:relative}
+.day::before{content:'';position:absolute;left:-7px;top:6px;width:11px;height:11px;border-radius:50%;background:var(--accent);border:2px solid var(--card)}
+.day.blue{border-left-color:var(--accent2)}.day.blue::before{background:var(--accent2)}
+.day.green{border-left-color:var(--accent3)}.day.green::before{background:var(--accent3)}
+.day.gold{border-left-color:var(--gold)}.day.gold::before{background:var(--gold)}
+.day .dhead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:4px}
+.day .date{font-size:15px;font-weight:700}
+.day .tag{font-size:10.5px;background:#fdeee7;color:var(--accent);padding:2px 8px;border-radius:12px;font-weight:600}
+.day .route{font-size:13.5px;color:var(--accent);font-weight:600;margin-bottom:6px}
+.day ul{list-style:none;padding:0}
+.day li{font-size:13.5px;padding:2px 0;padding-left:18px;position:relative}
+.day li::before{content:'·';position:absolute;left:4px;color:var(--accent);font-weight:700}
+.day li b{color:var(--fg)}
+.day li .k{color:var(--muted);font-size:12px}
+.day .stay{margin-top:6px;font-size:12.5px;background:#faf7f3;border:1px dashed var(--line);border-radius:8px;padding:6px 10px;color:#5a514a}
+.hotel{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:13.5px}
+.hotel:last-child{border-bottom:none}
+.hotel .h-name b{font-size:13.5px}
+.hotel .h-name span{display:block;font-size:11.5px;color:var(--muted)}
+.hotel .h-price{color:var(--accent);font-weight:700;white-space:nowrap;font-size:13px}
+.tip{background:#fff8f0;border:1px solid #f0dfc8;border-radius:10px;padding:12px 14px;font-size:13px;margin-top:10px;color:#6b5a3e}
+.tip b{color:#a06a1a}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-size:12px;color:var(--muted);font-weight:600;background:#faf7f3}
+td b{color:var(--accent)}
+.warn{background:#fdf0f0;border:1px solid #f2d2d2;border-radius:10px;padding:12px 14px;font-size:13px;margin-top:10px;color:#8a3a3a}
+.warn b{color:#c0392b}
+.step{display:flex;gap:12px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:13.5px}
+.step:last-child{border-bottom:none}
+.step .num{width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none;margin-top:2px}
+.step p b{color:var(--accent)}
+.check li{font-size:13.5px;padding:5px 0;padding-left:20px;position:relative;list-style:none}
+.check li::before{content:'✓';position:absolute;left:0;color:var(--accent3);font-weight:700}
+.footer{text-align:center;color:var(--muted);font-size:11.5px;padding:20px 0 40px}
+.anchor{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.anchor a{flex:1;min-width:100px;text-align:center;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px 4px;font-size:12px;color:var(--fg);text-decoration:none;font-weight:600}
+.anchor a:hover{border-color:var(--accent);color:var(--accent)}
+@media(max-width:480px){.stat-grid{grid-template-columns:repeat(2,1fr)}.hero{padding:36px 16px 28px}.hero h1{font-size:20px}}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>🏔️ 平顶山 → 成都 → 川西 · 自驾攻略</h1>
+  <div class="sub">给表妹的 9 天 10 晚出行计划 · 成都休整 + 三星堆 + 川西小环线</div>
+  <div class="badges">
+    <span class="badge">📅 8.8 出发</span>
+    <span class="badge">🚗 全程约 3,300 km</span>
+    <span class="badge">⛰️ 最高海拔 ~4,300m</span>
+    <span class="badge">💴 2人约 1.0-1.1 万</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+<div class="anchor">
+  <a href="#plan">🗓️ 行程总览</a>
+  <a href="#hotel">🏨 住宿清单</a>
+  <a href="#ticket">🎫 门票预约</a>
+  <a href="#budget">💰 预算</a>
+  <a href="#tips">⚠️ 注意事项</a>
+</div>
+
+<div class="card" id="plan">
+  <h2><span class="ic ic-orange">🗓️</span> 行程总览（10 天：8.8 → 8.17）</h2>
+  <div class="stat-grid">
+    <div class="stat"><b>10天</b><span>8.8 周六出发</span></div>
+    <div class="stat"><b>3300km</b><span>往返+环线</span></div>
+    <div class="stat"><b>2.5天</b><span>成都+三星堆</span></div>
+    <div class="stat"><b>4天</b><span>川西小环线</span></div>
+  </div>
+  <div style="height:10px"></div>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:16px">💡 长途单程 1,250km，往返都拆两天开（经西安歇脚），不疲劳驾驶。川西走经典「逆时针小环线」：成都→四姑娘山→丹巴→八美→塔公→新都桥→康定→成都，4 天节奏舒适。</p>
+
+  <div class="day">
+    <div class="dhead"><span class="date">Day 1 · 8/8 周六</span><span class="tag">🚗 赶路日</span></div>
+    <div class="route">平顶山 → 西安（约 530km · 6-7h · 连霍高速G30）</div>
+    <ul>
+      <li>早上 8 点前出发，中午服务区午餐</li>
+      <li>下午 4-5 点抵达西安，入住后去<b>回民街</b>吃晚饭（羊肉泡馍、肉夹馍、biangbiang面）</li>
+      <li>时间充裕可夜游<b>大唐不夜城</b>（免费，夜景超好看）</li>
+    </ul>
+    <div class="stay">🏨 宿：西安 · 钟楼/回民街附近（全季/亚朵 约 ¥300-450）</div>
+  </div>
+
+  <div class="day blue">
+    <div class="dhead"><span class="date">Day 2 · 8/9 周日</span><span class="tag">🚗 赶路日</span></div>
+    <div class="route">西安 → 成都（约 750km · 8-9h · 京昆高速G5 翻秦岭）</div>
+    <ul>
+      <li>早点出发（7:30），秦岭段隧道多、限速 80-100，慢慢开</li>
+      <li>中午汉中服务区午餐，下午继续</li>
+      <li>傍晚抵达成都，入住春熙路附近，晚上<b>太古里/春熙路</b>逛街 + 吃火锅🍲</li>
+    </ul>
+    <div class="stay">🏨 宿：成都 · 春熙路/太古里商圈（连住 3 晚 约 ¥350-550/晚）</div>
+  </div>
+
+  <div class="day blue">
+    <div class="dhead"><span class="date">Day 3 · 8/10 周一</span><span class="tag">🐼 成都市区</span></div>
+    <div class="route">成都市区一日：大熊猫基地 + 宽窄巷子</div>
+    <ul>
+      <li>上午：<b>成都大熊猫繁育研究基地</b>（门票 ¥55，7:30 开门，赶早看"花花"吃竹子最活跃）</li>
+      <li>下午：<b>宽窄巷子</b>逛逛 + <b>人民公园</b>喝盖碗茶、掏耳朵（成都慢生活体验）</li>
+      <li>晚上：<b>锦里/武侯祠</b>夜景，或玉林路小酒馆</li>
+    </ul>
+    <div class="stay">🏨 宿：成都（同前）</div>
+  </div>
+
+  <div class="day blue">
+    <div class="dhead"><span class="date">Day 4 · 8/11 周二</span><span class="tag">🥇 三星堆（已定）</span></div>
+    <div class="route">成都 → 广汉三星堆博物馆（约 60km · 1h · 成绵高速）</div>
+    <ul>
+      <li>上午 9 点前出发，<b>三星堆博物馆</b>（暑期延时开放 8:30-20:00，建议留 3-5 小时）</li>
+      <li>看青铜大立人、青铜神树、黄金面具——古蜀文明震撼现场</li>
+      <li>⚠️ 一定要提前在官方小程序抢票（详见下方"门票预约"），暑期票紧张</li>
+      <li>下午 4 点返回成都，晚上逛<b>东郊记忆</b>或吃串串</li>
+    </ul>
+    <div class="stay">🏨 宿：成都（同前）</div>
+  </div>
+
+  <div class="day green">
+    <div class="dhead"><span class="date">Day 5 · 8/12 周三</span><span class="tag">⛰️ 进川西</span></div>
+    <div class="route">成都 → 四姑娘山镇（约 200km · 4h · 都汶高速+熊猫大道G350）</div>
+    <ul>
+      <li>上午出发，经都江堰、映秀、卧龙，走中国熊猫大道</li>
+      <li>翻<b>巴朗山垭口</b>（海拔 4,500m+，观景台拍照）或走巴朗山隧道</li>
+      <li>下午到<b>猫鼻梁观景台</b>——看四姑娘山幺妹峰全景的最佳位置</li>
+      <li>抵达四姑娘山镇（海拔 3,200m），<b>第一晚别洗澡</b>，防高反</li>
+      <li>晚上吃牦牛肉火锅</li>
+    </ul>
+    <div class="stay">🏨 宿：四姑娘山镇 · 供氧/地暖酒店（约 ¥250-450）</div>
+  </div>
+
+  <div class="day green">
+    <div class="dhead"><span class="date">Day 6 · 8/13 周四</span><span class="tag">🏞️ 四姑娘山</span></div>
+    <div class="route">四姑娘山双桥沟一日 → 丹巴甲居藏寨（约 120km · 2.5-3.5h）</div>
+    <ul>
+      <li>上午：<b>双桥沟</b>（门票+观光车 ¥150）——最轻松的一条沟，全程景区大巴：红杉林→布达拉峰→四姑娜措→隆珠措，雪山海子随手出大片</li>
+      <li>下午 3 点出沟，驱车前往丹巴（熊猫大道尾巴容易堵，预留时间）</li>
+      <li>傍晚抵达<b>甲居藏寨</b>（门票 ¥50），住藏式民宿，海拔仅 1,800m，睡个好觉</li>
+    </ul>
+    <div class="stay">🏨 宿：丹巴 · 甲居藏寨民宿（约 ¥250-400，性价比高）</div>
+  </div>
+
+  <div class="day green">
+    <div class="dhead"><span class="date">Day 7 · 8/14 周五</span><span class="tag">🌄 草原石林</span></div>
+    <div class="route">丹巴 → 八美墨石公园 → 塔公草原 → 新都桥（约 150km · 3-4h）</div>
+    <ul>
+      <li>早上在甲居藏寨拍<b>晨雾藏寨</b>（中国最美乡村古镇之首）</li>
+      <li>经八美到<b>墨石公园</b>（门票 ¥60）——灰色石林+青山，穿红/白衣服巨出片</li>
+      <li>下午<b>塔公草原</b>，看雅拉雪山与塔公寺同框，喝酥油茶</li>
+      <li>傍晚到<b>新都桥</b>（海拔 3,400m，"摄影家的天堂"，10km 风景长廊），住下看日落</li>
+    </ul>
+    <div class="stay">🏨 宿：新都桥（约 ¥250-450，旺季提前订）</div>
+  </div>
+
+  <div class="day green">
+    <div class="dhead"><span class="date">Day 8 · 8/15 周六</span><span class="tag">🚗 回成都</span></div>
+    <div class="route">新都桥 → 康定 → 泸定 → 成都（约 330km · 5-6h）</div>
+    <ul>
+      <li>上午沿 434 省道，途经<b>红海子</b>（晴天雪山倒影，门票 ¥20）</li>
+      <li>中午康定午餐（牦牛汤锅），可逛情歌广场；时间够可停<b>泸定桥</b>（¥10 上桥感受铁索桥）</li>
+      <li>下午上雅康高速，傍晚回成都</li>
+      <li>晚上成都最后一顿：串串/川菜，采购返程路上零食</li>
+    </ul>
+    <div class="stay">🏨 宿：成都（约 ¥300-500）</div>
+  </div>
+
+  <div class="day gold">
+    <div class="dhead"><span class="date">Day 9 · 8/16 周日</span><span class="tag">🚗 返程①</span></div>
+    <div class="route">成都 → 西安（约 750km · 8-9h · 京昆高速G5）</div>
+    <ul>
+      <li>7 点出发（暑期返程高峰，京昆容易堵，早走早到）</li>
+      <li>中午汉中服务区午餐，下午翻秦岭</li>
+      <li>傍晚到西安，再吃一顿回民街，或逛<b>大唐不夜城</b></li>
+    </ul>
+    <div class="stay">🏨 宿：西安 · 钟楼附近（约 ¥300-450）</div>
+  </div>
+
+  <div class="day gold">
+    <div class="dhead"><span class="date">Day 10 · 8/17 周一</span><span class="tag">🏠 到家</span></div>
+    <div class="route">西安 → 平顶山（约 530km · 6-7h · 连霍高速）</div>
+    <ul>
+      <li>睡个自然醒，9 点出发，下午 4-5 点到家，完美收工 🎉</li>
+    </ul>
+    <div class="stay">🏠 到家啦！记得发朋友圈大片</div>
+  </div>
+
+  <div class="tip">📌 <b>如果必须 8.16 当天回平顶山</b>：8.15 晚从康定连夜赶回成都（约 3.5h），8.16 凌晨 5 点出发单日 1,250km 直回（需 2 位司机轮换，纯赶路无体验，不建议）。正常玩法还是按上面分两天，安全第一。</div>
+</div>
+
+<div class="card" id="hotel">
+  <h2><span class="ic ic-blue">🏨</span> 住宿清单（提前一周订！暑期爆满）</h2>
+  <div class="hotel"><div class="h-name"><b>西安（8/8、8/16 两晚）</b><span>钟楼/回民街商圈：全季、亚朵、美居</span></div><div class="h-price">¥300-450</div></div>
+  <div class="hotel"><div class="h-name"><b>成都（8/9-8/11 三晚）</b><span>春熙路/太古里：全季、亚朵、桔子水晶</span></div><div class="h-price">¥350-550</div></div>
+  <div class="hotel"><div class="h-name"><b>四姑娘山镇（8/12）</b><span>优先供氧/地暖房：云顶星空、空山民宿、山语间</span></div><div class="h-price">¥250-450</div></div>
+  <div class="hotel"><div class="h-name"><b>丹巴甲居藏寨（8/13）</b><span>藏式民宿：澜峰酒店、甲居星空民宿</span></div><div class="h-price">¥250-400</div></div>
+  <div class="hotel"><div class="h-name"><b>新都桥（8/14）</b><span>摄影天堂大酒店、贡嘎宗庄园</span></div><div class="h-price">¥250-450</div></div>
+  <div class="hotel"><div class="h-name"><b>成都（8/15）</b><span>回程中转一晚，机场/高铁站附近即可</span></div><div class="h-price">¥300-500</div></div>
+  <p style="font-size:12px;color:var(--muted);margin-top:12px">💡 成都、四姑娘山、新都桥暑期房源紧张且越临近越贵，<b>出发前 7 天订完所有住宿</b>；丹巴价格最实惠。</p>
+</div>
+
+<div class="card" id="ticket">
+  <h2><span class="ic ic-gold">🎫</span> 门票预约攻略（重点！）</h2>
+  <div class="step"><div class="num">1</div><p><b>三星堆博物馆（必抢）</b>：官方公众号/小程序「三星堆博物馆」实名预约。票价成人 ¥72、学生 ¥36。每天<b>晚上 20:00 放票</b>（可约第 3 天），暑期 8:30-20:00 延时开放、18:00 停止入馆。<b>8/8 晚上 8 点准时抢 8/11 的票</b>，暑假票紧张，建议多设备同时抢，抢到再确认行程。</p></div>
+  <div class="step"><div class="num">2</div><p><b>四姑娘山双桥沟</b>：官方小程序「四姑娘山景区」提前 1-3 天预约，门票+观光车 ¥150，暑期周末可能售罄，8/10 左右就约 8/13 的。</p></div>
+  <div class="step"><div class="num">3</div><p><b>成都大熊猫基地</b>：公众号「成都大熊猫繁育研究基地」预约，¥55/人，提前 3-5 天，约上午场。</p></div>
+  <div class="step"><div class="num">4</div><p><b>墨石公园 ¥60 / 甲居藏寨 ¥50 / 红海子 ¥20</b>：现场或携程/美团买即可，基本不用抢。</p></div>
+  <div class="tip">🎓 <b>学生党福利</b>：2026 届中高考生凭准考证+身份证，甘孜州 115 家 A 级景区（墨石、木格措等）<b>免首道门票</b>，到 8/31 截止，表妹有准考证的话能省 200-400 元！</div>
+</div>
+
+<div class="card" id="budget">
+  <h2><span class="ic ic-green">💰</span> 预算估算（2 人同行）</h2>
+  <table>
+    <tr><th>项目</th><th>明细</th><th>费用</th></tr>
+    <tr><td>🚗 油费+过路费</td><td>全程约 3,300km，油费≈¥2,000 + 高速费≈¥1,100</td><td><b>¥3,100</b></td></tr>
+    <tr><td>🏨 住宿</td><td>9 晚 × ¥300-500（2 人一间）</td><td><b>¥3,000-4,000</b></td></tr>
+    <tr><td>🎫 门票</td><td>三星堆144+熊猫基地110+双桥沟300+甲居100+墨石120+杂项100</td><td><b>≈¥900</b></td></tr>
+    <tr><td>🍜 餐饮</td><td>10 天 × 2 人 × ¥120</td><td><b>≈¥2,400</b></td></tr>
+    <tr><td>🛒 杂项</td><td>氧气瓶、零食、停车、纪念品</td><td><b>≈¥500</b></td></tr>
+    <tr><td colspan="2">合计</td><td><b>¥9,900-10,900（人均约 ¥5,200）</b></td></tr>
+  </table>
+</div>
+
+<div class="card" id="tips">
+  <h2><span class="ic ic-orange">⚠️</span> 自驾注意事项（高原+雨季）</h2>
+  <ul class="check">
+    <li><b>高反预防</b>：出发前 3 天吃红景天；四姑娘山/新都桥第一晚不洗澡不剧烈运动；成都买氧气瓶 ¥15-20/罐（药店/便利店），备葡萄糖口服液</li>
+    <li><b>8 月是川西雨季</b>：出发前查「四川交通广播」实时路况；丹巴-八美段雨季有落石风险，遇雨慢行；<b>坚决不夜间跑山路</b></li>
+    <li><b>车辆</b>：全程柏油路为主，SUV 最佳、轿车可通行（底盘别太低）；出发前检查刹车、轮胎、备胎、玻璃水</li>
+    <li><b>衣物</b>：昼夜温差 5-25℃，洋葱式穿搭：冲锋衣+薄羽绒+速干衣；墨镜、帽子、高倍防晒霜必备（高原紫外线强）</li>
+    <li><b>证件</b>：身份证（进藏区检查站）、驾驶证、行驶证；学生证/准考证带好能省门票</li>
+    <li><b>导航</b>：全程高德/百度导航，提前下载四川离线地图（山区信号差）；加油站尽量到县城加满</li>
+    <li><b>尊重民俗</b>：不摸小孩头、不踩寺庙门槛、转经筒顺时针转、拍照先征得同意</li>
+    <li><b>返程高峰</b>：8/16-17 京昆高速返程车多，早出发、多进服务区休息，2 小时换一次司机</li>
+  </ul>
+  <div class="warn">🚨 <b>特别提醒</b>：若遇恶劣天气（暴雨/泥石流预警），川西部分路段会临时管制，务必以当天交警通告为准，宁可绕行或调整行程，安全第一。</div>
+</div>
+
+<div class="footer">📝 给表妹的川西自驾计划 · 生成于 2026.8.5 · 价格为参考，以实际预订为准</div>
+</div>
+</body>
+</html>
